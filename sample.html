@@ -3,49 +3,48 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Mobile Haven Realty</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Permanent+Marker&display=swap"
+      rel="stylesheet"
+    />
     <style>
-      /* Reset styles */
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      /* Fonts */
-      @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
-
       body {
-        font-family: "Roboto", sans-serif;
-        background-color: #f8f9fa;
-        color: #343a40;
+        font-family: "Comic Neue", sans-serif;
+        background-color: #ffebcd;
+        color: #333;
         line-height: 1.6;
       }
 
       header {
-        background-color: #343a40;
-        padding: 10px 0;
+        background-color: #ff6347;
+        padding: 20px 0;
         position: fixed;
         width: 100%;
         top: 0;
         z-index: 1000;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       }
 
       header .container {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 20px;
       }
 
       header .logo {
-        color: white;
-        font-size: 1.5em;
+        color: #fff;
+        font-size: 2em;
         font-weight: bold;
+        font-family: "Permanent Marker", cursive;
       }
 
       header nav ul {
@@ -58,14 +57,15 @@
       }
 
       header nav ul li a {
-        color: white;
+        color: #fff;
         text-decoration: none;
         font-weight: bold;
+        font-size: 1.2em;
         transition: color 0.3s;
       }
 
       header nav ul li a:hover {
-        color: #f8f9fa;
+        color: #ffebcd;
       }
 
       .hero {
@@ -78,42 +78,49 @@
         justify-content: center;
         flex-direction: column;
         text-align: center;
+        border-bottom: 10px solid #ff6347;
+        padding: 20px;
+        margin-top: 80px;
       }
 
       .hero h1 {
-        font-size: 3em;
+        font-size: 4em;
         margin-bottom: 20px;
+        text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+        font-family: "Permanent Marker", cursive;
       }
 
       .hero p {
-        font-size: 1.2em;
+        font-size: 1.5em;
         margin-bottom: 20px;
+        text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
       }
 
       .search {
         background-color: #fff;
         padding: 20px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         margin: -50px auto 50px auto;
         display: flex;
         justify-content: center;
         gap: 10px;
         width: 90%;
         max-width: 1000px;
-        border-radius: 5px;
+        border-radius: 15px;
       }
 
       .search input,
       .search select,
       .search button {
-        padding: 10px;
-        border: 1px solid #ced4da;
-        border-radius: 4px;
+        padding: 15px;
+        border: 2px solid #ff6347;
+        border-radius: 8px;
         background-color: #fff;
+        font-size: 1.2em;
       }
 
       .search button {
-        background-color: #343a40;
+        background-color: #ff6347;
         color: white;
         border: none;
         cursor: pointer;
@@ -121,7 +128,7 @@
       }
 
       .search button:hover {
-        background-color: #495057;
+        background-color: #e5533c;
       }
 
       .container {
@@ -138,7 +145,7 @@
       }
 
       .listing {
-        border: 1px solid #ccc;
+        border: 2px solid #ff6347;
         padding: 20px;
         margin: 10px;
         width: calc(33.333% - 40px);
@@ -146,6 +153,7 @@
         background: white;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         transition: transform 0.3s;
+        border-radius: 15px;
       }
 
       .listing:hover {
@@ -155,12 +163,14 @@
       .listing img {
         max-width: 100%;
         height: auto;
-        border-bottom: 1px solid #ccc;
+        border-bottom: 2px solid #ff6347;
         margin-bottom: 10px;
+        border-radius: 15px 15px 0 0;
       }
 
       .listing h3 {
         margin: 10px 0;
+        font-family: "Permanent Marker", cursive;
       }
 
       .listing p {
@@ -171,12 +181,16 @@
       .testimonial-section {
         background-color: #fff;
         padding: 50px 20px;
+        text-align: center;
       }
 
       .agent,
       .testimonial {
         display: flex;
         margin-bottom: 20px;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
       }
 
       .agent img,
@@ -193,19 +207,22 @@
       .agent h3,
       .testimonial h3 {
         margin-bottom: 10px;
+        font-family: "Permanent Marker", cursive;
       }
 
       footer {
-        background-color: #343a40;
+        background-color: #ff6347;
         color: white;
         text-align: center;
         padding: 20px 0;
         position: relative;
         margin-top: 50px;
+        border-top: 10px solid #e5533c;
       }
 
       footer p {
-        font-size: 0.9em;
+        font-size: 1em;
+        font-family: "Comic Neue", sans-serif;
       }
 
       form {
@@ -216,31 +233,33 @@
         margin: 0 auto;
         padding: 20px;
         background-color: #f8f9fa;
-        border: 1px solid #ced4da;
-        border-radius: 5px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border: 2px solid #ff6347;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       }
 
       form label {
         margin-top: 10px;
         color: #495057;
+        font-size: 1.2em;
       }
 
       form input,
       form textarea,
       form button {
-        padding: 10px;
+        padding: 15px;
         margin-top: 5px;
-        border: 1px solid #ced4da;
-        border-radius: 4px;
+        border: 2px solid #ff6347;
+        border-radius: 8px;
         background-color: #fff;
+        font-size: 1.2em;
         transition: border-color 0.3s;
       }
 
       form input:focus,
       form textarea:focus {
         outline: none;
-        border-color: #80bdff;
+        border-color: #ff6347;
       }
 
       form textarea {
@@ -248,7 +267,7 @@
       }
 
       form button {
-        background-color: #343a40;
+        background-color: #ff6347;
         color: white;
         border: none;
         cursor: pointer;
@@ -256,7 +275,96 @@
       }
 
       form button:hover {
-        background-color: #495057;
+        background-color: #e5533c;
+      }
+
+      .modal-header,
+      .modal-footer {
+        border: none;
+      }
+
+      /* Footer */
+      .footer {
+        background-color: #343a40;
+        color: #fff;
+        padding: 20px 0;
+      }
+
+      .footer a {
+        color: #fff;
+        text-decoration: none;
+      }
+
+      .footer a:hover {
+        text-decoration: underline;
+      }
+
+      .footer .container {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+
+      .footer .social-icons {
+        display: flex;
+        gap: 10px;
+      }
+
+      .footer .social-icons a {
+        color: #fff;
+        font-size: 1.5rem;
+      }
+
+      .footer .social-icons a:hover {
+        color: #ffcc00;
+      }
+
+      /* Responsive Styles */
+      @media (max-width: 768px) {
+        header .container {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        header nav ul {
+          flex-direction: column;
+          width: 100%;
+          margin-top: 10px;
+        }
+
+        header nav ul li {
+          margin: 5px 0;
+        }
+
+        .search {
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .listings {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .listing {
+          width: 90%;
+        }
+
+        .agent,
+        .testimonial {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .agent img,
+        .testimonial img {
+          margin: 0 0 10px 0;
+        }
+
+        .agent-details,
+        .testimonial-details {
+          text-align: center;
+        }
       }
     </style>
   </head>
@@ -271,6 +379,16 @@
             <li><a href="#sell">Sell</a></li>
             <li><a href="#services">Services</a></li>
             <li><a href="#contact">Contact</a></li>
+            <li>
+              <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal"
+                >Login</a
+              >
+            </li>
+            <li>
+              <a href="#" data-bs-toggle="modal" data-bs-target="#signupModal"
+                >Sign Up</a
+              >
+            </li>
           </ul>
         </nav>
       </div>
@@ -402,10 +520,172 @@
       </div>
     </section>
 
-    <footer>
-      <p>&copy; 2024 Mobile Haven Realty. All rights reserved.</p>
+    <footer class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <h5>Quick Links</h5>
+            <ul class="list-unstyled">
+              <li><a href="#home">Home</a></li>
+              <li><a href="#buy">Buy</a></li>
+              <li><a href="#sell">Sell</a></li>
+              <li><a href="#services">Services</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </div>
+          <div class="col-md-4">
+            <h5>Contact Us</h5>
+            <p>
+              123 Real Estate Ave,<br />City, State, 12345<br />Email:
+              info@mobilehavenrealty.com<br />Phone: (123) 456-7890
+            </p>
+          </div>
+          <div class="col-md-4">
+            <h5>Follow Us</h5>
+            <div class="social-icons">
+              <a href="#" class="text-white me-2"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
+              <a href="#" class="text-white me-2"
+                ><i class="fab fa-twitter"></i
+              ></a>
+              <a href="#" class="text-white"
+                ><i class="fab fa-instagram"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+        <p class="mt-3">
+          &copy; 2024 Mobile Haven Realty. All rights reserved.
+        </p>
+      </div>
     </footer>
 
+    <!-- Login Modal -->
+    <div
+      class="modal fade"
+      id="loginModal"
+      tabindex="-1"
+      aria-labelledby="loginModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="loginModalLabel">Login</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="login-form">
+              <div class="mb-3">
+                <label for="login-email" class="form-label"
+                  >Email address</label
+                >
+                <input
+                  type="email"
+                  class="form-control"
+                  id="login-email"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="login-password" class="form-label">Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="login-password"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-primary">Login</button>
+              <div
+                id="login-error"
+                class="text-danger mt-2"
+                style="display: none"
+              >
+                Invalid email or password. Please try again.
+              </div>
+              <div
+                id="login-success"
+                class="text-success mt-2"
+                style="display: none"
+              >
+                Login successful!
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sign Up Modal -->
+    <div
+      class="modal fade"
+      id="signupModal"
+      tabindex="-1"
+      aria-labelledby="signupModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="signupModalLabel">Sign Up</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="signup-form">
+              <div class="mb-3">
+                <label for="signup-email" class="form-label"
+                  >Email address</label
+                >
+                <input
+                  type="email"
+                  class="form-control"
+                  id="signup-email"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="signup-password" class="form-label">Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="signup-password"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-primary">Sign Up</button>
+              <div
+                id="signup-error"
+                class="text-danger mt-2"
+                style="display: none"
+              >
+                Error signing up. Please try again.
+              </div>
+              <div
+                id="signup-success"
+                class="text-success mt-2"
+                style="display: none"
+              >
+                Signup successful!
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         // Fetch and display listings
@@ -420,6 +700,16 @@
         document
           .getElementById("contact-form")
           .addEventListener("submit", handleContactFormSubmit);
+
+        // Handle login form submission
+        document
+          .getElementById("login-form")
+          .addEventListener("submit", handleLoginFormSubmit);
+
+        // Handle signup form submission
+        document
+          .getElementById("signup-form")
+          .addEventListener("submit", handleSignupFormSubmit);
       });
 
       function fetchListings() {
@@ -450,10 +740,10 @@
           const listingElement = document.createElement("div");
           listingElement.className = "listing";
           listingElement.innerHTML = `
-          <img src="${listing.image}" alt="${listing.title}">
-          <h3>${listing.title}</h3>
-          <p>${listing.description}</p>
-        `;
+                    <img src="${listing.image}" alt="${listing.title}">
+                    <h3>${listing.title}</h3>
+                    <p>${listing.description}</p>
+                `;
           listingsContainer.appendChild(listingElement);
         });
       }
@@ -464,9 +754,20 @@
         const email = event.target.email.value;
         const message = event.target.message.value;
 
+        // Basic validation
+        if (!name || !email || !message) {
+          alert("Please fill out all fields.");
+          return;
+        }
+
         // Here you would typically send this data to your server
         console.log("Sell Form Submitted", { name, email, message });
+
+        // Display success message
         alert("Thank you for contacting us! We will get back to you soon.");
+
+        // Clear the form
+        event.target.reset();
       }
 
       function handleContactFormSubmit(event) {
@@ -475,9 +776,84 @@
         const email = event.target["contact-email"].value;
         const message = event.target["contact-message"].value;
 
+        // Basic validation
+        if (!name || !email || !message) {
+          alert("Please fill out all fields.");
+          return;
+        }
+
         // Here you would typically send this data to your server
         console.log("Contact Form Submitted", { name, email, message });
+
+        // Display success message
         alert("Thank you for contacting us! We will get back to you soon.");
+
+        // Clear the form
+        event.target.reset();
+      }
+
+      function handleLoginFormSubmit(event) {
+        event.preventDefault();
+        const email = event.target["login-email"].value;
+        const password = event.target["login-password"].value;
+
+        // Basic validation
+        if (!email || !password) {
+          alert("Please fill out all fields.");
+          return;
+        }
+
+        // Here you would typically send this data to your server
+        console.log("Login Form Submitted", { email, password });
+
+        // Simulate server response for successful login
+        if (email === "test@example.com" && password === "password") {
+          document.getElementById("login-error").style.display = "none";
+          document.getElementById("login-success").style.display = "block";
+
+          // Clear the form
+          event.target.reset();
+
+          // Close the modal after a short delay
+          setTimeout(() => {
+            var modal = bootstrap.Modal.getInstance(
+              document.getElementById("loginModal")
+            );
+            modal.hide();
+          }, 2000);
+        } else {
+          document.getElementById("login-error").style.display = "block";
+        }
+      }
+
+      function handleSignupFormSubmit(event) {
+        event.preventDefault();
+        const email = event.target["signup-email"].value;
+        const password = event.target["signup-password"].value;
+
+        // Basic validation
+        if (!email || !password) {
+          alert("Please fill out all fields.");
+          return;
+        }
+
+        // Here you would typically send this data to your server
+        console.log("Signup Form Submitted", { email, password });
+
+        // Simulate server response for successful signup
+        document.getElementById("signup-error").style.display = "none";
+        document.getElementById("signup-success").style.display = "block";
+
+        // Clear the form
+        event.target.reset();
+
+        // Close the modal after a short delay
+        setTimeout(() => {
+          var modal = bootstrap.Modal.getInstance(
+            document.getElementById("signupModal")
+          );
+          modal.hide();
+        }, 2000);
       }
     </script>
   </body>
