@@ -3,307 +3,346 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Real Estate Website</title>
+    <title>Mobile Haven Realty</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet" />
     <style>
         body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f4f7f6;
+            font-family: "Poppins", sans-serif;
+            background-color: #f4f5f7;
             color: #333;
+            line-height: 1.6;
         }
-        .masthead {
-            background: linear-gradient(to right, #6a11cb, #2575fc);
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            height: 75vh;
+        header {
+            background-color: #0062cc;
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        header .container {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
+        }
+        header .logo {
+            color: #fff;
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+        header nav ul {
+            list-style: none;
+            display: flex;
+        }
+        header nav ul li {
+            margin: 0 15px;
+        }
+        header nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        header nav ul li a:hover {
+            color: #ffcc00;
+        }
+        .hero {
+            background: url("https://via.placeholder.com/1200x500") no-repeat center center/cover;
+            color: white;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
             text-align: center;
         }
-        .masthead h1 {
-            font-size: 4rem;
-            margin-bottom: 1rem;
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
-        .masthead p {
-            font-size: 1.5rem;
+        .hero p {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
-        .navbar-dark .navbar-nav .nav-link {
-            color: rgba(255, 255, 255, 0.8);
+        .search {
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: -50px auto 50px auto;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            width: 90%;
+            max-width: 1000px;
+            border-radius: 5px;
         }
-        .navbar-dark .navbar-nav .nav-link:hover {
-            color: #fff;
+        .search input,
+        .search select,
+        .search button {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #fff;
         }
-        .search-form {
-            margin-top: -50px;
-            background-color: white;
-            padding: 15px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-        .search-form input {
-            border-radius: 8px 0 0 8px;
-        }
-        .search-form button {
-            border-radius: 0 8px 8px 0;
-        }
-        .card {
+        .search button {
+            background-color: #0062cc;
+            color: white;
             border: none;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: background-color 0.3s;
         }
-        .card img {
-            border-top-left-radius: 8px;
-            border-top-right-radius: 8px;
+        .search button:hover {
+            background-color: #004085;
         }
-        .btn-primary {
-            background-color: #2575fc;
-            border-color: #2575fc;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
-        .btn-primary:hover {
-            background-color: #1d63d0;
-            border-color: #1d63d0;
+        .listings {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 50px;
         }
-        footer {
-            background-color: #343a40;
-            color: white;
-            padding: 30px 0;
-        }
-        .footer-link {
-            color: white;
-            text-decoration: none;
-        }
-        .footer-link:hover {
-            text-decoration: underline;
-        }
-        .testimonial-blockquote {
-            background-color: white;
-            border-left: 5px solid #2575fc;
-            padding: 1rem;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        .listing {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin: 10px;
+            width: calc(33.333% - 40px);
+            box-sizing: border-box;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s;
         }
-        .testimonial-blockquote:hover {
-            transform: translateY(-10px);
+        .listing:hover {
+            transform: scale(1.05);
         }
-        .service-img {
-            height: 150px;
-            object-fit: cover;
-            border-radius: 8px;
+        .listing img {
+            max-width: 100%;
+            height: auto;
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+        .listing h3 {
+            margin: 10px 0;
+        }
+        .listing p {
+            color: #666;
+        }
+        .agent-section,
+        .testimonial-section {
+            background-color: #fff;
+            padding: 50px 20px;
+        }
+        .agent,
+        .testimonial {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        .agent img,
+        .testimonial img {
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+        .agent-details,
+        .testimonial-details {
+            text-align: left;
+        }
+        .agent h3,
+        .testimonial h3 {
+            margin-bottom: 10px;
+        }
+        footer {
+            background-color: #0062cc;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            position: relative;
+            margin-top: 50px;
+        }
+        footer p {
+            font-size: 0.9em;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            width: 80%;
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        form label {
+            margin-top: 10px;
+            color: #333;
+        }
+        form input,
+        form textarea,
+        form button {
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #fff;
+            transition: border-color 0.3s;
+        }
+        form input:focus,
+        form textarea:focus {
+            outline: none;
+            border-color: #80bdff;
+        }
+        form textarea {
+            resize: vertical;
+        }
+        form button {
+            background-color: #0062cc;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        form button:hover {
+            background-color: #004085;
+        }
+        .modal-header,
+        .modal-footer {
+            border: none;
         }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <header>
         <div class="container">
-            <a class="navbar-brand" href="#">RealEstatePro</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#about">About Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#services">Services</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#testimonials">Testimonials</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#contact">Contact</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#signupModal">Sign Up</a>
-                    </li>
+            <div class="logo">Mobile Haven Realty</div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#buy">Buy</a></li>
+                    <li><a href="#sell">Sell</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a></li>
+                    <li><a href="#" data-bs-toggle="modal" data-bs-target="#signupModal">Sign Up</a></li>
                 </ul>
-            </div>
-        </div>
-    </nav>
-
-    <header class="masthead">
-        <div class="container">
-            <h1 class="fw-light">Welcome to Your Real Estate Hub</h1>
-            <p class="lead">Find your dream home today!</p>
+            </nav>
         </div>
     </header>
 
-    <div class="container mt-5">
-        <div class="search-form">
-            <form class="row g-3">
-                <div class="col-md-10">
-                    <input type="text" class="form-control" placeholder="City, State or ZIP">
-                </div>
-                <div class="col-md-2">
-                    <button type="submit" class="btn btn-primary w-100">Search</button>
-                </div>
+    <section id="home" class="hero">
+        <h1>Welcome to Mobile Haven Realty</h1>
+        <p>Your trusted partner for buying and selling mobile homes in Central Florida.</p>
+    </section>
+
+    <section id="search" class="search">
+        <input type="text" placeholder="Search by location..." />
+        <select>
+            <option value="">Property Type</option>
+            <option value="mobile_home">Mobile Home</option>
+            <option value="single_family">Single Family</option>
+        </select>
+        <input type="text" placeholder="Min Price" />
+        <input type="text" placeholder="Max Price" />
+        <button type="button">Search</button>
+    </section>
+
+    <section id="buy">
+        <div class="container">
+            <h2>Buy a Home</h2>
+            <div id="listings" class="listings">
+                <!-- Listings will be dynamically added here -->
+            </div>
+        </div>
+    </section>
+
+    <section id="sell">
+        <div class="container">
+            <h2>Sell Your Home</h2>
+            <p>Learn how we can help you sell your mobile home quickly and easily.</p>
+            <form id="sell-form">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required />
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required />
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" required></textarea>
+                <button type="submit">Submit</button>
             </form>
         </div>
+    </section>
 
-        <h2 class="mb-4">Featured Listings</h2>
-        <div id="property-listings" class="row">
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="Property Image">
-                    <div class="card-body">
-                        <h5 class="card-title">Beautiful Family Home</h5>
-                        <p class="card-text">4 beds • 3 baths • 2,500 sqft</p>
-                        <a href="#" class="btn btn-primary">View Details</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="Property Image">
-                    <div class="card-body">
-                        <h5 class="card-title">Modern Apartment</h5>
-                        <p class="card-text">2 beds • 2 baths • 1,200 sqft</p>
-                        <a href="#" class="btn btn-primary">View Details</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="Property Image">
-                    <div class="card-body">
-                        <h5 class="card-title">Luxury Condo</h5>
-                        <p class="card-text">3 beds • 3 baths • 1,800 sqft</p>
-                        <a href="#" class="btn btn-primary">View Details</a>
-                    </div>
-                </div>
-            </div>
+    <section id="services">
+        <div class="container">
+            <h2>Our Services</h2>
+            <p>We offer financing, insurance, inspections, and handyman services.</p>
         </div>
-    </div>
+    </section>
 
-    <section class="container mt-5" id="about">
-        <h2 class="mb-4">About Us</h2>
-        <div class="row">
-            <div class="col-md-6">
-                <img src="https://via.placeholder.com/600x300" class="img-fluid service-img mb-3" alt="About Us">
+    <section id="agent-section">
+        <div class="container">
+            <h2>Meet Our Agents</h2>
+            <div class="agent">
+                <img src="https://via.placeholder.com/100" alt="Agent Photo" />
+                <div class="agent-details">
+                    <h3>Jane Doe</h3>
+                    <p>Expert in mobile home sales with over 10 years of experience.</p>
+                </div>
             </div>
-            <div class="col-md-6">
-                <p>RealEstatePro is dedicated to helping you find your dream home. We offer a wide range of properties and services to meet your needs. Our team of experienced professionals is here to assist you every step of the way.</p>
-                <p>Whether you're looking to buy, sell, or rent, we have the expertise and resources to make your experience seamless and enjoyable.</p>
+            <div class="agent">
+                <img src="https://via.placeholder.com/100" alt="Agent Photo" />
+                <div class="agent-details">
+                    <h3>John Smith</h3>
+                    <p>Specialist in finding the perfect home for families.</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <section class="container mt-5" id="services">
-        <h2 class="mb-4">Our Services</h2>
-        <div class="row">
-            <div class="col-md-6">
-                <img src="https://via.placeholder.com/600x300" class="img-fluid service-img mb-3" alt="Tenant Services">
-                <h3>For Tenants</h3>
-                <p>Pay rent, request maintenance, and more through our tenant portal.</p>
-                <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tenantPortalModal">Tenant Portal</a>
+    <section id="testimonial-section">
+        <div class="container">
+            <h2>What Our Clients Say</h2>
+            <div class="testimonial">
+                <img src="https://via.placeholder.com/100" alt="Client Photo" />
+                <div class="testimonial-details">
+                    <h3>Emily Johnson</h3>
+                    <p>"Mobile Haven Realty made buying our first home a wonderful experience!"</p>
+                </div>
             </div>
-            <div class="col-md-6">
-                <img src="https://via.placeholder.com/600x300" class="img-fluid service-img mb-3" alt="Owner Services">
-                <h3>For Owners</h3>
-                <p>Manage your property, view statements, and more through our owner portal.</p>
-                <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ownerPortalModal">Owner Portal</a>
-            </div>
-        </div>
-        <div class="row mt-4">
-            <div class="col-md-6">
-                <h3>Financing</h3>
-                <p>Get assistance with home financing options to make your purchase easier.</p>
-            </div>
-            <div class="col-md-6">
-                <h3>Insurance</h3>
-                <p>Protect your investment with comprehensive insurance plans.</p>
-            </div>
-            <div class="col-md-6">
-                <h3>Inspections</h3>
-                <p>Ensure your home is in top condition with professional inspection services.</p>
-            </div>
-            <div class="col-md-6">
-                <h3>Utility Connection</h3>
-                <p>Get help with connecting utilities to your new home smoothly.</p>
-            </div>
-            <div class="col-md-6">
-                <h3>Handyman Services</h3>
-                <p>Access reliable handyman services for home repairs and maintenance.</p>
+            <div class="testimonial">
+                <img src="https://via.placeholder.com/100" alt="Client Photo" />
+                <div class="testimonial-details">
+                    <h3>Michael Brown</h3>
+                    <p>"Thanks to their expert advice, we sold our home quickly and easily."</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <section class="container mt-5" id="testimonials">
-        <h2 class="mb-4">Client Testimonials</h2>
-        <div class="row">
-            <div class="col-md-4">
-                <blockquote class="testimonial-blockquote">
-                    <p class="mb-0">"RealEstatePro helped us find the perfect home. The service was exceptional!"</p>
-                    <footer class="blockquote-footer">Jane Doe</footer>
-                </blockquote>
-            </div>
-            <div class="col-md-4">
-                <blockquote class="testimonial-blockquote">
-                    <p class="mb-0">"The owner portal makes managing my properties so much easier. Highly recommended!"</p>
-                    <footer class="blockquote-footer">John Smith</footer>
-                </blockquote>
-            </div>
-            <div class="col-md-4">
-                <blockquote class="testimonial-blockquote">
-                    <p class="mb-0">"Their financing options made our dream of owning a home a reality."</p>
-                    <footer class="blockquote-footer">Sarah Lee</footer>
-                </blockquote>
-            </div>
+    <section id="contact">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <form id="contact-form">
+                <label for="contact-name">Name:</label>
+                <input type="text" id="contact-name" name="contact-name" required />
+                <label for="contact-email">Email:</label>
+                <input type="email" id="contact-email" name="contact-email" required />
+                <label for="contact-message">Message:</label>
+                <textarea id="contact-message" name="contact-message" required></textarea>
+                <button type="submit">Submit</button>
+            </form>
         </div>
     </section>
 
-    <section class="container mt-5" id="contact">
-        <h2 class="mb-4">Contact Us</h2>
-        <form>
-            <div class="mb-3">
-                <label for="contactName" class="form-label">Name</label>
-                <input type="text" class="form-control" id="contactName" />
-            </div>
-            <div class="mb-3">
-                <label for="contactEmail" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="contactEmail" />
-            </div>
-            <div class="mb-3">
-                <label for="contactMessage" class="form-label">Message</label>
-                <textarea class="form-control" id="contactMessage" rows="3"></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Send Message</button>
-        </form>
-    </section>
-
-    <footer class="py-4">
-        <div class="container text-center">
-            <div class="row">
-                <div class="col-md-4">
-                    <h5>Quick Links</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#about" class="footer-link">About Us</a></li>
-                        <li><a href="#services" class="footer-link">Services</a></li>
-                        <li><a href="#testimonials" class="footer-link">Testimonials</a></li>
-                        <li><a href="#contact" class="footer-link">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h5>Contact Us</h5>
-                    <p>123 Real Estate Ave,<br>City, State, 12345<br>Email: info@realestatepro.com<br>Phone: (123) 456-7890</p>
-                </div>
-                <div class="col-md-4">
-                    <h5>Follow Us</h5>
-                    <p>
-                        <a href="#" class="text-white me-2"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="text-white me-2"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-white"><i class="fab fa-instagram"></i></a>
-                    </p>
-                </div>
-            </div>
-            <p class="mt-3">&copy; 2024 RealEstatePro. All rights reserved.</p>
-        </div>
+    <footer>
+        <p>&copy; 2024 Mobile Haven Realty. All rights reserved.</p>
     </footer>
 
     <!-- Login Modal -->
@@ -315,16 +354,18 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="login-form">
                         <div class="mb-3">
-                            <label for="loginEmail" class="form-label">Email address</label>
-                            <input type="email" class="form-control" id="loginEmail" />
+                            <label for="login-email" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="login-email" required />
                         </div>
                         <div class="mb-3">
-                            <label for="loginPassword" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="loginPassword" />
+                            <label for="login-password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="login-password" required />
                         </div>
                         <button type="submit" class="btn btn-primary">Login</button>
+                        <div id="login-error" class="text-danger mt-2" style="display: none;">Invalid email or password. Please try again.</div>
+                        <div id="login-success" class="text-success mt-2" style="display: none;">Login successful!</div>
                     </form>
                 </div>
             </div>
@@ -340,16 +381,18 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="signup-form">
                         <div class="mb-3">
-                            <label for="signupEmail" class="form-label">Email address</label>
-                            <input type="email" class="form-control" id="signupEmail" />
+                            <label for="signup-email" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="signup-email" required />
                         </div>
                         <div class="mb-3">
-                            <label for="signupPassword" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="signupPassword" />
+                            <label for="signup-password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="signup-password" required />
                         </div>
                         <button type="submit" class="btn btn-primary">Sign Up</button>
+                        <div id="signup-error" class="text-danger mt-2" style="display: none;">Error signing up. Please try again.</div>
+                        <div id="signup-success" class="text-success mt-2" style="display: none;">Signup successful!</div>
                     </form>
                 </div>
             </div>
@@ -358,22 +401,162 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Initialize and add the map
-        function initMap() {
-            // The location of the property
-            const propertyLocation = { lat: -25.344, lng: 131.036 };
-            // The map, centered at the property location
-            const map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 4,
-                center: propertyLocation,
-            });
-            // The marker, positioned at the property location
-            const marker = new google.maps.Marker({
-                position: propertyLocation,
-                map: map,
+        document.addEventListener("DOMContentLoaded", () => {
+            // Fetch and display listings
+            fetchListings();
+
+            // Handle sell form submission
+            document.getElementById("sell-form").addEventListener("submit", handleSellFormSubmit);
+
+            // Handle contact form submission
+            document.getElementById("contact-form").addEventListener("submit", handleContactFormSubmit);
+
+            // Handle login form submission
+            document.getElementById("login-form").addEventListener("submit", handleLoginFormSubmit);
+
+            // Handle signup form submission
+            document.getElementById("signup-form").addEventListener("submit", handleSignupFormSubmit);
+        });
+
+        function fetchListings() {
+            // This would typically involve an API call to fetch listings
+            const listings = [
+                {
+                    id: 1,
+                    title: "Beautiful Mobile Home",
+                    description: "2 bed, 2 bath in a great community.",
+                    image: "https://via.placeholder.com/300x200",
+                },
+                {
+                    id: 2,
+                    title: "Spacious Mobile Home",
+                    description: "3 bed, 2 bath with a large yard.",
+                    image: "https://via.placeholder.com/300x200",
+                },
+                {
+                    id: 3,
+                    title: "Cozy Mobile Home",
+                    description: "1 bed, 1 bath perfect for singles or couples.",
+                    image: "https://via.placeholder.com/300x200",
+                },
+            ];
+
+            const listingsContainer = document.getElementById("listings");
+            listings.forEach((listing) => {
+                const listingElement = document.createElement("div");
+                listingElement.className = "listing";
+                listingElement.innerHTML = `
+                    <img src="${listing.image}" alt="${listing.title}">
+                    <h3>${listing.title}</h3>
+                    <p>${listing.description}</p>
+                `;
+                listingsContainer.appendChild(listingElement);
             });
         }
+
+        function handleSellFormSubmit(event) {
+            event.preventDefault();
+            const name = event.target.name.value;
+            const email = event.target.email.value;
+            const message = event.target.message.value;
+
+            // Basic validation
+            if (!name || !email || !message) {
+                alert("Please fill out all fields.");
+                return;
+            }
+
+            // Here you would typically send this data to your server
+            console.log("Sell Form Submitted", { name, email, message });
+
+            // Display success message
+            alert("Thank you for contacting us! We will get back to you soon.");
+
+            // Clear the form
+            event.target.reset();
+        }
+
+        function handleContactFormSubmit(event) {
+            event.preventDefault();
+            const name = event.target["contact-name"].value;
+            const email = event.target["contact-email"].value;
+            const message = event.target["contact-message"].value;
+
+            // Basic validation
+            if (!name || !email || !message) {
+                alert("Please fill out all fields.");
+                return;
+            }
+
+            // Here you would typically send this data to your server
+            console.log("Contact Form Submitted", { name, email, message });
+
+            // Display success message
+            alert("Thank you for contacting us! We will get back to you soon.");
+
+            // Clear the form
+            event.target.reset();
+        }
+
+        function handleLoginFormSubmit(event) {
+            event.preventDefault();
+            const email = event.target["login-email"].value;
+            const password = event.target["login-password"].value;
+
+            // Basic validation
+            if (!email || !password) {
+                alert("Please fill out all fields.");
+                return;
+            }
+
+            // Here you would typically send this data to your server
+            console.log("Login Form Submitted", { email, password });
+
+            // Simulate server response for successful login
+            if (email === "test@example.com" && password === "password") {
+                document.getElementById("login-error").style.display = "none";
+                document.getElementById("login-success").style.display = "block";
+
+                // Clear the form
+                event.target.reset();
+
+                // Close the modal after a short delay
+                setTimeout(() => {
+                    var modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+                    modal.hide();
+                }, 2000);
+            } else {
+                document.getElementById("login-error").style.display = "block";
+            }
+        }
+
+        function handleSignupFormSubmit(event) {
+            event.preventDefault();
+            const email = event.target["signup-email"].value;
+            const password = event.target["signup-password"].value;
+
+            // Basic validation
+            if (!email || !password) {
+                alert("Please fill out all fields.");
+                return;
+            }
+
+            // Here you would typically send this data to your server
+            console.log("Signup Form Submitted", { email, password });
+
+            // Simulate server response for successful signup
+            document.getElementById("signup-error").style.display = "none";
+            document.getElementById("signup-success").style.display = "block";
+
+            // Clear the form
+            event.target.reset();
+
+            // Close the modal after a short delay
+            setTimeout(() => {
+                var modal = bootstrap.Modal.getInstance(document.getElementById('signupModal'));
+                modal.hide();
+            }, 2000);
+        }
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async></script>
 </body>
 </html>
