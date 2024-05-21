@@ -28,40 +28,51 @@
 
       header {
         background-color: #2c3e50;
-        padding: 15px 0;
+        padding: 10px 20px;
         position: fixed;
         width: 100%;
         top: 0;
         z-index: 1000;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      }
-
-      header .container {
         display: flex;
         justify-content: space-between;
         align-items: center;
       }
 
       header .logo {
+        display: flex;
+        align-items: center;
         color: #fff;
-        font-size: 1.8em;
+        font-size: 1.5em;
         font-weight: bold;
+      }
+
+      header .logo img {
+        max-width: 50px;
+        height: auto;
+        margin-right: 10px;
+      }
+
+      header .company-name {
+        display: none;
       }
 
       header nav ul {
         list-style: none;
         display: flex;
+        margin: 0;
+        padding: 0;
       }
 
       header nav ul li {
-        margin: 0 10px;
+        margin: 0 15px;
       }
 
       header nav ul li a {
         color: #fff;
         text-decoration: none;
         font-weight: bold;
-        font-size: 1.1em;
+        font-size: 1em;
         transition: color 0.3s;
       }
 
@@ -70,8 +81,7 @@
       }
 
       .hero {
-        background: url("https://via.placeholder.com/1200x500") no-repeat center
-          center/cover;
+        background: url("/path/to/your/image.png") no-repeat center center/cover;
         color: white;
         height: 400px;
         display: flex;
@@ -312,7 +322,7 @@
       }
 
       @media (max-width: 768px) {
-        header .container {
+        header {
           flex-direction: column;
           align-items: flex-start;
         }
@@ -346,32 +356,37 @@
       }
     </style>
   </head>
+
   <body>
     <header>
-      <div class="container">
-        <div class="logo">Iron Pillar Engineering and Construction</div>
-        <nav>
-          <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#homes">Homes for Sale</a></li>
-            <li><a href="#about">About Us</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li>
-              <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal"
-                >Login</a
-              >
-            </li>
-            <li>
-              <a href="#" data-bs-toggle="modal" data-bs-target="#signupModal"
-                >Sign Up</a
-              >
-            </li>
-          </ul>
-        </nav>
+      <div class="logo">
+        <img src="/images/image.png" alt="Iron Pillar Logo" />
       </div>
+      <nav>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#homes">Homes for Sale</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li>
+            <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal"
+              >Login</a
+            >
+          </li>
+          <li>
+            <a href="#" data-bs-toggle="modal" data-bs-target="#signupModal"
+              >Sign Up</a
+            >
+          </li>
+        </ul>
+      </nav>
     </header>
+
+    <section class="logo-container">
+      <!-- <h1>Iron Pillar Engineering and Construction</h1> -->
+    </section>
 
     <section id="home" class="hero">
       <h1>Welcome to Iron Pillar Engineering and Construction</h1>
@@ -387,6 +402,15 @@
 
     <section id="projects" class="section">
       <h2>Our Projects</h2>
+      <label for="project-filter">Filter by project type:</label>
+      <select id="project-filter">
+        <option value="all">All</option>
+        <option value="1-bhk">1 BHK</option>
+        <option value="2-bhk">2 BHK</option>
+        <option value="3-bhk">3 BHK</option>
+        <option value="commercial">Commercial</option>
+        <option value="industrial">Industrial</option>
+      </select>
       <div id="listings" class="projects">
         <!-- Listings will be dynamically added here -->
       </div>
@@ -462,6 +486,13 @@
 
     <section id="homes" class="section">
       <h2>Available Homes for Sale</h2>
+      <label for="home-filter">Filter by home type:</label>
+      <select id="home-filter">
+        <option value="all">All</option>
+        <option value="luxury-villa">Luxury Villa</option>
+        <option value="modern-apartment">Modern Apartment</option>
+        <option value="cozy-cottage">Cozy Cottage</option>
+      </select>
       <div class="homes" id="home-listings">
         <!-- Home listings will be dynamically added here -->
       </div>
@@ -974,6 +1005,14 @@
         document
           .getElementById("forgot-password-form")
           .addEventListener("submit", handleForgotPasswordFormSubmit);
+
+        // Add event listeners for filter dropdowns
+        document
+          .getElementById("project-filter")
+          .addEventListener("change", filterProjects);
+        document
+          .getElementById("home-filter")
+          .addEventListener("change", filterHomes);
       });
 
       function fetchListings() {
@@ -981,33 +1020,50 @@
         const listings = [
           {
             id: 1,
-            title: "Residential Project",
-            description: "2 BHK, 3 BHK, and 4 BHK apartments available.",
+            title: "1 BHK Apartment",
+            description: "1 BHK apartments available.",
             image: "https://via.placeholder.com/300x200",
+            type: "1-bhk",
           },
           {
             id: 2,
-            title: "Commercial Project",
-            description: "Office spaces, retail stores, and more.",
+            title: "2 BHK Apartment",
+            description: "2 BHK apartments available.",
             image: "https://via.placeholder.com/300x200",
+            type: "2-bhk",
           },
           {
             id: 3,
+            title: "3 BHK Apartment",
+            description: "3 BHK apartments available.",
+            image: "https://via.placeholder.com/300x200",
+            type: "3-bhk",
+          },
+          {
+            id: 4,
+            title: "Commercial Project",
+            description: "Office spaces, retail stores, and more.",
+            image: "https://via.placeholder.com/300x200",
+            type: "commercial",
+          },
+          {
+            id: 5,
             title: "Industrial Project",
             description: "Factories, warehouses, and other industrial spaces.",
             image: "https://via.placeholder.com/300x200",
+            type: "industrial",
           },
         ];
 
         const listingsContainer = document.getElementById("listings");
         listings.forEach((listing) => {
           const listingElement = document.createElement("div");
-          listingElement.className = "project";
+          listingElement.className = `project ${listing.type}`;
           listingElement.innerHTML = `
-            <img src="${listing.image}" alt="${listing.title}">
-            <h3>${listing.title}</h3>
-            <p>${listing.description}</p>
-          `;
+                  <img src="${listing.image}" alt="${listing.title}">
+                  <h3>${listing.title}</h3>
+                  <p>${listing.description}</p>
+              `;
           listingsContainer.appendChild(listingElement);
         });
       }
@@ -1020,30 +1076,33 @@
             title: "Luxury Villa",
             description: "4 BHK, 3 Baths, 3500 sqft, pool and garden.",
             image: "https://via.placeholder.com/300x200",
+            type: "luxury-villa",
           },
           {
             id: 2,
             title: "Modern Apartment",
             description: "3 BHK, 2 Baths, 1800 sqft, city view.",
             image: "https://via.placeholder.com/300x200",
+            type: "modern-apartment",
           },
           {
             id: 3,
             title: "Cozy Cottage",
             description: "2 BHK, 1 Bath, 1200 sqft, countryside.",
             image: "https://via.placeholder.com/300x200",
+            type: "cozy-cottage",
           },
         ];
 
         const homesContainer = document.getElementById("home-listings");
         homes.forEach((home) => {
           const homeElement = document.createElement("div");
-          homeElement.className = "home";
+          homeElement.className = `home ${home.type}`;
           homeElement.innerHTML = `
-            <img src="${home.image}" alt="${home.title}">
-            <h3>${home.title}</h3>
-            <p>${home.description}</p>
-          `;
+                  <img src="${home.image}" alt="${home.title}">
+                  <h3>${home.title}</h3>
+                  <p>${home.description}</p>
+              `;
           homesContainer.appendChild(homeElement);
         });
       }
@@ -1233,6 +1292,30 @@
           );
           modal.hide();
         }, 2000);
+      }
+
+      function filterProjects() {
+        const filter = document.getElementById("project-filter").value;
+        const projects = document.querySelectorAll(".project");
+        projects.forEach((project) => {
+          if (filter === "all" || project.classList.contains(filter)) {
+            project.style.display = "block";
+          } else {
+            project.style.display = "none";
+          }
+        });
+      }
+
+      function filterHomes() {
+        const filter = document.getElementById("home-filter").value;
+        const homes = document.querySelectorAll(".home");
+        homes.forEach((home) => {
+          if (filter === "all" || home.classList.contains(filter)) {
+            home.style.display = "block";
+          } else {
+            home.style.display = "none";
+          }
+        });
       }
     </script>
   </body>
