@@ -53,10 +53,6 @@
         margin-right: 10px;
       }
 
-      header .company-name {
-        display: none;
-      }
-
       header nav ul {
         list-style: none;
         display: flex;
@@ -217,7 +213,7 @@
         display: flex;
         flex-direction: column;
         width: 80%;
-        max-width: 400px;
+        max-width: 600px;
         margin: 0 auto;
         padding: 20px;
         background-color: #f8f9fa;
@@ -353,10 +349,13 @@
         .home {
           width: 90%;
         }
+
+        form {
+          max-width: 100%;
+        }
       }
     </style>
   </head>
-
   <body>
     <header>
       <div class="logo">
@@ -384,9 +383,7 @@
       </nav>
     </header>
 
-    <section class="logo-container">
-      <!-- <h1>Iron Pillar Engineering and Construction</h1> -->
-    </section>
+    <section class="logo-container"></section>
 
     <section id="home" class="hero">
       <h1>Welcome to Iron Pillar Engineering and Construction</h1>
@@ -783,93 +780,87 @@
           </div>
           <div class="modal-body">
             <form id="signup-form">
-              <div class="mb-3">
-                <label for="signup-username" class="form-label"
-                  >Username *</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="signup-username"
-                  required
-                />
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="signup-firstname" class="form-label"
+                    >First Name *</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="signup-firstname"
+                    required
+                  />
+                </div>
+                <div class="col-md-6">
+                  <label for="signup-lastname" class="form-label"
+                    >Last Name *</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="signup-lastname"
+                    required
+                  />
+                </div>
               </div>
-              <div class="mb-3">
-                <label for="signup-firstname" class="form-label"
-                  >First Name *</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="signup-firstname"
-                  required
-                />
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="signup-email" class="form-label">Email *</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="signup-email"
+                    required
+                  />
+                </div>
+                <div class="col-md-6">
+                  <label for="signup-confirm-email" class="form-label"
+                    >Confirm Email *</label
+                  >
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="signup-confirm-email"
+                    required
+                  />
+                </div>
               </div>
-              <div class="mb-3">
-                <label for="signup-lastname" class="form-label"
-                  >Last Name *</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="signup-lastname"
-                  required
-                />
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="signup-password" class="form-label"
+                    >Password *</label
+                  >
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="signup-password"
+                    required
+                  />
+                </div>
+                <div class="col-md-6">
+                  <label for="signup-confirm-password" class="form-label"
+                    >Confirm Password *</label
+                  >
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="signup-confirm-password"
+                    required
+                  />
+                </div>
               </div>
-              <div class="mb-3">
-                <label for="signup-email" class="form-label"
-                  >Email address *</label
-                >
+              <div class="form-check mb-3">
                 <input
-                  type="email"
-                  class="form-control"
-                  id="signup-email"
+                  type="checkbox"
+                  class="form-check-input"
+                  id="signup-terms"
                   required
                 />
-              </div>
-              <div class="mb-3">
-                <label for="signup-confirm-email" class="form-label"
-                  >Confirm Email address *</label
+                <label class="form-check-label" for="signup-terms"
+                  >I accept the <a href="#">Terms of Use</a> &
+                  <a href="#">Privacy Policy</a></label
                 >
-                <input
-                  type="email"
-                  class="form-control"
-                  id="signup-confirm-email"
-                  required
-                />
-              </div>
-              <div class="mb-3">
-                <label for="signup-password" class="form-label"
-                  >Password *</label
-                >
-                <input
-                  type="password"
-                  class="form-control"
-                  id="signup-password"
-                  required
-                />
-              </div>
-              <div class="mb-3">
-                <label for="signup-confirm-password" class="form-label"
-                  >Confirm Password *</label
-                >
-                <input
-                  type="password"
-                  class="form-control"
-                  id="signup-confirm-password"
-                  required
-                />
-              </div>
-              <div class="mb-3">
-                <label for="signup-phone" class="form-label"
-                  >Phone Number *</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="signup-phone"
-                  required
-                />
               </div>
               <button type="submit" class="btn btn-primary">Sign Up</button>
               <div
@@ -977,7 +968,6 @@
       async
       defer
     ></script>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
@@ -1064,10 +1054,10 @@
           const listingElement = document.createElement("div");
           listingElement.className = `project ${listing.type}`;
           listingElement.innerHTML = `
-                  <img src="${listing.image}" alt="${listing.title}">
-                  <h3>${listing.title}</h3>
-                  <p>${listing.description}</p>
-              `;
+                    <img src="${listing.image}" alt="${listing.title}">
+                    <h3>${listing.title}</h3>
+                    <p>${listing.description}</p>
+                `;
           listingsContainer.appendChild(listingElement);
         });
       }
@@ -1103,10 +1093,10 @@
           const homeElement = document.createElement("div");
           homeElement.className = `home ${home.type}`;
           homeElement.innerHTML = `
-                  <img src="${home.image}" alt="${home.title}">
-                  <h3>${home.title}</h3>
-                  <p>${home.description}</p>
-              `;
+                    <img src="${home.image}" alt="${home.title}">
+                    <h3>${home.title}</h3>
+                    <p>${home.description}</p>
+                `;
           homesContainer.appendChild(homeElement);
         });
       }
@@ -1229,25 +1219,21 @@
 
       async function handleSignupFormSubmit(event) {
         event.preventDefault();
-        const username = event.target["signup-username"].value;
         const firstName = event.target["signup-firstname"].value;
         const lastName = event.target["signup-lastname"].value;
         const email = event.target["signup-email"].value;
         const confirmEmail = event.target["signup-confirm-email"].value;
         const password = event.target["signup-password"].value;
         const confirmPassword = event.target["signup-confirm-password"].value;
-        const phoneNumber = event.target["signup-phone"].value;
 
         // Basic validation
         if (
-          !username ||
           !firstName ||
           !lastName ||
           !email ||
           !confirmEmail ||
           !password ||
-          !confirmPassword ||
-          !phoneNumber
+          !confirmPassword
         ) {
           alert("Please fill out all fields.");
           return;
@@ -1265,21 +1251,17 @@
 
         // Here you would typically send this data to your server
         console.log("Signup Form Submitted", {
-          username,
           firstName,
           lastName,
           email,
           password,
-          phoneNumber,
         });
 
         const signupData = {
-          username: username,
           firstName: firstName,
           lastName: lastName,
           email: email,
           password: password,
-          phoneNumber: phoneNumber,
         };
 
         try {
