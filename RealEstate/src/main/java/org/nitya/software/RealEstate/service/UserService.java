@@ -25,6 +25,10 @@ public class UserService {
     public Optional<User> findById(Long id) {
         return userRepository.findById(id);
     }
+    
+    public Optional<User> findByUsername(String username){
+        return userRepository.findByUsername(username);
+    }
 
     public User save(User user) {
         return userRepository.save(user);
@@ -32,5 +36,21 @@ public class UserService {
 
     public void deleteById(Long id) {
         userRepository.deleteById(id);
+    }
+    
+    public void deleteAll() {
+        userRepository.deleteAll();
+    }
+
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    public Optional<User> findByPhoneNumber(String phoneNumber) {
+        return userRepository.findByPhoneNumber(phoneNumber);
+    }
+
+    public Optional<User> findByLastName(String lastName) {
+        return userRepository.findByLastName(lastName);
     }
 }

@@ -1,5 +1,6 @@
 package org.nitya.software.RealEstate.controller;
 
+import org.nitya.software.RealEstate.exception.CustomExceptions.*;
 import org.nitya.software.RealEstate.model.User;
 import org.nitya.software.RealEstate.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,8 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/user")
+//@CrossOrigin(origins = "http://localhost:8080")
+@RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
@@ -36,9 +38,29 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
-        User savedUser = userService.save(user);
-        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+    public ResponseEntity<?> createUser(@Valid @RequestBody User user) {
+        try {
+            if(userService.findByUsername(user.getUsername()).isPresent()){
+                throw new UserAlreadyExistsException("User already exists");
+            }
+            if(userService.findByEmail(user.getEmail()).isPresent()){
+                throw new EmailAlreadyExistsException("Email already exists");
+            }
+            if(userService.findByPhoneNumber(user.getPhoneNumber()).isPresent()){
+                throw new PhoneNumberAlreadyExistsException("Phone number already exists");
+            }
+            if(userService.findByLastName(user.getLastName()).isPresent()){
+                throw new LastNameAlreadyExistsException("Last name already exists");
+            }
+            User savedUser = userService.save(user);
+            return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+
+        } catch (UserAlreadyExistsException | EmailAlreadyExistsException |
+                 PhoneNumberAlreadyExistsException | LastNameAlreadyExistsException e) {
+            throw e;
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
+        }
     }
 
     @PutMapping("/{id}")
@@ -48,7 +70,6 @@ public class UserController {
             User user = userOptional.get();
             user.setUsername(userDetails.getUsername());
             user.setPassword(userDetails.getPassword());
-            user.setConfirmPassword(userDetails.getConfirmPassword());
             user.setEmail(userDetails.getEmail());
             user.setPhoneNumber(userDetails.getPhoneNumber());
             User updatedUser = userService.save(user);

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
+import org.nitya.software.RealEstate.exception.UserValidationException;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
@@ -23,14 +24,17 @@ public class User {
     private String username;
 
     @NonNull
+    @Column(nullable = false)
+    private String firstName;
+
+    @NonNull
+    @Column(nullable = false, unique = true)
+    private String lastName;
+
+    @NonNull
     @Length(min = 6, max = 16)
     @Column(nullable = false)
     private String password;
-
-    @NonNull
-    @Column(nullable = false)
-    @Transient
-    private String confirmPassword;
 
     @NonNull
     @Column(nullable = false, unique = true)
@@ -40,4 +44,12 @@ public class User {
     @Column(nullable = false, unique = true)
     @Pattern(regexp = "^\\+?[1-9]\\d{1,14}$")
     private String phoneNumber;
+
+    public void validate() {
+        if (username == null || firstName == null || lastName == null ||
+                password == null || email == null || phoneNumber == null) {
+            throw new UserValidationException("All fields are mandatory and cannot be null.");
+        }
+    }
+
 }

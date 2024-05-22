@@ -1203,27 +1203,28 @@
         }
       }
 
-      function handleSignupFormSubmit(event) {
+      async function handleSignupFormSubmit(event) {
         event.preventDefault();
         const username = event.target["signup-username"].value;
-        const firstname = event.target["signup-firstname"].value;
-        const lastname = event.target["signup-lastname"].value;
+        const firstName = event.target["signup-firstname"].value;
+        const lastName = event.target["signup-lastname"].value;
         const email = event.target["signup-email"].value;
         const confirmEmail = event.target["signup-confirm-email"].value;
         const password = event.target["signup-password"].value;
         const confirmPassword = event.target["signup-confirm-password"].value;
-        const phone = event.target["signup-phone"].value;
+        const phoneNumber = event.target["signup-phone"].value;
+
 
         // Basic validation
         if (
           !username ||
-          !firstname ||
-          !lastname ||
+          !firstName ||
+          !lastName ||
           !email ||
           !confirmEmail ||
           !password ||
           !confirmPassword ||
-          !phone
+          !phoneNumber
         ) {
           alert("Please fill out all fields.");
           return;
@@ -1242,58 +1243,57 @@
         // Here you would typically send this data to your server
         console.log("Signup Form Submitted", {
           username,
-          firstname,
-          lastname,
+          firstName,
+          lastName,
           email,
           password,
-          phone,
+          phoneNumber,
         });
 
         const signupData = {
           username: username,
-          firstName: firstname,
-          lastName: lastname,
+          firstName: firstName,
+          lastName: lastName,
           email: email,
           password: password,
-          phoneNumber: phone
+          phoneNumber: phoneNumber
         };
 
-        // Send the data to the server using Fetch API
-        fetch('/user', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(signupData)
-        })
-                .then(response => {
-                  if(!response.ok){
-                    throw new Error("Failed to create User")
-                  }
-                  return response.json();
-                })
+        try {
+          const response = await fetch('/users', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(signupData)
+          });
 
-                .then(data => {
-                    alert('Signup successful!');
-                })
-                .catch(error => {
-                  console.error('Error:', error);
-                });
+          if (!response.ok) {
+            const errorMessage = await response.text();
+            throw new Error(errorMessage);
+          }
 
-        // Simulate server response for successful signup
-        document.getElementById("signup-error").style.display = "none";
-        document.getElementById("signup-success").style.display = "block";
+          const data = await response.json();
 
-        // Clear the form
-        event.target.reset();
+          document.getElementById("signup-success").style.display = "block";
+          document.getElementById("signup-error").style.display = "none";
 
-        // Close the modal after a short delay
-        setTimeout(() => {
-          var modal = bootstrap.Modal.getInstance(
-            document.getElementById("signupModal")
-          );
-          modal.hide();
-        }, 2000);
+          // Clear the form
+          event.target.reset();
+
+          // Close the modal after a short delay
+          setTimeout(() => {
+            var modal = bootstrap.Modal.getInstance(document.getElementById("signupModal"));
+            modal.hide();
+            // Hide success message after modal is closed
+            document.getElementById("signup-success").style.display = "none";
+          }, 2000);
+        } catch (error) {
+          console.error('Error:', error);
+          document.getElementById("signup-error").innerText = error.message;
+          document.getElementById("signup-error").style.display = "block";
+          document.getElementById("signup-success").style.display = "none";
+        }
       }
 
       function handleForgotPasswordFormSubmit(event) {
