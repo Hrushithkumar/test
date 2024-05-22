@@ -1172,7 +1172,7 @@
         }, 2000);
       }
 
-      function handleLoginFormSubmit(event) {
+      async function handleLoginFormSubmit(event) {
         event.preventDefault();
         const email = event.target["login-email"].value;
         const password = event.target["login-password"].value;
@@ -1183,11 +1183,28 @@
           return;
         }
 
+        const loginData = {email: email, password:password};
+
         // Here you would typically send this data to your server
         console.log("Login Form Submitted", { email, password });
 
-        // Simulate server response for successful login
-        if (email === "test@example.com" && password === "password") {
+        try {
+          const response = await fetch('/users/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(loginData)
+          });
+
+          if (!response.ok) {
+            const errorMessage = await response.text();
+            throw new Error(errorMessage);
+          }
+
+          const data = await response.text();
+
+          console.log("Login successful", data);
           document.getElementById("login-error").style.display = "none";
           document.getElementById("login-success").style.display = "block";
 
@@ -1196,13 +1213,17 @@
 
           // Close the modal after a short delay
           setTimeout(() => {
-            var modal = bootstrap.Modal.getInstance(
-              document.getElementById("loginModal")
-            );
+            var modal = bootstrap.Modal.getInstance(document.getElementById("loginModal"));
             modal.hide();
+            document.getElementById("login-success").style.display = "none"; // Hiding success message after modal close
+            //window.location.href = '/dashboard'; // Update this to the desired URL
           }, 2000);
-        } else {
+
+        } catch (error) {
+          console.error('Error:', error);
+          document.getElementById("login-error").innerText = error.message;
           document.getElementById("login-error").style.display = "block";
+          document.getElementById("login-success").style.display = "none";
         }
       }
 
