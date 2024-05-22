@@ -7,6 +7,7 @@ import org.nitya.software.RealEstate.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -14,11 +15,13 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-//@CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserController(UserService userService) {
@@ -44,7 +47,7 @@ public class UserController {
             if(userService.findByUsername(user.getUsername()).isPresent()){
                 throw new UserAlreadyExistsException("User already exists");
             }
-            if(userService.findByEmail(user.getEmail()) != null){
+            if(userService.findByEmail(user.getEmail()).isPresent()){
                 throw new EmailAlreadyExistsException("Email already exists");
             }
             if(userService.findByPhoneNumber(user.getPhoneNumber()).isPresent()){
@@ -53,13 +56,17 @@ public class UserController {
             if(userService.findByLastName(user.getLastName()).isPresent()){
                 throw new LastNameAlreadyExistsException("Last name already exists");
             }
+
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             User savedUser = userService.save(user);
             return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
 
-        } catch (UserAlreadyExistsException | EmailAlreadyExistsException |
+        }
+        catch (UserAlreadyExistsException | EmailAlreadyExistsException |
                  PhoneNumberAlreadyExistsException | LastNameAlreadyExistsException e) {
             throw e;
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
         }
     }
@@ -93,15 +100,15 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        User user = userService.findByEmail(loginRequest.getEmail());
-        if(user==null){
-            throw new UserNotFoundException("User not found");
-        } else {
-            if (loginRequest.getPassword().equals(user.getPassword())) {
+        Optional<User> user = userService.findByEmail(loginRequest.getEmail());
+        if (user.isPresent()){
+            if (passwordEncoder.matches(loginRequest.getPassword(), user.get().getPassword())) {
                 return ResponseEntity.status(200).body("Login successful");
             } else {
                 return ResponseEntity.status(401).body("Invalid email or password");
             }
+        } else {
+            throw new UserNotFoundException("User not found");
         }
     }
 

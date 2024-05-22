@@ -3,7 +3,12 @@ package org.nitya.software.RealEstate.service;
 import org.nitya.software.RealEstate.model.User;
 import org.nitya.software.RealEstate.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.security.core.userdetails.User.UserBuilder;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -42,9 +47,7 @@ public class UserService {
         userRepository.deleteAll();
     }
 
-    public User findByEmail(String email) {
-        System.out.println("Given email:" + email);
-        //System.out.println(userRepository.findByEmail(email));
+    public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 

@@ -32,7 +32,7 @@ public class User {
     private String lastName;
 
     @NonNull
-    @Length(min = 6, max = 16)
+    //@Length(min = 6, max = 16)
     @Column(nullable = false)
     private String password;
 
