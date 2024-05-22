@@ -1,5 +1,6 @@
 package org.nitya.software.RealEstate.controller;
 
+import org.nitya.software.RealEstate.dto.LoginRequest;
 import org.nitya.software.RealEstate.exception.CustomExceptions.*;
 import org.nitya.software.RealEstate.model.User;
 import org.nitya.software.RealEstate.service.UserService;
@@ -43,7 +44,7 @@ public class UserController {
             if(userService.findByUsername(user.getUsername()).isPresent()){
                 throw new UserAlreadyExistsException("User already exists");
             }
-            if(userService.findByEmail(user.getEmail()).isPresent()){
+            if(userService.findByEmail(user.getEmail()) != null){
                 throw new EmailAlreadyExistsException("Email already exists");
             }
             if(userService.findByPhoneNumber(user.getPhoneNumber()).isPresent()){
@@ -87,6 +88,20 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+        User user = userService.findByEmail(loginRequest.getEmail());
+        if(user==null){
+            throw new UserNotFoundException("User not found");
+        } else {
+            if (loginRequest.getPassword().equals(user.getPassword())) {
+                return ResponseEntity.status(200).body("Login successful");
+            } else {
+                return ResponseEntity.status(401).body("Invalid email or password");
+            }
         }
     }
 

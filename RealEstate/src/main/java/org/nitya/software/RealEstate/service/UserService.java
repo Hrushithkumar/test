@@ -42,7 +42,9 @@ public class UserService {
         userRepository.deleteAll();
     }
 
-    public Optional<User> findByEmail(String email) {
+    public User findByEmail(String email) {
+        System.out.println("Given email:" + email);
+        //System.out.println(userRepository.findByEmail(email));
         return userRepository.findByEmail(email);
     }
 
