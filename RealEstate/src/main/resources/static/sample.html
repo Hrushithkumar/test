@@ -1026,7 +1026,7 @@
         const email = event.target["login-email"].value;
         const password = event.target["login-password"].value;
 
-        if (!email || password) {
+        if (!email || !password) {
           alert("Please fill out all fields.");
           return;
         }
@@ -1045,9 +1045,9 @@
                 document.getElementById("login-success").style.display = "none";
               } else {
                 document.getElementById("login-error").style.display = "none";
-                document.getElementById("login-success").style.display =
-                  "block";
+                document.getElementById("login-success").style.display = "block";
                 localStorage.setItem("user", JSON.stringify(json.user));
+                event.target.reset();
                 setTimeout(() => {
                   window.location.href = "main.html";
                 }, 2000);
@@ -1119,14 +1119,17 @@
             if (data.error) {
               document.getElementById("signup-error").style.display = "block";
               document.getElementById("signup-success").style.display = "none";
+              event.target.reset();
             } else {
               document.getElementById("signup-success").style.display = "block";
               document.getElementById("signup-error").style.display = "none";
+              event.target.reset();
               setTimeout(() => {
                 var modal = bootstrap.Modal.getInstance(
                   document.getElementById("signupModal")
                 );
                 modal.hide();
+                document.getElementById("signup-success").style.display = "none";
               }, 2000);
             }
           })

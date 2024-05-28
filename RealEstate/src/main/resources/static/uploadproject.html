@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Project</title>
+</head>
+<body>
+<h1>Upload Project</h1>
+<form id="uploadForm" enctype="multipart/form-data">
+    <label for="category">Category:</label><br>
+    <select id="category" name="category" required>
+        <option value="" disabled selected>Select a category</option>
+    </select><br><br>
+
+    <label for="title">Title:</label><br>
+    <input type="text" id="title" name="title" required><br><br>
+
+    <label for="description">Description:</label><br>
+    <textarea id="description" name="description" required></textarea><br><br>
+
+    <label for="image">Image:</label><br>
+    <input type="file" id="image" name="image" accept="image/*" required><br><br>
+
+    <button type="button" onclick="uploadProject()">Upload</button>
+</form>
+
+<div id="projectDetails" style="display: none;">
+    <h2>Project Details</h2>
+    <p id="projectCategory"></p>
+    <p id="projectTitle"></p>
+    <p id="projectDescription"></p>
+    <img id="projectImage" src="" alt="Project Image" style="max-width: 500px;">
+</div>
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function() {
+        fetchCategories();
+    });
+
+    function fetchCategories() {
+        fetch('/projects/categories')
+            .then(response => response.json())
+            .then(categories => {
+                const categorySelect = document.getElementById('category');
+                categories.forEach(category => {
+                    const option = document.createElement('option');
+                    option.value = category;
+                    option.textContent = category;
+                    categorySelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error fetching categories:', error));
+    }
+
+    function uploadProject() {
+        const form = document.getElementById('uploadForm');
+        const formData = new FormData(form);
+
+        fetch('/projects/upload', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('projectDetails').style.display = 'block';
+                    document.getElementById('projectCategory').textContent = 'Category: ' + formData.get('category');
+                    document.getElementById('projectTitle').textContent = 'Title: ' + formData.get('title');
+                    document.getElementById('projectDescription').textContent = 'Description: ' + formData.get('description');
+                    document.getElementById('projectImage').src = '/uploads/' + data.filename;
+                    form.reset();
+                } else {
+                    alert('Failed to upload project.');
+                }
+            })
+            .catch(error => console.error('Error uploading project:', error));
+    }
+</script>
+</body>
+</html>

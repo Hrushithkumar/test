@@ -20,13 +20,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/sample.html", "/login.html", "/users/login", "/static/**", "/users", "/services.html", "/index.css","/front.js").permitAll()
+                .antMatchers("/sample.html", "/login.html", "/users/login", "/static/**", "/users", "/project.html",
+                        "/uploadproject.html", "/projects/view", "/projects/upload", "/projects/images/**", "/projects",
+                        "/uploads/**", "/services.html", "/images/**", "/projects/categories",
+                        "/projects/**", "/deleteproject.html").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/sample.html")
                 .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/services.html", true)
+                //.defaultSuccessUrl("/project.html", true)
                 .permitAll()
                 .and()
                 .logout()

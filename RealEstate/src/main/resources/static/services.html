@@ -353,8 +353,8 @@
           <li>
             <a href="#">Projects</a>
             <ul>
-              <li><a href="#">Submenu 1</a></li>
-              <li><a href="#">Submenu 2</a></li>
+              <li><a href="/uploadproject.html">Upload Project</a></li>
+              <li><a href="/deleteproject.html">Delete project</a></li>
             </ul>
           </li>
           <li>
@@ -592,6 +592,7 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", () => {
+        fetchCategories();
         fetchListings();
         fetchHomeListings();
 
@@ -609,63 +610,111 @@
           .addEventListener("change", filterHomes);
       });
 
+
+      function fetchCategories() {
+        fetch('/projects/categories')
+                .then(response => response.json())
+                .then(categories => {
+                  const filterSelect = document.getElementById('project-filter');
+                  filterSelect.innerHTML = '<option value="all">All Projects</option>';
+
+                  categories.forEach(category => {
+                    const option = document.createElement('option');
+                    option.value = category.toLowerCase().replace(/\s+/g, '-'); // Convert to lowercase and replace spaces with hyphens
+                    option.textContent = category;
+                    filterSelect.appendChild(option);
+                  });
+                })
+                .catch(error => console.error('Error fetching categories:', error));
+      }
+
       function fetchListings() {
-        const listings = [
-          {
-            id: 1,
-            title: "1 BHK Apartment",
-            description: "1 BHK apartments available.",
-            image: "https://via.placeholder.com/300x200",
-            type: "1-bhk",
-          },
-          {
-            id: 2,
-            title: "2 BHK Apartment",
-            description: "2 BHK apartments available.",
-            image: "https://via.placeholder.com/300x200",
-            type: "2-bhk",
-          },
-          {
-            id: 3,
-            title: "3 BHK Apartment",
-            description: "3 BHK apartments available.",
-            image: "https://via.placeholder.com/300x200",
-            type: "3-bhk",
-          },
-          {
-            id: 4,
-            title: "Commercial Space",
-            description: "Commercial spaces available.",
-            image: "https://via.placeholder.com/300x200",
-            type: "commercial",
-          },
-          {
-            id: 5,
-            title: "Industrial Facility",
-            description: "Industrial facilities available.",
-            image: "https://via.placeholder.com/300x200",
-            type: "industrial",
-          },
-        ];
-        const listingsContainer = document.getElementById("listings");
+        // const listings = [
+        //   {
+        //     id: 1,
+        //     title: "1 BHK Apartment",
+        //     description: "1 BHK apartments available.",
+        //     image: "https://via.placeholder.com/300x200",
+        //     type: "1-bhk",
+        //   },
+        //   {
+        //     id: 2,
+        //     title: "2 BHK Apartment",
+        //     description: "2 BHK apartments available.",
+        //     image: "https://via.placeholder.com/300x200",
+        //     type: "2-bhk",
+        //   },
+        //   {
+        //     id: 3,
+        //     title: "3 BHK Apartment",
+        //     description: "3 BHK apartments available.",
+        //     image: "https://via.placeholder.com/300x200",
+        //     type: "3-bhk",
+        //   },
+        //   {
+        //     id: 4,
+        //     title: "Commercial Space",
+        //     description: "Commercial spaces available.",
+        //     image: "https://via.placeholder.com/300x200",
+        //     type: "commercial",
+        //   },
+        //   {
+        //     id: 5,
+        //     title: "Industrial Facility",
+        //     description: "Industrial facilities available.",
+        //     image: "https://via.placeholder.com/300x200",
+        //     type: "industrial",
+        //   },
+        // ];
+        // const listingsContainer = document.getElementById("listings");
+        //
+        // listingsContainer.innerHTML = "";
+        //
+        // listings.forEach((listing) => {
+        //   const listingHTML = `
+        //       <div class="col-md-4">
+        //           <div class="ad-item">
+        //               <img src="${listing.image}" alt="${listing.title}">
+        //               <h3>${listing.title}</h3>
+        //               <p>${listing.description}</p>
+        //               <div class="ad-popup">
+        //                   <p>Type: ${listing.type}</p>
+        //               </div>
+        //           </div>
+        //       </div>
+        //   `;
+        //   listingsContainer.innerHTML += listingHTML;
+        // });
 
-        listingsContainer.innerHTML = "";
+        fetch('/projects/view')
+                .then(response => response.json())
+                .then(listings => {
+                  const listingsContainer = document.getElementById('listings');
+                  listingsContainer.innerHTML = '';
 
-        listings.forEach((listing) => {
-          const listingHTML = `
-              <div class="col-md-4">
-                  <div class="ad-item">
-                      <img src="${listing.image}" alt="${listing.title}">
-                      <h3>${listing.title}</h3>
-                      <p>${listing.description}</p>
-                      <div class="ad-popup">
-                          <p>Type: ${listing.type}</p>
-                      </div>
-                  </div>
-              </div>
-          `;
-          listingsContainer.innerHTML += listingHTML;
-        });
+                  if (listings.length === 0) {
+                    listingsContainer.innerHTML = '<p class="col-12 text-center">No projects to display.</p>';
+                  } else {
+                    listings.forEach(listing => {
+                      const listingHTML = `
+                    <div class="col-md-4 mb-3">
+                        <div class="ad-item">
+                            <img src="/uploads/${listing.image}" alt="${listing.title}">
+                            <h3>${listing.title}</h3>
+                            <p>${listing.description}</p>
+                            <div class="ad-popup">
+                                <p>Type: ${listing.category}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                      listingsContainer.innerHTML += listingHTML;
+                    });
+
+                    filterProjects(); // Apply filter after fetching listings
+                  }
+                })
+                .catch(error => console.error('Error fetching listings:', error));
       }
 
       function fetchHomeListings() {
@@ -716,19 +765,42 @@
 
       function filterProjects() {
         const filter = document.getElementById("project-filter").value;
-        const listings = document.querySelectorAll("#listings .ad-item");
+        const listings = document.querySelectorAll("#listings .col-md-4");
+
+        let projectsFound = false;
 
         listings.forEach((listing) => {
           const type = listing
-            .querySelector(".ad-popup p")
-            .textContent.split(":")[1]
-            .trim();
+                  .querySelector(".ad-popup p")
+                  .textContent.split(":")[1]
+                  .trim().toLowerCase().replace(/\s+/g, '-');
+
           if (filter === "all" || type === filter) {
             listing.style.display = "block";
+            projectsFound = true;
           } else {
             listing.style.display = "none";
           }
         });
+
+        const listingsContainer = document.getElementById('listings');
+        const noProjectsMessage = document.getElementById('no-projects-message');
+
+        if (!projectsFound && filter !== "all") {
+          // Add the message only if no projects found for the selected filter
+          if (!noProjectsMessage) {
+            const message = document.createElement('p');
+            message.id = 'no-projects-message';
+            message.className = 'col-12 text-center';
+            message.textContent = 'No projects matching the selected filter.';
+            listingsContainer.appendChild(message);
+          }
+        } else {
+          // Remove the message if projects are found or if "all" filter is selected
+          if (noProjectsMessage) {
+            noProjectsMessage.remove();
+          }
+        }
       }
 
       function filterHomes() {

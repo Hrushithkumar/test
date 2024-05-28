@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h2>Our Projects</h2>
+    <div class="row" id="projects-list">
+        <!-- Project items will be dynamically added here -->
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        fetchProjects();
+    });
+
+    function fetchProjects() {
+        fetch('/projects/view')
+            .then(response => response.json())
+            .then(projects => {
+                const projectsList = document.getElementById('projects-list');
+                projectsList.innerHTML = '';
+
+                projects.forEach(project => {
+                    const projectHTML = `
+                            <div class="col-md-4 mb-4">
+                                <div class="card">
+                                    <img src="/uploads/${project.image}" class="card-img-top" alt="${project.title}">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${project.title}</h5>
+                                        <p class="card-text">${project.description}</p>
+                                        <button class="btn btn-danger" onclick="deleteProject(${project.id})">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    projectsList.innerHTML += projectHTML;
+                });
+            })
+            .catch(error => console.error('Error fetching projects:', error));
+    }
+
+    function deleteProject(projectId) {
+        fetch(`/projects/${projectId}`, {
+            method: 'DELETE'
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert('Project deleted successfully.');
+                    fetchProjects(); // Refresh the list of projects
+                } else {
+                    alert('Failed to delete project.');
+                }
+            })
+            .catch(error => console.error('Error deleting project:', error));
+    }
+</script>
+</body>
+</html>
