@@ -17,7 +17,6 @@
       rel="stylesheet"
     />
     <style>
-      /* Add your CSS styling here */
       body {
         font-family: "Montserrat", sans-serif;
         background-color: #f4f7f6;
@@ -99,19 +98,102 @@
         margin-bottom: 15px;
         text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
       }
-      .about {
+      .about,
+      .advertisements,
+      .gallery,
+      .testimonials,
+      .contact,
+      .extra-content {
         padding: 40px 0;
         text-align: center;
+        transform: perspective(1000px) rotateY(-10deg);
       }
-      .about h2 {
+      .about h2,
+      .advertisements h2,
+      .gallery h2,
+      .testimonials h2,
+      .contact h2,
+      .extra-content h2 {
         font-size: 2.2em;
         margin-bottom: 20px;
+        transform: perspective(1000px) rotateX(-10deg);
       }
-      .about p {
+      .about p,
+      .advertisements p,
+      .testimonials p,
+      .contact p,
+      .extra-content p {
         font-size: 1.1em;
         color: #555;
         max-width: 800px;
         margin: 0 auto;
+        transform: perspective(1000px) rotateX(10deg);
+      }
+      .advertisements .ad,
+      .extra-content .extra-div {
+        margin: 20px;
+        padding: 20px;
+        background: #e1e5e8;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+        transform: perspective(1000px) rotateY(10deg);
+      }
+      .advertisements .ad:hover,
+      .extra-content .extra-div:hover {
+        transform: perspective(1000px) rotateY(20deg) scale(1.05);
+      }
+      .gallery img {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        transition: transform 0.3s;
+        transform: perspective(1000px) rotateX(10deg);
+      }
+      .gallery img:hover {
+        transform: perspective(1000px) rotateX(20deg) scale(1.05);
+      }
+      .testimonials .testimonial {
+        margin: 20px;
+        padding: 20px;
+        background: #e1e5e8;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+        transform: perspective(1000px) rotateY(-10deg);
+      }
+      .testimonials .testimonial:hover {
+        transform: perspective(1000px) rotateY(-20deg) scale(1.05);
+      }
+      .contact form {
+        max-width: 600px;
+        margin: 0 auto;
+        transform: perspective(1000px) rotateX(-10deg);
+      }
+      .feature {
+        background-color: #e9ecef;
+        padding: 40px 0;
+        text-align: center;
+        transform: perspective(1000px) rotateY(10deg);
+      }
+      .feature .feature-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transform: perspective(1000px) rotateX(-10deg);
+      }
+      .feature .feature-content h3 {
+        font-size: 2em;
+        margin-bottom: 15px;
+      }
+      .feature .feature-content p {
+        font-size: 1.2em;
+        margin-bottom: 15px;
       }
       .modal-content {
         transform: perspective(500px) rotateY(-10deg) translateZ(50px);
@@ -124,6 +206,7 @@
         position: relative;
         margin-top: 50px;
         border-top: 10px solid #34495e;
+        transform: perspective(1000px) rotateX(10deg);
       }
       footer .container {
         display: flex;
@@ -190,6 +273,7 @@
     <header>
       <div class="logo">
         <img src="/test/images/image.png" alt="Logo" />
+        Iron Pillar
       </div>
       <nav>
         <ul>
@@ -224,6 +308,327 @@
           ensuring the highest standards of quality and excellence in every
           project we undertake.
         </p>
+      </div>
+    </section>
+
+    <section class="advertisements">
+      <div class="container">
+        <h2>Advertisements</h2>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="ad">
+              <img src="https://via.placeholder.com/300x200" alt="Ad 1" />
+              <p>Special offer on our latest construction services!</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="ad">
+              <img src="https://via.placeholder.com/300x200" alt="Ad 2" />
+              <p>Get a free quote for your next project!</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="ad">
+              <img src="https://via.placeholder.com/300x200" alt="Ad 3" />
+              <p>Limited-time discounts on home renovations!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="gallery">
+      <div class="container">
+        <h2>Gallery</h2>
+        <div class="row">
+          <div class="col-md-4">
+            <img
+              src="https://via.placeholder.com/400x300"
+              alt="Gallery Image 1"
+            />
+          </div>
+          <div class="col-md-4">
+            <img
+              src="https://via.placeholder.com/400x300"
+              alt="Gallery Image 2"
+            />
+          </div>
+          <div class="col-md-4">
+            <img
+              src="https://via.placeholder.com/400x300"
+              alt="Gallery Image 3"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="testimonials">
+      <div class="container">
+        <h2>Testimonials</h2>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="testimonial">
+              <p>
+                "Iron Pillar Engineering and Construction transformed our home!"
+                - John D.
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="testimonial">
+              <p>
+                "Excellent service and attention to detail. Highly recommended!"
+                - Sarah P.
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="testimonial">
+              <p>
+                "Professional and reliable. They exceeded our expectations!" -
+                Mike T.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact">
+      <div class="container">
+        <h2>Contact Us</h2>
+        <form>
+          <div class="mb-3">
+            <label for="contact-name" class="form-label">Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="contact-name"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="contact-email" class="form-label">Email</label>
+            <input
+              type="email"
+              class="form-control"
+              id="contact-email"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="contact-message" class="form-label">Message</label>
+            <textarea
+              class="form-control"
+              id="contact-message"
+              rows="3"
+              required
+            ></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="feature">
+      <div class="container">
+        <div class="feature-content">
+          <h3>Our Unique Feature</h3>
+          <p>
+            We provide innovative construction solutions that are both
+            sustainable and efficient. Our approach integrates advanced
+            technology with expert craftsmanship to deliver exceptional results.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="extra-content">
+      <div class="container">
+        <h2>More Construction Content</h2>
+        <div class="row">
+          <div class="col-md-3">
+            <div class="extra-div">
+              <img
+                src="https://via.placeholder.com/300x200"
+                alt="Construction Image 1"
+              />
+              <p>High-quality materials for every project.</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="extra-div">
+              <img
+                src="https://via.placeholder.com/300x200"
+                alt="Construction Image 2"
+              />
+              <p>Innovative design and architecture.</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="extra-div">
+              <img
+                src="https://via.placeholder.com/300x200"
+                alt="Construction Image 3"
+              />
+              <p>Efficient project management.</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="extra-div">
+              <img
+                src="https://via.placeholder.com/300x200"
+                alt="Construction Image 4"
+              />
+              <p>Modern construction techniques.</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="extra-div">
+              <img
+                src="https://via.placeholder.com/300x200"
+                alt="Construction Image 5"
+              />
+              <p>Experienced and skilled workforce.</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="extra-div">
+              <img
+                src="https://via.placeholder.com/300x200"
+                alt="Construction Image 6"
+              />
+              <p>Safe and secure construction sites.</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="extra-div">
+              <img
+                src="https://via.placeholder.com/300x200"
+                alt="Construction Image 7"
+              />
+              <p>Customized solutions for every client.</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="extra-div">
+              <img
+                src="https://via.placeholder.com/300x200"
+                alt="Construction Image 8"
+              />
+              <p>Sustainable building practices.</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="extra-div">
+              <img
+                src="https://via.placeholder.com/300x200"
+                alt="Construction Image 9"
+              />
+              <p>On-time project delivery.</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="extra-div">
+              <img
+                src="https://via.placeholder.com/300x200"
+                alt="Construction Image 10"
+              />
+              <p>Cost-effective construction solutions.</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="extra-div">
+              <img
+                src="https://via.placeholder.com/300x200"
+                alt="Construction Image 11"
+              />
+              <p>Advanced construction equipment.</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="extra-div">
+              <img
+                src="https://via.placeholder.com/300x200"
+                alt="Construction Image 12"
+              />
+              <p>Commitment to quality and excellence.</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="extra-div">
+              <img
+                src="https://via.placeholder.com/300x200"
+                alt="Construction Image 13"
+              />
+              <p>Comprehensive construction services.</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="extra-div">
+              <img
+                src="https://via.placeholder.com/300x200"
+                alt="Construction Image 14"
+              />
+              <p>Environmentally friendly construction.</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="extra-div">
+              <img
+                src="https://via.placeholder.com/300x200"
+                alt="Construction Image 15"
+              />
+              <p>Expert consultation and planning.</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="extra-div">
+              <img
+                src="https://via.placeholder.com/300x200"
+                alt="Construction Image 16"
+              />
+              <p>High standards of safety and compliance.</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="extra-div">
+              <img
+                src="https://via.placeholder.com/300x200"
+                alt="Construction Image 17"
+              />
+              <p>Innovative building solutions.</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="extra-div">
+              <img
+                src="https://via.placeholder.com/300x200"
+                alt="Construction Image 18"
+              />
+              <p>Comprehensive project management.</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="extra-div">
+              <img
+                src="https://via.placeholder.com/300x200"
+                alt="Construction Image 19"
+              />
+              <p>Building with precision and care.</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="extra-div">
+              <img
+                src="https://via.placeholder.com/300x200"
+                alt="Construction Image 20"
+              />
+              <p>Trusted by clients nationwide.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
