@@ -98,31 +98,17 @@
         margin-bottom: 15px;
         text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
       }
-      .about,
-      .advertisements,
-      .gallery,
-      .testimonials,
-      .contact,
-      .extra-content {
+      .section {
         padding: 40px 0;
         text-align: center;
         transform: perspective(1000px) rotateY(-10deg);
       }
-      .about h2,
-      .advertisements h2,
-      .gallery h2,
-      .testimonials h2,
-      .contact h2,
-      .extra-content h2 {
+      .section h2 {
         font-size: 2.2em;
         margin-bottom: 20px;
         transform: perspective(1000px) rotateX(-10deg);
       }
-      .about p,
-      .advertisements p,
-      .testimonials p,
-      .contact p,
-      .extra-content p {
+      .section p {
         font-size: 1.1em;
         color: #555;
         max-width: 800px;
@@ -130,17 +116,19 @@
         transform: perspective(1000px) rotateX(10deg);
       }
       .advertisements .ad,
-      .extra-content .extra-div {
+      .extra-content .extra-div,
+      .videos .video-div {
         margin: 20px;
         padding: 20px;
-        background: #e1e5e8;
+        background: #fff;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         transition: transform 0.3s;
         transform: perspective(1000px) rotateY(10deg);
       }
       .advertisements .ad:hover,
-      .extra-content .extra-div:hover {
+      .extra-content .extra-div:hover,
+      .videos .video-div:hover {
         transform: perspective(1000px) rotateY(20deg) scale(1.05);
       }
       .gallery img {
@@ -158,7 +146,7 @@
       .testimonials .testimonial {
         margin: 20px;
         padding: 20px;
-        background: #e1e5e8;
+        background: #fff;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         transition: transform 0.3s;
@@ -298,7 +286,7 @@
       </div>
     </section>
 
-    <section class="about">
+    <section class="section about">
       <div class="container">
         <h2>About Iron Pillar Engineering and Construction</h2>
         <p>
@@ -311,7 +299,7 @@
       </div>
     </section>
 
-    <section class="advertisements">
+    <section class="section advertisements">
       <div class="container">
         <h2>Advertisements</h2>
         <div class="row">
@@ -337,7 +325,7 @@
       </div>
     </section>
 
-    <section class="gallery">
+    <section class="section gallery">
       <div class="container">
         <h2>Gallery</h2>
         <div class="row">
@@ -363,7 +351,7 @@
       </div>
     </section>
 
-    <section class="testimonials">
+    <section class="section testimonials">
       <div class="container">
         <h2>Testimonials</h2>
         <div class="row">
@@ -395,7 +383,57 @@
       </div>
     </section>
 
-    <section class="contact">
+    <section class="section videos">
+      <div class="container">
+        <h2>Construction Videos</h2>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="video-div">
+              <iframe
+                width="100%"
+                height="200"
+                src="https://www.youtube.com/embed/Z0GFRcFm-aY"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              ></iframe>
+              <p>Innovative Construction Techniques</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="video-div">
+              <iframe
+                width="100%"
+                height="200"
+                src="https://www.youtube.com/embed/Z0GFRcFm-aY"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              ></iframe>
+              <p>Building with Modern Technology</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="video-div">
+              <iframe
+                width="100%"
+                height="200"
+                src="https://www.youtube.com/embed/Z0GFRcFm-aY"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              ></iframe>
+              <p>Project Management in Construction</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section contact">
       <div class="container">
         <h2>Contact Us</h2>
         <form>
@@ -431,7 +469,7 @@
       </div>
     </section>
 
-    <section class="feature">
+    <section class="section feature">
       <div class="container">
         <div class="feature-content">
           <h3>Our Unique Feature</h3>
@@ -444,7 +482,7 @@
       </div>
     </section>
 
-    <section class="extra-content">
+    <section class="section extra-content">
       <div class="container">
         <h2>More Construction Content</h2>
         <div class="row">
@@ -988,7 +1026,7 @@
         const email = event.target["login-email"].value;
         const password = event.target["login-password"].value;
 
-        if (!email || !password) {
+        if (!email || password) {
           alert("Please fill out all fields.");
           return;
         }
