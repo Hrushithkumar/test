@@ -255,6 +255,18 @@
           margin-top: 10px;
         }
       }
+      .message {
+        padding: 10px;
+        margin: 10px 0;
+        display: none;
+
+      }
+      .success {
+        color: green;
+      }
+      .error {
+        color: red;
+      }
     </style>
   </head>
   <body>
@@ -877,20 +889,22 @@
                 >
               </div>
               <button type="submit" class="btn btn-primary">Sign Up</button>
-              <div
-                id="signup-error"
-                class="text-danger mt-2"
-                style="display: none"
-              >
-                Error signing up. Please try again.
-              </div>
-              <div
-                id="signup-success"
-                class="text-success mt-2"
-                style="display: none"
-              >
-                Signup successful!
-              </div>
+
+              <div id="message" class="message"></div>
+<!--              <div-->
+<!--                id="signup-error"-->
+<!--                class="text-danger mt-2"-->
+<!--                style="display: none"-->
+<!--              >-->
+<!--                Error signing up. Please try again.-->
+<!--              </div>-->
+<!--              <div-->
+<!--                id="signup-success"-->
+<!--                class="text-success mt-2"-->
+<!--                style="display: none"-->
+<!--              >-->
+<!--                Signup successful!-->
+<!--              </div>-->
               <div class="form-text mt-2">
                 <a
                   href="#"
@@ -1043,13 +1057,20 @@
               if (json.error) {
                 document.getElementById("login-error").style.display = "block";
                 document.getElementById("login-success").style.display = "none";
+                event.target.reset();
               } else {
                 document.getElementById("login-error").style.display = "none";
                 document.getElementById("login-success").style.display = "block";
                 localStorage.setItem("user", JSON.stringify(json.user));
                 event.target.reset();
                 setTimeout(() => {
-                  window.location.href = "main.html";
+                  var modal = bootstrap.Modal.getInstance(
+                          document.getElementById("loginModal")
+                  );
+                  modal.hide();
+                  window.location.href = "services.html";
+                  document.getElementById("login-success").style.display = "none";
+                  document.getElementById("login-error").style.display = "none";
                 }, 2000);
               }
             } catch (error) {
@@ -1116,28 +1137,31 @@
         })
           .then((response) => response.json())
           .then((data) => {
+            const messageDiv = document.getElementById('message');
             if (data.error) {
-              document.getElementById("signup-error").style.display = "block";
-              document.getElementById("signup-success").style.display = "none";
-              event.target.reset();
+              messageDiv.className = 'message error';
+              messageDiv.textContent = data.error;
+               <!--event.target.reset();-->
             } else {
-              document.getElementById("signup-success").style.display = "block";
-              document.getElementById("signup-error").style.display = "none";
+              messageDiv.className = 'message success';
+              messageDiv.textContent = 'User created successfully ';
               event.target.reset();
               setTimeout(() => {
                 var modal = bootstrap.Modal.getInstance(
                   document.getElementById("signupModal")
                 );
                 modal.hide();
-                document.getElementById("signup-success").style.display = "none";
+                messageDiv.style.display = 'none';
+                <!-- document.getElementById("signup-success").style.display = "none"; -->
               }, 2000);
             }
+            messageDiv.style.display = 'block';
           })
           .catch((error) => {
-            console.error("Error:", error);
-            document.getElementById("signup-error").innerText = error.message;
-            document.getElementById("signup-error").style.display = "block";
-            document.getElementById("signup-success").style.display = "none";
+            const messageDiv = document.getElementById('message');
+            messageDiv.className = 'message error';
+            messageDiv.textContent = 'An unexpected error occurred: ' + error.message;
+            messageDiv.style.display = 'block';
           });
       }
 

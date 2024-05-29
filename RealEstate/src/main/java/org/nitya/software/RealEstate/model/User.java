@@ -45,6 +45,10 @@ public class User {
     @Pattern(regexp = "^\\+?[1-9]\\d{1,14}$")
     private String phoneNumber;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private UserRole role;
+
     public void validate() {
         if (username == null || firstName == null || lastName == null ||
                 password == null || email == null || phoneNumber == null) {

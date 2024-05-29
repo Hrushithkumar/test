@@ -3,15 +3,19 @@ package org.nitya.software.RealEstate.controller;
 import org.nitya.software.RealEstate.dto.LoginRequest;
 import org.nitya.software.RealEstate.exception.CustomExceptions.*;
 import org.nitya.software.RealEstate.model.User;
+import org.nitya.software.RealEstate.model.UserRole;
 import org.nitya.software.RealEstate.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -43,6 +47,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<?> createUser(@Valid @RequestBody User user) {
+        Map<String, Object> response = new HashMap<>();
         try {
             if(userService.findByUsername(user.getUsername()).isPresent()){
                 throw new UserAlreadyExistsException("User already exists");
@@ -58,16 +63,21 @@ public class UserController {
             }
 
             user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setRole(UserRole.ROLE_USER);
             User savedUser = userService.save(user);
+            response.put("message", "User created successfully");
+            response.put("user", savedUser);
             return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
 
         }
         catch (UserAlreadyExistsException | EmailAlreadyExistsException |
                  PhoneNumberAlreadyExistsException | LastNameAlreadyExistsException e) {
-            throw e;
+            response.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
         catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
+            response.put("error" ,"An unexpected error occurred");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
 

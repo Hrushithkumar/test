@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,6 +21,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
+//                .antMatchers("/users/login", "/users", "/projects/view", "/projects/upload", "/projects/images/**", "/projects",
+//                         "/images/**", "/projects/categories",
+//                        "/projects/**").permitAll()
                 .antMatchers("/sample.html", "/login.html", "/users/login", "/static/**", "/users", "/project.html",
                         "/uploadproject.html", "/projects/view", "/projects/upload", "/projects/images/**", "/projects",
                         "/uploads/**", "/services.html", "/images/**", "/projects/categories",
@@ -29,13 +33,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/sample.html")
                 .loginProcessingUrl("/login")
-                //.defaultSuccessUrl("/project.html", true)
+                .defaultSuccessUrl("/services.html", true)
                 .permitAll()
                 .and()
                 .logout()
                 .permitAll();
 
         http.headers().frameOptions().sameOrigin(); // For H2 console
+    }
+
+    @Override
+    public void configure(WebSecurity webSecurity){
+        webSecurity.ignoring()
+                .antMatchers("/resources/**", "/static/**");
     }
 
     @Bean
