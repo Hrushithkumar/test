@@ -111,11 +111,14 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         Optional<User> user = userService.findByEmail(loginRequest.getEmail());
+        Map<String, Object> response = new HashMap<>();
         if (user.isPresent()){
             if (passwordEncoder.matches(loginRequest.getPassword(), user.get().getPassword())) {
-                return ResponseEntity.status(200).body("Login successful");
+                response.put("message" ,"Login successful");
+                return ResponseEntity.status(200).body(response);
             } else {
-                return ResponseEntity.status(401).body("Invalid email or password");
+                response.put("error", "Invalid email or password");
+                return ResponseEntity.status(401).body(response);
             }
         } else {
             throw new UserNotFoundException("User not found");
