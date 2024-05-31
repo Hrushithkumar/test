@@ -108,7 +108,7 @@
       }
 
       .hero {
-        background: url("https://via.placeholder.com/1200x400") no-repeat center
+        background: url("images/img2.jpg") no-repeat center
           center/cover;
         color: white;
         height: 400px;
@@ -226,8 +226,8 @@
 
       .contact-section img,
       .quote-section img {
-        max-width: 300px;
-        height: auto;
+        width: 400px;
+        height: 700px;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         margin-right: 20px;
@@ -339,15 +339,15 @@
   <body>
     <header>
       <div class="logo">
-        <img src="/test/images/image.png" alt="Logo" />
+        <img src="/images/logo.png" alt="Logo" />
       </div>
       <nav>
         <ul>
           <li>
             <a href="#">Home</a>
             <ul>
-              <li><a href="#">Submenu 1</a></li>
-              <li><a href="#">Submenu 2</a></li>
+              <li><a href="/sample.html">Main</a></li>
+<!--              <li><a href="#">Submenu 2</a></li>-->
             </ul>
           </li>
           <li>
@@ -367,22 +367,22 @@
           <li>
             <a href="#">Homes for Sale</a>
             <ul>
-              <li><a href="#">Submenu 1</a></li>
-              <li><a href="#">Submenu 2</a></li>
+              <li><a href="#home-listings">Homes</a></li>
+<!--              <li><a href="#">Submenu 2</a></li>-->
             </ul>
           </li>
           <li>
             <a href="#">About Us</a>
             <ul>
-              <li><a href="#">Submenu 1</a></li>
-              <li><a href="#">Submenu 2</a></li>
+              <li><a href="#about">About US</a></li>
+<!--              <li><a href="#">Submenu 2</a></li>-->
             </ul>
           </li>
           <li>
             <a href="#">Contact</a>
             <ul>
-              <li><a href="#">Submenu 1</a></li>
-              <li><a href="#">Submenu 2</a></li>
+              <li><a href="#contact-form">Contact Us</a></li>
+              <li><a href="#quote-form">Get Quote</a></li>
             </ul>
           </li>
           <li><a href="#" onclick="logout()">Logout</a></li>
@@ -444,7 +444,7 @@
 
     <section class="contact-section">
       <div class="container d-flex">
-        <img src="https://via.placeholder.com/300x200" alt="Contact Us Image" />
+        <img src="/images/contactus.jpg" alt="Contact Us Image" />
         <form id="contact-form">
           <h2>Contact Us</h2>
           <div class="mb-3">
@@ -485,7 +485,7 @@
     <section class="quote-section">
       <div class="container d-flex">
         <img
-          src="https://via.placeholder.com/300x200"
+          src="/images/getquote.jpg"
           alt="Get a Quote Image"
         />
         <form id="quote-form">
@@ -629,63 +629,6 @@
       }
 
       function fetchListings() {
-        // const listings = [
-        //   {
-        //     id: 1,
-        //     title: "1 BHK Apartment",
-        //     description: "1 BHK apartments available.",
-        //     image: "https://via.placeholder.com/300x200",
-        //     type: "1-bhk",
-        //   },
-        //   {
-        //     id: 2,
-        //     title: "2 BHK Apartment",
-        //     description: "2 BHK apartments available.",
-        //     image: "https://via.placeholder.com/300x200",
-        //     type: "2-bhk",
-        //   },
-        //   {
-        //     id: 3,
-        //     title: "3 BHK Apartment",
-        //     description: "3 BHK apartments available.",
-        //     image: "https://via.placeholder.com/300x200",
-        //     type: "3-bhk",
-        //   },
-        //   {
-        //     id: 4,
-        //     title: "Commercial Space",
-        //     description: "Commercial spaces available.",
-        //     image: "https://via.placeholder.com/300x200",
-        //     type: "commercial",
-        //   },
-        //   {
-        //     id: 5,
-        //     title: "Industrial Facility",
-        //     description: "Industrial facilities available.",
-        //     image: "https://via.placeholder.com/300x200",
-        //     type: "industrial",
-        //   },
-        // ];
-        // const listingsContainer = document.getElementById("listings");
-        //
-        // listingsContainer.innerHTML = "";
-        //
-        // listings.forEach((listing) => {
-        //   const listingHTML = `
-        //       <div class="col-md-4">
-        //           <div class="ad-item">
-        //               <img src="${listing.image}" alt="${listing.title}">
-        //               <h3>${listing.title}</h3>
-        //               <p>${listing.description}</p>
-        //               <div class="ad-popup">
-        //                   <p>Type: ${listing.type}</p>
-        //               </div>
-        //           </div>
-        //       </div>
-        //   `;
-        //   listingsContainer.innerHTML += listingHTML;
-        // });
-
         fetch('/projects/view')
                 .then(response => response.json())
                 .then(listings => {
@@ -723,21 +666,21 @@
             id: 1,
             title: "Luxury Villa",
             description: "Luxury villas for sale.",
-            image: "https://via.placeholder.com/300x200",
+            image: "/uploads/LuxuryVilla.jpg",
             type: "luxury-villa",
           },
           {
             id: 2,
             title: "Modern Apartment",
             description: "Modern apartments for sale.",
-            image: "https://via.placeholder.com/300x200",
+            image: "/uploads/ModernApartment.jpg",
             type: "modern-apartment",
           },
           {
             id: 3,
             title: "Cozy Cottage",
             description: "Cozy cottages for sale.",
-            image: "https://via.placeholder.com/300x200",
+            image: "/uploads/CozyCottage.jpg",
             type: "cozy-cottage",
           },
         ];
@@ -838,7 +781,10 @@
 
       function logout() {
         // Add logout logic here
-        alert("Logout clicked");
+        localStorage.removeItem('token');
+
+        // Redirect to /sample.html
+        window.location.href = '/sample.html';
       }
     </script>
   </body>

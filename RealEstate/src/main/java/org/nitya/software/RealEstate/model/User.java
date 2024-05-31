@@ -3,11 +3,11 @@ package org.nitya.software.RealEstate.model;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
-import org.hibernate.validator.constraints.Length;
 import org.nitya.software.RealEstate.exception.UserValidationException;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -45,15 +45,18 @@ public class User {
     @Pattern(regexp = "^\\+?[1-9]\\d{1,14}$")
     private String phoneNumber;
 
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private UserRole role;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
 
-    public void validate() {
-        if (username == null || firstName == null || lastName == null ||
-                password == null || email == null || phoneNumber == null) {
-            throw new UserValidationException("All fields are mandatory and cannot be null.");
-        }
-    }
+//    public void validate() {
+//        if (username == null || firstName == null || lastName == null ||
+//                password == null || email == null || phoneNumber == null) {
+//            throw new UserValidationException("All fields are mandatory and cannot be null.");
+//        }
+//    }
 
 }

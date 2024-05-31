@@ -1,11 +1,13 @@
 package org.nitya.software.RealEstate.controller;
 
 import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.tasks.UnsupportedFormatException;
 import org.nitya.software.RealEstate.dto.ProjectDto;
 import org.nitya.software.RealEstate.model.Project;
 import org.nitya.software.RealEstate.model.enums.Category;
 import org.nitya.software.RealEstate.repository.ProjectRepository;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.PathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
@@ -14,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.naming.SizeLimitExceededException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -48,13 +51,13 @@ public class ProjectController {
      * @param filename
      * @return
      */
-    @GetMapping("/images/{filename.+}")
+    @GetMapping("/images/{filename:.+}")
     public ResponseEntity<Resource> getImage(@PathVariable String filename) {
         try {
-            //Path imagePath = Paths.get(UPLOAD_DIR).resolve(filename).normalize();
-            Resource resource = new ClassPathResource("uploads/" + filename);
+            Path imagePath = Paths.get(UPLOAD_DIR).resolve(filename).normalize();
+            Resource resource = new PathResource(imagePath);
 
-            if (resource.exists()) {
+            if (resource.exists() && resource.isReadable()) {
                 return ResponseEntity.ok()
                         .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + resource.getFilename() + "\"")
                         .body(resource);
@@ -84,12 +87,22 @@ public class ProjectController {
         try {
             // Save image to the file system
             String imageName = image.getOriginalFilename();
-            Path imagePath = Paths.get(UPLOAD_DIR + imageName);
+            if (imageName == null || imageName.trim().isEmpty()) {
+                imageName = UUID.randomUUID().toString() + ".jpg"; // You can change the extension as needed
+            }
+
+            // Sanitize the filename to remove any path traversal characters
+            imageName = imageName.replaceAll("[^a-zA-Z0-9\\.\\-]", "_");
+            Path imagePath = Paths.get(UPLOAD_DIR).resolve(imageName);
             //Files.write(imagePath, image.getBytes());
 
-            Thumbnails.of(image.getInputStream())
-                    .size(300, 200)
-                    .toFile(imagePath.toFile());
+            try {
+                Thumbnails.of(image.getInputStream())
+                        .size(300, 200)
+                        .toFile(imagePath.toFile());
+            } catch (UnsupportedFormatException e) {
+                return ResponseEntity.badRequest().body("Unsupported image format.");
+            }
 
             Category projectCategory = Arrays.stream(Category.values())
                     .filter(cat -> cat.getCategoryName().equalsIgnoreCase(category))
@@ -112,7 +125,7 @@ public class ProjectController {
 
             return ResponseEntity.ok(response);
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload project.");
         }
     }

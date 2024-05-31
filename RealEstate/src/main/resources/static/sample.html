@@ -46,7 +46,7 @@
       }
       header .logo img {
         max-width: 50px;
-        height: auto;
+        height: 50px;
         margin-right: 10px;
       }
       header nav ul {
@@ -69,8 +69,7 @@
         color: #f39c12;
       }
       .hero {
-        background: url("https://via.placeholder.com/1200x400") no-repeat center
-          center/cover;
+        background: url("images/img2.jpg") no-repeat center center/cover;
         color: white;
         height: 400px;
         display: flex;
@@ -132,8 +131,9 @@
         transform: perspective(1000px) rotateY(20deg) scale(1.05);
       }
       .gallery img {
-        width: 100%;
-        height: auto;
+        width: 400px;
+        height: 300px;
+        object-fit: cover;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         margin-bottom: 20px;
@@ -267,12 +267,22 @@
       .error {
         color: red;
       }
+      .ad img {
+        width: 300px;
+        height: 200px;
+        object-fit: cover; /* Ensures the image covers the area without distorting */
+      }
+
+      .modal.show .modal-dialog {
+        transform: none;
+        margin-top: 15em;
+      }
     </style>
   </head>
   <body>
     <header>
       <div class="logo">
-        <img src="/test/images/image.png" alt="Logo" />
+        <img src="/images/logo.png" alt="Logo" />
         Iron Pillar
       </div>
       <nav>
@@ -292,8 +302,9 @@
     </header>
 
     <section class="hero">
+<!--      <img src="/images/img.jpg">-->
       <div class="hero-content">
-        <h1>Welcome to Iron Pillar Engineering and Construction</h1>
+        <h1>Iron Pillar Engineering and Construction</h1>
         <p>Building the future with innovation and excellence.</p>
       </div>
     </section>
@@ -317,19 +328,19 @@
         <div class="row">
           <div class="col-md-4">
             <div class="ad">
-              <img src="https://via.placeholder.com/300x200" alt="Ad 1" />
+              <img src="/images/adv_wood.jpg" alt="Ad 1" />
               <p>Special offer on our latest construction services!</p>
             </div>
           </div>
           <div class="col-md-4">
             <div class="ad">
-              <img src="https://via.placeholder.com/300x200" alt="Ad 2" />
+              <img src="/images/adv_workers.jpg" alt="Ad 2" />
               <p>Get a free quote for your next project!</p>
             </div>
           </div>
           <div class="col-md-4">
             <div class="ad">
-              <img src="https://via.placeholder.com/300x200" alt="Ad 3" />
+              <img src="images/adv_iron.jpg" alt="Ad 3" />
               <p>Limited-time discounts on home renovations!</p>
             </div>
           </div>
@@ -343,19 +354,19 @@
         <div class="row">
           <div class="col-md-4">
             <img
-              src="https://via.placeholder.com/400x300"
+              src="/images/gallery_1.jpg"
               alt="Gallery Image 1"
             />
           </div>
           <div class="col-md-4">
             <img
-              src="https://via.placeholder.com/400x300"
+              src="/images/gallery_2.jpg"
               alt="Gallery Image 2"
             />
           </div>
           <div class="col-md-4">
             <img
-              src="https://via.placeholder.com/400x300"
+              src="/images/gallery_3.jpg"
               alt="Gallery Image 3"
             />
           </div>
@@ -1045,7 +1056,7 @@
           return;
         }
 
-        fetch("/users/login", {
+        fetch("/authenticate", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, password }),
@@ -1053,6 +1064,7 @@
           .then((response) => response.json())
           .then((data) => {
               //const json = JSON.parse(data);
+            const token = data.token;
               if (data.error) {
                 document.getElementById("login-error").innerText = data.error;
                 document.getElementById("login-error").style.display = "block";
@@ -1062,7 +1074,12 @@
                 document.getElementById("login-success").innerText = data.message;
                 document.getElementById("login-error").style.display = "none";
                 document.getElementById("login-success").style.display = "block";
-                localStorage.setItem("user", JSON.stringify(data.user));
+                if (token) {
+                  localStorage.setItem("token", token); // Save token to local storage
+                  //window.location.pathname = "/services.html"; // Redirect to services.html
+                } else {
+                  throw new Error("Token not received from server");
+                }
                 event.target.reset();
                 setTimeout(() => {
                   var modal = bootstrap.Modal.getInstance(
@@ -1118,7 +1135,7 @@
           return;
         }
 
-        fetch("/users", {
+        fetch("/register", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
