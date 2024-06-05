@@ -1063,8 +1063,9 @@
         })
           .then((response) => response.json())
           .then((data) => {
-              //const json = JSON.parse(data);
-            const token = data.token;
+            const token = data.jwtToken;
+            console.log("data is " + data.toString());
+            console.log("Token is:" + data.jwtToken);
               if (data.error) {
                 document.getElementById("login-error").innerText = data.error;
                 document.getElementById("login-error").style.display = "block";
@@ -1076,9 +1077,8 @@
                 document.getElementById("login-success").style.display = "block";
                 if (token) {
                   localStorage.setItem("token", token); // Save token to local storage
-                  //window.location.pathname = "/services.html"; // Redirect to services.html
                 } else {
-                  throw new Error("Token not received from server");
+                  console.error("Token not received from server");
                 }
                 event.target.reset();
                 setTimeout(() => {
@@ -1086,9 +1086,10 @@
                           document.getElementById("loginModal")
                   );
                   modal.hide();
-                  window.location.pathname = "/services.html";
+                  fetchServices();
                   document.getElementById("login-success").style.display = "none";
                   document.getElementById("login-error").style.display = "none";
+                  //fetchServices();
                 }, 2000);
               }
           })
@@ -1099,6 +1100,19 @@
             document.getElementById("login-success").style.display = "none";
           });
       }
+
+      function fetchServices() {
+        const token = localStorage.getItem('token');
+
+
+        if (token) {
+          window.location.href = '/services.html';
+        } else {
+            alert('Access Denied. Please log in.');
+            window.location.href = '/';
+        }
+      }
+
 
       function handleSignupFormSubmit(event) {
         event.preventDefault();

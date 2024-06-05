@@ -4,22 +4,23 @@ import org.nitya.software.RealEstate.dto.LoginRequest;
 import org.nitya.software.RealEstate.exception.CustomExceptions.*;
 import org.nitya.software.RealEstate.model.User;
 import org.nitya.software.RealEstate.repository.RoleRepository;
-import org.nitya.software.RealEstate.repository.UserRepository;
+import org.nitya.software.RealEstate.security.JwtUtil;
 import org.nitya.software.RealEstate.service.UserService;
-import org.nitya.software.RealEstate.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.AbstractAuthenticationTargetUrlRequestHandler;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,7 +36,7 @@ public class AuthController {
     private RoleRepository roleRepository;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -47,14 +48,32 @@ public class AuthController {
     private UserService userService;
 
     @GetMapping("/")
-    public String getHome(){
-        return "sample";
+    public StreamingResponseBody home(HttpServletResponse response) throws IOException {
+        response.setContentType("text/html");
+        InputStream inputStream = getClass().getResourceAsStream("/static/sample.html");
+        return outputStream -> {
+            byte[] buffer = new byte[2048];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+            inputStream.close();
+        };
     }
 
-    @GetMapping("/services")
-    public  String getServices(){
-        return "services";
-    }
+//    @GetMapping("/services")
+//    public StreamingResponseBody getServices(HttpServletResponse response) throws IOException {
+//        response.setContentType("text/html");
+//        InputStream inputStream = getClass().getResourceAsStream("/static/services.html");
+//        return outputStream -> {
+//            byte[] buffer = new byte[2048];
+//            int bytesRead;
+//            while ((bytesRead = inputStream.read(buffer)) != -1) {
+//                outputStream.write(buffer, 0, bytesRead);
+//            }
+//            inputStream.close();
+//        };
+//    }
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody User user) {
@@ -91,6 +110,18 @@ public class AuthController {
         }
     }
 
+//    @PostMapping("/authenticate")
+//    public ResponseEntity<?> createAuthenticationToken(@RequestBody LoginRequest loginRequest) throws Exception {
+//        authenticationManager.authenticate(
+//                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())
+//        );
+//
+//        final UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getEmail());
+//        final String jwt = jwtUtil.generateToken(userDetails.getUsername());
+//
+//        return ResponseEntity.ok(new AuthenticationResponse(jwt));
+//    }
+
     @PostMapping("/authenticate")
     public ResponseEntity<?> authenticate(@RequestBody LoginRequest authenticationRequest) {
         Map<String, Object> response = new HashMap<>();
@@ -101,9 +132,14 @@ public class AuthController {
             if (passwordEncoder.matches(authenticationRequest.getPassword(), user.get().getPassword())) {
                 final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
                 final String jwt = jwtUtil.generateToken(userDetails.getUsername());
+
+
                 response.put("message", "Login successful");
-                response.put("token", jwt);
-                return ResponseEntity.ok(response);
+                response.put("jwtToken", jwt);
+
+                return ResponseEntity.ok()
+                        //.header(HttpHeaders.SET_COOKIE, cookie.toString())
+                        .body(response);
             } else {
                 response.put("error", "Invalid email or password");
                 return ResponseEntity.status(401).body(response);
@@ -113,5 +149,4 @@ public class AuthController {
             return ResponseEntity.status(404).body(response);
         }
     }
-
 }

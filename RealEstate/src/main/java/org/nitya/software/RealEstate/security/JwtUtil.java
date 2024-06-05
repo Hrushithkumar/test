@@ -1,4 +1,4 @@
-package org.nitya.software.RealEstate.utils;
+package org.nitya.software.RealEstate.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
