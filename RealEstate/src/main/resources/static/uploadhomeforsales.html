@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Upload Project</title>
+    <title>Homes for Sale - Iron Pillar Engineering and Construction</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -110,9 +110,17 @@
         text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
       }
 
-      h1 {
-        text-align: center;
+      .container {
         margin-top: 20px;
+      }
+
+      .card {
+        transition: transform 0.3s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-10px) rotateX(5deg);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
       }
 
       .back-button {
@@ -170,21 +178,6 @@
       button:hover {
         background-color: #45a049;
       }
-
-      #projectDetails {
-        margin-top: 20px;
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-        display: none;
-      }
-
-      #projectDetails img {
-        max-width: 100%;
-        border-radius: 5px;
-        margin-top: 10px;
-      }
     </style>
   </head>
   <body>
@@ -207,7 +200,14 @@
       </div>
     </section>
 
-    <h1>Upload Project</h1>
+    <div class="container mt-5">
+      <!-- <h2>Homes for Sale</h2> -->
+      <div class="row" id="homes-list">
+        <!-- Home items will be dynamically added here -->
+      </div>
+    </div>
+
+    <!-- <h1>Upload Home for Sale</h1> -->
     <form id="uploadForm" enctype="multipart/form-data">
       <label for="category">Category:</label><br />
       <select id="category" name="category" required>
@@ -230,26 +230,53 @@
         required
       /><br /><br />
 
-      <button type="button" onclick="uploadProject()">Upload</button>
+      <button type="button" onclick="uploadHome()">Upload</button>
     </form>
 
-    <div id="projectDetails">
-      <h2>Project Details</h2>
-      <p id="projectCategory"></p>
-      <p id="projectTitle"></p>
-      <p id="projectDescription"></p>
-      <img id="projectImage" src="" alt="Project Image" />
+    <div id="homeDetails" style="display: none">
+      <h2>Home Details</h2>
+      <p id="homeCategory"></p>
+      <p id="homeTitle"></p>
+      <p id="homeDescription"></p>
+      <img id="homeImage" src="" alt="Home Image" />
     </div>
 
     <a href="#" class="back-button" onclick="goBack()">Back</a>
 
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
+      document.addEventListener("DOMContentLoaded", () => {
+        fetchHomes();
         fetchCategories();
       });
 
+      function fetchHomes() {
+        fetch("/homes/view")
+          .then((response) => response.json())
+          .then((homes) => {
+            const homesList = document.getElementById("homes-list");
+            homesList.innerHTML = "";
+
+            homes.forEach((home) => {
+              const homeHTML = `
+                            <div class="col-md-4 mb-4">
+                                <div class="card">
+                                    <img src="/uploads/${home.image}" class="card-img-top" alt="${home.title}">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${home.title}</h5>
+                                        <p class="card-text">${home.description}</p>
+                                        <button class="btn btn-danger" onclick="deleteHome(${home.id})">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+              homesList.innerHTML += homeHTML;
+            });
+          })
+          .catch((error) => console.error("Error fetching homes:", error));
+      }
+
       function fetchCategories() {
-        fetch("/projects/categories")
+        fetch("/homes/categories")
           .then((response) => response.json())
           .then((categories) => {
             const categorySelect = document.getElementById("category");
@@ -263,32 +290,48 @@
           .catch((error) => console.error("Error fetching categories:", error));
       }
 
-      function uploadProject() {
+      function uploadHome() {
         const form = document.getElementById("uploadForm");
         const formData = new FormData(form);
 
-        fetch("/projects/upload", {
+        fetch("/homes/upload", {
           method: "POST",
           body: formData,
         })
           .then((response) => response.json())
           .then((data) => {
             if (data.success) {
-              document.getElementById("projectDetails").style.display = "block";
-              document.getElementById("projectCategory").textContent =
+              document.getElementById("homeDetails").style.display = "block";
+              document.getElementById("homeCategory").textContent =
                 "Category: " + formData.get("category");
-              document.getElementById("projectTitle").textContent =
+              document.getElementById("homeTitle").textContent =
                 "Title: " + formData.get("title");
-              document.getElementById("projectDescription").textContent =
+              document.getElementById("homeDescription").textContent =
                 "Description: " + formData.get("description");
-              document.getElementById("projectImage").src =
+              document.getElementById("homeImage").src =
                 "/uploads/" + data.filename;
               form.reset();
+              fetchHomes(); // Refresh the list of homes
             } else {
-              alert("Failed to upload project.");
+              alert("Failed to upload home.");
             }
           })
-          .catch((error) => console.error("Error uploading project:", error));
+          .catch((error) => console.error("Error uploading home:", error));
+      }
+
+      function deleteHome(homeId) {
+        fetch(`/homes/${homeId}`, {
+          method: "DELETE",
+        })
+          .then((response) => {
+            if (response.ok) {
+              alert("Home deleted successfully.");
+              fetchHomes(); // Refresh the list of homes
+            } else {
+              alert("Failed to delete home.");
+            }
+          })
+          .catch((error) => console.error("Error deleting home:", error));
       }
 
       function goBack() {
