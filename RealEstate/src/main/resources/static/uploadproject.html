@@ -211,8 +211,9 @@
     <form id="uploadForm" enctype="multipart/form-data">
       <label for="category">Category:</label><br />
       <select id="category" name="category" required>
-        <option value="" disabled selected>Select a category</option></select
-      ><br /><br />
+        <option value="" disabled selected>Select a category</option>
+      </select>
+      <br /><br />
 
       <label for="title">Title:</label><br />
       <input type="text" id="title" name="title" required /><br /><br />
@@ -244,28 +245,45 @@
     <a href="#" class="back-button" onclick="goBack()">Back</a>
 
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
+
+        const token = localStorage.getItem('token');
+        if (!token) {
+            // Redirect to login page if token is not found
+            alert("Your login session expired. Please login to access this page");
+            window.location.href = '/';
+        }
+
+      document.addEventListener("DOMContentLoaded", () => {
         fetchCategories();
+        console.log("Dom Content loading");
       });
 
-    function fetchCategories() {
-        fetch('/projects/categories',{
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
-            .then(response => response.json())
-            .then(categories => {
-                const categorySelect = document.getElementById('category');
-                categories.forEach(category => {
-                    const option = document.createElement('option');
-                    option.value = category;
-                    option.textContent = category;
-                    categorySelect.appendChild(option);
-                });
-            })
-            .catch(error => console.error('Error fetching categories:', error));
-    }
+
+      function fetchCategories() {
+          console.log("Fetch called")
+          if(token){
+              fetch('/projects/categories',{
+                  headers: {
+                      'Authorization': `Bearer ${token}`
+                  }
+              })
+              .then(response => response.json())
+              .then(categories => {
+                  const categorySelect = document.getElementById('category');
+                  categorySelect.innerHTML = '<option value="all">Select Category</option>';
+
+                  categories.forEach(category => {
+                      const option = document.createElement('option');
+                      option.value = category;
+                      option.textContent = category;
+                      categorySelect.appendChild(option);
+                  });
+              })
+              .catch(error => console.error('Error fetching categories:', error));
+          } else {
+              alert("Session expired, please login");
+          }
+      }
 
       function uploadProject() {
         const form = document.getElementById("uploadForm");
@@ -273,11 +291,9 @@
 
         fetch('/projects/upload', {
             method: 'POST',
-            body: formData
-        },{
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
+            body: formData,
+          headers: {
+            'Authorization': `Bearer ${token}`}
         })
           .then((response) => response.json())
           .then((data) => {
