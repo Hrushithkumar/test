@@ -108,8 +108,7 @@
       }
 
       .hero {
-        background: url("images/img2.jpg") no-repeat center
-          center/cover;
+        background: url("images/img2.jpg") no-repeat center center/cover;
         color: white;
         height: 400px;
         display: flex;
@@ -345,10 +344,10 @@
         <ul>
           <li>
             <a href="/sample">Home</a>
-<!--            <ul>-->
-<!--              <li><a href="/sample.html">Main</a></li>-->
-<!--              <li><a href="#">Submenu 2</a></li>-->
-<!--            </ul>-->
+            <!--            <ul>-->
+            <!--              <li><a href="/sample.html">Main</a></li>-->
+            <!--              <li><a href="#">Submenu 2</a></li>-->
+            <!--            </ul>-->
           </li>
           <li>
             <a href="#">Projects</a>
@@ -360,22 +359,25 @@
           <li>
             <a href="#">Services</a>
             <ul>
-              <li><a href="#">Submenu 1</a></li>
-              <li><a href="#">Submenu 2</a></li>
+              <li>
+                <a href="/servicespage.html">uploadproject 1</a>
+              </li>
+              <!-- <li><a href="#">Submenu 2</a></li> -->
             </ul>
           </li>
           <li>
             <a href="#">Homes for Sale</a>
             <ul>
-              <li><a href="#home-listings">Homes</a></li>
-<!--              <li><a href="#">Submenu 2</a></li>-->
+              <li><a href="/uploadhomeforsales.html">uploadhomeforsale</a></li>
+              <li><a href="/deletehomeforsale.html">Deletehomeforsale</a></li>
+              <!--              <li><a href="#">Submenu 2</a></li>-->
             </ul>
           </li>
           <li>
             <a href="#">About Us</a>
             <ul>
               <li><a href="#about">About US</a></li>
-<!--              <li><a href="#">Submenu 2</a></li>-->
+              <!--              <li><a href="#">Submenu 2</a></li>-->
             </ul>
           </li>
           <li>
@@ -484,10 +486,7 @@
 
     <section class="quote-section">
       <div class="container d-flex">
-        <img
-          src="/images/getquote.jpg"
-          alt="Get a Quote Image"
-        />
+        <img src="/images/getquote.jpg" alt="Get a Quote Image" />
         <form id="quote-form">
           <h2>Get a Quote</h2>
           <div class="mb-3">
@@ -662,11 +661,11 @@
     </footer>
 
     <script>
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       if (!token) {
         // Redirect to login page if token is not found
         alert("Your login session expired. Please login to access this page");
-        window.location.href = '/';
+        window.location.href = "/";
       }
       document.addEventListener("DOMContentLoaded", () => {
         fetchCategories();
@@ -687,48 +686,51 @@
           .addEventListener("change", filterHomes);
       });
 
-
       function fetchCategories() {
-        if(token){
-          fetch('/projects/categories',{
+        if (token) {
+          fetch("/projects/categories", {
             headers: {
-              'Authorization': `Bearer ${token}`
-            }
+              Authorization: `Bearer ${token}`,
+            },
           })
-                  .then(response => response.json())
-                  .then(categories => {
-                    const filterSelect = document.getElementById('project-filter');
-                    filterSelect.innerHTML = '<option value="all">All Projects</option>';
+            .then((response) => response.json())
+            .then((categories) => {
+              const filterSelect = document.getElementById("project-filter");
+              filterSelect.innerHTML =
+                '<option value="all">All Projects</option>';
 
-                    categories.forEach(category => {
-                      const option = document.createElement('option');
-                      option.value = category.toLowerCase().replace(/\s+/g, '-'); // Convert to lowercase and replace spaces with hyphens
-                      option.textContent = category;
-                      filterSelect.appendChild(option);
-                    });
-                  })
-                  .catch(error => console.error('Error fetching categories:', error));
+              categories.forEach((category) => {
+                const option = document.createElement("option");
+                option.value = category.toLowerCase().replace(/\s+/g, "-"); // Convert to lowercase and replace spaces with hyphens
+                option.textContent = category;
+                filterSelect.appendChild(option);
+              });
+            })
+            .catch((error) =>
+              console.error("Error fetching categories:", error)
+            );
         } else {
           alert("Session expired, please login");
         }
       }
 
       function fetchListings() {
-        fetch('/projects/view',{
+        fetch("/projects/view", {
           headers: {
-            'Authorization': `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         })
-                .then(response => response.json())
-                .then(listings => {
-                  const listingsContainer = document.getElementById('listings');
-                  listingsContainer.innerHTML = '';
+          .then((response) => response.json())
+          .then((listings) => {
+            const listingsContainer = document.getElementById("listings");
+            listingsContainer.innerHTML = "";
 
-                  if (listings.length === 0) {
-                    listingsContainer.innerHTML = '<p class="col-12 text-center">No projects to display.</p>';
-                  } else {
-                    listings.forEach(listing => {
-                      const listingHTML = `
+            if (listings.length === 0) {
+              listingsContainer.innerHTML =
+                '<p class="col-12 text-center">No projects to display.</p>';
+            } else {
+              listings.forEach((listing) => {
+                const listingHTML = `
                     <div class="col-md-4 mb-3">
                         <div class="ad-item">
                             <img src="/uploads/${listing.image}" alt="${listing.title}">
@@ -740,13 +742,13 @@
                         </div>
                     </div>
                 `;
-                      listingsContainer.innerHTML += listingHTML;
-                    });
+                listingsContainer.innerHTML += listingHTML;
+              });
 
-                    filterProjects(); // Apply filter after fetching listings
-                  }
-                })
-                .catch(error => console.error('Error fetching listings:', error));
+              filterProjects(); // Apply filter after fetching listings
+            }
+          })
+          .catch((error) => console.error("Error fetching listings:", error));
       }
 
       function fetchHomeListings() {
@@ -803,9 +805,11 @@
 
         listings.forEach((listing) => {
           const type = listing
-                  .querySelector(".ad-popup p")
-                  .textContent.split(":")[1]
-                  .trim().toLowerCase().replace(/\s+/g, '-');
+            .querySelector(".ad-popup p")
+            .textContent.split(":")[1]
+            .trim()
+            .toLowerCase()
+            .replace(/\s+/g, "-");
 
           if (filter === "all" || type === filter) {
             listing.style.display = "block";
@@ -815,16 +819,18 @@
           }
         });
 
-        const listingsContainer = document.getElementById('listings');
-        const noProjectsMessage = document.getElementById('no-projects-message');
+        const listingsContainer = document.getElementById("listings");
+        const noProjectsMessage = document.getElementById(
+          "no-projects-message"
+        );
 
         if (!projectsFound && filter !== "all") {
           // Add the message only if no projects found for the selected filter
           if (!noProjectsMessage) {
-            const message = document.createElement('p');
-            message.id = 'no-projects-message';
-            message.className = 'col-12 text-center';
-            message.textContent = 'No projects matching the selected filter.';
+            const message = document.createElement("p");
+            message.id = "no-projects-message";
+            message.className = "col-12 text-center";
+            message.textContent = "No projects matching the selected filter.";
             listingsContainer.appendChild(message);
           }
         } else {
@@ -864,16 +870,32 @@
         event.preventDefault();
         const formData = new FormData(event.target);
         const formDataObject = Object.fromEntries(formData.entries());
-        console.log("Quote Form Data:", formDataObject);
-        // Add your form submission logic here
+
+        fetch("/quotes/submit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(formDataObject),
+        })
+          .then((response) => {
+            if (response.ok) {
+              alert("Quote submitted successfully");
+              event.target.reset();
+            } else {
+              alert("Failed to submit quote");
+            }
+          })
+          .catch((error) => console.error("Error submitting quote:", error));
       }
 
       function logout() {
         // Add logout logic here
-        localStorage.removeItem('token');
+        localStorage.removeItem("token");
 
         // Redirect to /sample.html
-        window.location.href = '/';
+        window.location.href = "/";
       }
     </script>
   </body>
