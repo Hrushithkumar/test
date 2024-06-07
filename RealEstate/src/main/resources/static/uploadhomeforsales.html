@@ -181,6 +181,7 @@
         background-color: #45a049;
       }
     </style>
+    <script src="js/auth.js"></script>
   </head>
   <body>
     <header>
@@ -258,11 +259,7 @@
       });
 
       function fetchHomes() {
-        fetch("/homes/view", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
+        fetchWithAuth("/homes/view")
           .then((response) => response.json())
           .then((homes) => {
             const homesList = document.getElementById("homes-list");
@@ -288,11 +285,7 @@
       }
 
       function fetchCategories() {
-        fetch("/homes/categories", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
+        fetchWithAuth("/homes/categories")
           .then((response) => response.json())
           .then((categories) => {
             const categorySelect = document.getElementById("category");
@@ -310,7 +303,7 @@
         const form = document.getElementById("uploadForm");
         const formData = new FormData(form);
 
-        fetch("/homes/upload", {
+        fetchWithAuth("/homes/upload", {
           method: "POST",
           body: formData,
         })
@@ -351,11 +344,8 @@
       }
 
       function deleteHome(homeId) {
-        fetch(`/homes/${homeId}`, {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+        fetchWithAuth(`/homes/${homeId}`, {
+          method: "DELETE"
         })
           .then((response) => {
             if (response.ok) {

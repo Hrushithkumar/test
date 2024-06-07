@@ -86,7 +86,7 @@ public class HomeController {
             // Save image to the file system
             String imageName = image.getOriginalFilename();
             if (imageName == null || imageName.trim().isEmpty()) {
-                imageName = UUID.randomUUID().toString() + ".jpg"; // You can change the extension as needed
+                imageName = UUID.randomUUID() + ".jpg"; // You can change the extension as needed
             }
 
             // Sanitize the filename to remove any path traversal characters
@@ -123,7 +123,7 @@ public class HomeController {
 
             return ResponseEntity.ok(response);
         } catch (IOException e) {
-            //e.printStackTrace();
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload project.");
         }
     }
