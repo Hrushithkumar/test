@@ -41,9 +41,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/authenticate").permitAll()
                 .antMatchers(HttpMethod.POST, "/register").permitAll()
-                .antMatchers("/", "/static/**", "/images/**", "/services.html", "/QuotePage.html","/uploadproject.html",
-                        "/deleteproject.html", "/servicespage.html",
-                        "/deletehomeforsale.html", "/uploadhomeforsales.html", "/usermanagement.html").permitAll()
+                .antMatchers("/", "/static/**", "/images/**", "/services.html", "/QuotePage.html","/usermanagment.html","/uploadhomeforsales.html","/deletehomeforsale.html","/contactuspage.html","/uploadproject.html","/employeemanagement.html",
+                        "/deleteproject.html", "/servicespage.html").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling()

@@ -246,11 +246,11 @@
     <a href="#" class="back-button" onclick="goBack()">Back</a>
 
     <script>
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       if (!token) {
         // Redirect to login page if token is not found
         alert("Your login session expired. Please login to access this page");
-        window.location.href = '/';
+        window.location.href = "/";
       }
       document.addEventListener("DOMContentLoaded", () => {
         fetchHomes();
@@ -258,10 +258,10 @@
       });
 
       function fetchHomes() {
-        fetch("/homes/view",{
+        fetch("/homes/view", {
           headers: {
-            'Authorization': `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         })
           .then((response) => response.json())
           .then((homes) => {
@@ -290,8 +290,8 @@
       function fetchCategories() {
         fetch("/homes/categories", {
           headers: {
-            'Authorization': `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         })
           .then((response) => response.json())
           .then((categories) => {
@@ -328,6 +328,7 @@
                 "/uploads/" + data.filename;
               form.reset();
               fetchHomes(); // Refresh the list of homes
+              updateMainPage(formData, data.filename);
             } else {
               alert("Failed to upload home.");
             }
@@ -335,11 +336,26 @@
           .catch((error) => console.error("Error uploading home:", error));
       }
 
+      function updateMainPage(formData, filename) {
+        const contentHTML = `
+        <div class="col-md-3">
+          <div class="extra-div">
+            <img src="/uploads/${filename}" alt="Construction Image" />
+            <p>${formData.get("description")}</p>
+          </div>
+        </div>
+      `;
+
+        window.opener.document.getElementById("more-content-list").innerHTML +=
+          contentHTML;
+      }
+
       function deleteHome(homeId) {
         fetch(`/homes/${homeId}`, {
           method: "DELETE",
           headers: {
-            'Authorization': `Bearer ${token}`}
+            Authorization: `Bearer ${token}`,
+          },
         })
           .then((response) => {
             if (response.ok) {

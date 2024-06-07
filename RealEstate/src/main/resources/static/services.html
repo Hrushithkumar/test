@@ -25,7 +25,6 @@
         margin: 0;
         padding-top: 80px;
       }
-
       header {
         background-color: #2c3e50;
         padding: 10px 20px;
@@ -38,7 +37,6 @@
         justify-content: space-between;
         align-items: center;
       }
-
       header .logo {
         display: flex;
         align-items: center;
@@ -46,25 +44,21 @@
         font-size: 1.5em;
         font-weight: bold;
       }
-
       header .logo img {
         max-width: 50px;
         height: auto;
         margin-right: 10px;
       }
-
       header nav ul {
         list-style: none;
         display: flex;
         margin: 0;
         padding: 0;
       }
-
       header nav ul li {
         margin: 0 15px;
         position: relative;
       }
-
       header nav ul li a {
         color: #fff;
         text-decoration: none;
@@ -72,11 +66,9 @@
         font-size: 1em;
         transition: color 0.3s;
       }
-
       header nav ul li a:hover {
         color: #f39c12;
       }
-
       header nav ul li ul {
         display: none;
         position: absolute;
@@ -88,25 +80,20 @@
         list-style: none;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       }
-
       header nav ul li:hover ul {
         display: block;
       }
-
       header nav ul li ul li {
         margin: 0;
       }
-
       header nav ul li ul li a {
         padding: 10px 15px;
         display: block;
         color: #fff;
       }
-
       header nav ul li ul li a:hover {
         background: #34495e;
       }
-
       .hero {
         background: url("images/img2.jpg") no-repeat center center/cover;
         color: white;
@@ -119,7 +106,6 @@
         border-bottom: 10px solid #2c3e50;
         padding: 20px;
       }
-
       .hero .hero-content {
         background-color: rgba(44, 62, 80, 0.8);
         padding: 20px;
@@ -127,24 +113,20 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         transform: perspective(500px) rotateX(10deg) translateZ(50px);
       }
-
       .hero h1 {
         font-size: 3.5em;
         margin-bottom: 15px;
         text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
       }
-
       .hero p {
         font-size: 1.3em;
         margin-bottom: 15px;
         text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
       }
-
       .dynamic-ads {
         background-color: #ecf0f1;
         padding: 40px 0;
       }
-
       .ad-item {
         background: #fff;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -154,27 +136,22 @@
         text-align: center;
         position: relative;
       }
-
       .ad-item:hover {
         transform: translateY(-10px);
       }
-
       .ad-item img {
         width: 100%;
         height: auto;
         border-bottom: 2px solid #2c3e50;
       }
-
       .ad-item h3 {
         margin: 10px 0;
         font-size: 1.5em;
       }
-
       .ad-item p {
         color: #555;
         padding: 0 15px 15px;
       }
-
       .ad-item .ad-popup {
         display: none;
         position: absolute;
@@ -190,29 +167,24 @@
         opacity: 0;
         transition: opacity 0.3s;
       }
-
       .ad-item:hover .ad-popup {
         display: block;
         opacity: 1;
       }
-
       .about {
         padding: 40px 0;
         text-align: center;
       }
-
       .about h2 {
         font-size: 2.2em;
         margin-bottom: 20px;
       }
-
       .about p {
         font-size: 1.1em;
         color: #555;
         max-width: 800px;
         margin: 0 auto;
       }
-
       .contact-section,
       .quote-section {
         display: flex;
@@ -222,7 +194,6 @@
         text-align: left;
         position: relative;
       }
-
       .contact-section img,
       .quote-section img {
         width: 400px;
@@ -231,7 +202,6 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         margin-right: 20px;
       }
-
       .contact-section form,
       .quote-section form {
         flex: 1;
@@ -243,12 +213,10 @@
         transform: perspective(500px) rotateY(10deg) translateZ(50px);
         transition: transform 0.3s;
       }
-
       .contact-section:hover form,
       .quote-section:hover form {
         transform: perspective(500px) rotateY(0deg) translateZ(0);
       }
-
       footer {
         background-color: #2c3e50;
         color: white;
@@ -258,83 +226,67 @@
         margin-top: 50px;
         border-top: 10px solid #34495e;
       }
-
       footer .container {
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
       }
-
       footer h5 {
         font-size: 1.2em;
       }
-
       footer ul {
         list-style: none;
         padding: 0;
       }
-
       footer ul li {
         margin-bottom: 10px;
       }
-
       footer ul li a {
         color: white;
         text-decoration: none;
         transition: color 0.3s;
       }
-
       footer ul li a:hover {
         color: #f39c12;
       }
-
       .footer .social-icons {
         display: flex;
         gap: 10px;
       }
-
       .footer .social-icons a {
         color: #fff;
         font-size: 1.4rem;
         transition: color 0.3s;
       }
-
       .footer .social-icons a:hover {
         color: #f39c12;
       }
-
       footer p {
         font-size: 0.9em;
       }
-
       @media (max-width: 768px) {
         header {
           flex-direction: column;
           align-items: flex-start;
         }
-
         header nav ul {
           flex-direction: column;
           width: 100%;
           margin-top: 10px;
         }
-
         header nav ul li {
           margin: 5px 0;
         }
-
         .footer .container {
           flex-direction: column;
           align-items: center;
         }
-
         .footer .social-icons {
           margin-top: 10px;
         }
       }
     </style>
   </head>
-
   <body>
     <header>
       <div class="logo">
@@ -343,41 +295,36 @@
       <nav>
         <ul>
           <li>
-            <a href="/">Home</a>
-            <!--            <ul>-->
-            <!--              <li><a href="/sample.html">Main</a></li>-->
-            <!--              <li><a href="#">Submenu 2</a></li>-->
-            <!--            </ul>-->
+            <a href="/services.html">Home</a>
           </li>
           <li>
             <a href="#">Projects</a>
             <ul>
               <li><a href="/uploadproject.html">Upload Project</a></li>
-              <li><a href="/deleteproject.html">Delete project</a></li>
+              <li><a href="/deleteproject.html">Delete Project</a></li>
             </ul>
           </li>
           <li>
             <a href="#">Services</a>
             <ul>
-              <li>
-                <a href="/servicespage.html">uploadproject 1</a>
-              </li>
-              <!-- <li><a href="#">Submenu 2</a></li> -->
+              <li><a href="/servicespage.html">Upload Project 1</a></li>
             </ul>
           </li>
           <li>
             <a href="#">Homes for Sale</a>
             <ul>
-              <li><a href="/uploadhomeforsales.html">uploadhomeforsale</a></li>
-              <li><a href="/deletehomeforsale.html">Deletehomeforsale</a></li>
-              <!--              <li><a href="#">Submenu 2</a></li>-->
+              <li>
+                <a href="/uploadhomeforsales.html">Upload Home for Sale</a>
+              </li>
+              <li>
+                <a href="/deletehomeforsale.html">Delete Home for Sale</a>
+              </li>
             </ul>
           </li>
           <li>
             <a href="#">About Us</a>
             <ul>
-              <li><a href="#about">About US</a></li>
-              <!--              <li><a href="#">Submenu 2</a></li>-->
+              <li><a href="#about">About Us</a></li>
             </ul>
           </li>
           <li>
@@ -385,6 +332,24 @@
             <ul>
               <li><a href="#contact-form">Contact Us</a></li>
               <li><a href="#quote-form">Get Quote</a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="#">Employee</a>
+            <ul>
+              <li>
+                <a href="/QuotePage.html">QuotePage</a>
+                <a href="/contactuspage.html">contactUsPage</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="#">Admin</a>
+            <ul>
+              <li><a href="/usermanagment.html">User Management</a></li>
+              <li>
+                <a href="/employeemanagement.html">Employee Management</a>
+              </li>
             </ul>
           </li>
           <li><a href="#" onclick="logout()">Logout</a></li>
@@ -404,8 +369,7 @@
         <h2>Our Projects</h2>
 
         <label for="project-filter"></label>
-        <select id="project-filter" class="form-select mb-4">
-        </select>
+        <select id="project-filter" class="form-select mb-4"></select>
         <div class="row" id="listings">
           <!-- Listings will be dynamically added here -->
         </div>
@@ -415,8 +379,7 @@
     <section class="dynamic-ads">
       <div class="container">
         <h2>Homes for Sale</h2>
-        <select id="home-filter" class="form-select mb-4">
-        </select>
+        <select id="home-filter" class="form-select mb-4"></select>
         <div class="row" id="home-listings">
           <!-- Home listings will be dynamically added here -->
         </div>
@@ -714,22 +677,21 @@
               Authorization: `Bearer ${token}`,
             },
           })
-                  .then((response) => response.json())
-                  .then((categories) => {
-                    const filterSelect = document.getElementById("home-filter");
-                    filterSelect.innerHTML =
-                            '<option value="all">All Homes</option>';
+            .then((response) => response.json())
+            .then((categories) => {
+              const filterSelect = document.getElementById("home-filter");
+              filterSelect.innerHTML = '<option value="all">All Homes</option>';
 
-                    categories.forEach((category) => {
-                      const option = document.createElement("option");
-                      option.value = category.toLowerCase().replace(/\s+/g, "-"); // Convert to lowercase and replace spaces with hyphens
-                      option.textContent = category;
-                      filterSelect.appendChild(option);
-                    });
-                  })
-                  .catch((error) =>
-                          console.error("Error fetching home categories:", error)
-                  );
+              categories.forEach((category) => {
+                const option = document.createElement("option");
+                option.value = category.toLowerCase().replace(/\s+/g, "-"); // Convert to lowercase and replace spaces with hyphens
+                option.textContent = category;
+                filterSelect.appendChild(option);
+              });
+            })
+            .catch((error) =>
+              console.error("Error fetching home categories:", error)
+            );
         } else {
           alert("Session expired, please login");
         }
@@ -773,22 +735,24 @@
       }
 
       function fetchHomeListings() {
-        fetch('/homes/view',{
+        fetch("/homes/view", {
           headers: {
-            'Authorization': `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         })
-          .then(response => response.json())
-          .then(homeListings => {
-            const homeListingsContainer = document.getElementById("home-listings");
+          .then((response) => response.json())
+          .then((homeListings) => {
+            const homeListingsContainer =
+              document.getElementById("home-listings");
 
-            homeListingsContainer.innerHTML = '';
+            homeListingsContainer.innerHTML = "";
 
             if (homeListings.length === 0) {
-              homeListingsContainer.innerHTML = '<p class="col-12 text-center">No homes to display.</p>';
+              homeListingsContainer.innerHTML =
+                '<p class="col-12 text-center">No homes to display.</p>';
             } else {
-                  homeListings.forEach(homeListing => {
-                    const listingHTML = `
+              homeListings.forEach((homeListing) => {
+                const listingHTML = `
                   <div class="col-md-4 mb-3">
                       <div class="ad-item">
                           <img src="/uploads/${homeListing.image}" alt="${homeListing.title}">
@@ -803,10 +767,9 @@
                 homeListingsContainer.innerHTML += listingHTML;
               });
               filterHomes(); // Apply filter after fetching homes
-                  }
-                })
-                .catch(error => console.error('Error fetching listings:', error));
-
+            }
+          })
+          .catch((error) => console.error("Error fetching listings:", error));
       }
 
       function filterProjects() {
@@ -855,7 +818,9 @@
 
       function filterHomes() {
         const filter = document.getElementById("home-filter").value;
-        const homeListings = document.querySelectorAll("#home-listings .ad-item");
+        const homeListings = document.querySelectorAll(
+          "#home-listings .ad-item"
+        );
 
         let homesFound = false;
 
@@ -871,16 +836,16 @@
           }
         });
 
-        const homesListingsContainer = document.getElementById('home-listings');
-        const noHomesMessage = document.getElementById('no-homes-message');
+        const homesListingsContainer = document.getElementById("home-listings");
+        const noHomesMessage = document.getElementById("no-homes-message");
 
         if (!homesFound && filter !== "all") {
           // Add the message only if no projects found for the selected filter
           if (!noHomesMessage) {
-            const message = document.createElement('p');
-            message.id = 'no-homes-message';
-            message.className = 'col-12 text-center';
-            message.textContent = 'No homes matching the selected filter.';
+            const message = document.createElement("p");
+            message.id = "no-homes-message";
+            message.className = "col-12 text-center";
+            message.textContent = "No homes matching the selected filter.";
             homesListingsContainer.appendChild(message);
           }
         } else {
@@ -895,8 +860,26 @@
         event.preventDefault();
         const formData = new FormData(event.target);
         const formDataObject = Object.fromEntries(formData.entries());
-        console.log("Contact Form Data:", formDataObject);
-        // Add your form submission logic here
+
+        fetch("/contactus/submit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(formDataObject),
+        })
+          .then((response) => {
+            if (response.ok) {
+              alert("Contact form submitted successfully");
+              event.target.reset();
+            } else {
+              alert("Failed to submit contact form");
+            }
+          })
+          .catch((error) =>
+            console.error("Error submitting contact form:", error)
+          );
       }
 
       function handleQuoteFormSubmit(event) {
