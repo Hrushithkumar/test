@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.nitya.software.RealEstate.model.enums.Category;
+import org.nitya.software.RealEstate.model.enums.HomeCategory;
 
 import javax.persistence.*;
 
@@ -17,7 +18,7 @@ public class Home {
     private Long id;
 
     @Column(nullable = false)
-    private Category category;
+    private HomeCategory category;
 
     @Column(nullable = false)
     private String title;

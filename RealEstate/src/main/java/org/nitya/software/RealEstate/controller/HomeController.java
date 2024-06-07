@@ -102,7 +102,7 @@ public class HomeController {
                 return ResponseEntity.badRequest().body("Unsupported image format.");
             }
 
-            Category homeCategory = Arrays.stream(Category.values())
+            HomeCategory homeCategory = Arrays.stream(HomeCategory.values())
                     .filter(cat -> cat.getCategoryName().equalsIgnoreCase(category))
                     .findFirst()
                     .orElseThrow(() -> new IllegalArgumentException("Unknown category: " + category));
