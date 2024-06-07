@@ -31,4 +31,11 @@ public class CustomExceptions {
                 super(message);
             }
         }
+
+    public static class ExpiredJwtTokenException extends RuntimeException {
+        public ExpiredJwtTokenException(String message) {
+            super(message);
+        }
+    }
+
     }

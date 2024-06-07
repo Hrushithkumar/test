@@ -1,18 +1,13 @@
 package org.nitya.software.RealEstate.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
-import org.nitya.software.RealEstate.exception.UserValidationException;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Set;
 
 @Getter
@@ -52,17 +47,14 @@ import java.util.Set;
         private String phoneNumber;
 
         @Column(nullable = false)
-        @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+        @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+        @OnDelete(action = OnDeleteAction.CASCADE)
         @JoinTable(name = "user_roles",
                 joinColumns = @JoinColumn(name = "user_id"),
                 inverseJoinColumns = @JoinColumn(name = "role_id"))
         private Set<Role> roles;
 
-//    public void validate() {
-//        if (username == null || firstName == null || lastName == null ||
-//                password == null || email == null || phoneNumber == null) {
-//            throw new UserValidationException("All fields are mandatory and cannot be null.");
-//        }
-//    }
+        @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+        private Set<ServiceRequest> serviceRequests;
 
 }

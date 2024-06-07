@@ -1,5 +1,8 @@
 package org.nitya.software.RealEstate.model.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum Category {
     ONE_BHK_APARTMENT("1 BHK Apartment"),
     TWO_BHK_APARTMENT("2 BHK Apartment"),
@@ -13,7 +16,4 @@ public enum Category {
         this.categoryName = categoryName;
     }
 
-    public String getCategoryName() {
-        return categoryName;
-    }
 }

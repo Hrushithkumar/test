@@ -209,12 +209,6 @@
       </div>
     </div>
 
-    <form id="deleteForm">
-      <label for="homeId">Home ID:</label><br />
-      <input type="text" id="homeId" name="homeId" required /><br /><br />
-      <button type="button" onclick="deleteHome()">Delete Home</button>
-    </form>
-
     <div id="homeDetails" style="display: none">
       <h2>Home Details</h2>
       <p id="homeCategory"></p>
@@ -226,12 +220,24 @@
     <a href="#" class="back-button" onclick="goBack()">Back</a>
 
     <script>
+
+      const token = localStorage.getItem('token');
+      if (!token) {
+        // Redirect to login page if token is not found
+        alert("Your login session expired. Please login to access this page");
+        window.location.href = '/';
+      }
       document.addEventListener("DOMContentLoaded", () => {
         fetchHomes();
       });
 
       function fetchHomes() {
-        fetch("/homes/view")
+        fetch("/homes/view",
+                {
+                  headers: {
+                    'Authorization': `Bearer ${token}`
+                  }
+                })
           .then((response) => response.json())
           .then((homes) => {
             const homesList = document.getElementById("homes-list");
@@ -261,6 +267,9 @@
 
         fetch(`/homes/${homeId}`, {
           method: "DELETE",
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
         })
           .then((response) => {
             if (response.ok) {
@@ -276,6 +285,9 @@
       function deleteHomeById(homeId) {
         fetch(`/homes/${homeId}`, {
           method: "DELETE",
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
         })
           .then((response) => {
             if (response.ok) {

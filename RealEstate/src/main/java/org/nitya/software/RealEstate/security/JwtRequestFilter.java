@@ -1,5 +1,7 @@
 package org.nitya.software.RealEstate.security;
 
+import io.jsonwebtoken.ExpiredJwtException;
+import org.nitya.software.RealEstate.exception.CustomExceptions;
 import org.nitya.software.RealEstate.service.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,6 +26,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Autowired
     private JwtUtil jwtUtil;
 
+
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
@@ -37,8 +41,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             jwt = authorizationHeader.substring(7);
             try {
                 username = jwtUtil.extractUsername(jwt);
-            } catch (Exception e) {
-                logger.error("JWT token extraction failed", e);
+            } catch (ExpiredJwtException e){
+                throw new CustomExceptions.ExpiredJwtTokenException("JWT token expired. Please, login again");
+            }
+            catch (Exception e) {
+                logger.error("Unable to parse JWT Token", e);
             }
         }
 

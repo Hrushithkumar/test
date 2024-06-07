@@ -255,6 +255,13 @@
       </form>
     </section>
     <script>
+
+      const token = localStorage.getItem('token');
+      if (!token) {
+        // Redirect to login page if token is not found
+        alert("Your login session expired. Please login to access this page");
+        window.location.href = '/';
+      }
       document
         .getElementById("serviceRequestForm")
         .addEventListener("submit", function (event) {
@@ -281,7 +288,7 @@
         });
       function logout() {
         localStorage.removeItem("token");
-        window.location.href = "/sample.html";
+        window.location.href = "/";
       }
     </script>
   </body>

@@ -61,20 +61,6 @@ public class AuthController {
         };
     }
 
-//    @GetMapping("/services")
-//    public StreamingResponseBody getServices(HttpServletResponse response) throws IOException {
-//        response.setContentType("text/html");
-//        InputStream inputStream = getClass().getResourceAsStream("/static/services.html");
-//        return outputStream -> {
-//            byte[] buffer = new byte[2048];
-//            int bytesRead;
-//            while ((bytesRead = inputStream.read(buffer)) != -1) {
-//                outputStream.write(buffer, 0, bytesRead);
-//            }
-//            inputStream.close();
-//        };
-//    }
-
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody User user) {
         Map<String, Object> response = new HashMap<>();
@@ -110,18 +96,6 @@ public class AuthController {
         }
     }
 
-//    @PostMapping("/authenticate")
-//    public ResponseEntity<?> createAuthenticationToken(@RequestBody LoginRequest loginRequest) throws Exception {
-//        authenticationManager.authenticate(
-//                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())
-//        );
-//
-//        final UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getEmail());
-//        final String jwt = jwtUtil.generateToken(userDetails.getUsername());
-//
-//        return ResponseEntity.ok(new AuthenticationResponse(jwt));
-//    }
-
     @PostMapping("/authenticate")
     public ResponseEntity<?> authenticate(@RequestBody LoginRequest authenticationRequest) {
         Map<String, Object> response = new HashMap<>();
@@ -137,9 +111,7 @@ public class AuthController {
                 response.put("message", "Login successful");
                 response.put("jwtToken", jwt);
 
-                return ResponseEntity.ok()
-                        //.header(HttpHeaders.SET_COOKIE, cookie.toString())
-                        .body(response);
+                return ResponseEntity.ok().body(response);
             } else {
                 response.put("error", "Invalid email or password");
                 return ResponseEntity.status(401).body(response);

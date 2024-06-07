@@ -161,7 +161,6 @@
       input[type="text"],
       textarea,
       select,
-      input[type="file"],
       button {
         width: 100%;
         padding: 10px;
@@ -204,17 +203,18 @@
     </section>
 
     <div class="container mt-5">
+      <!-- <h2>Homes for Sale</h2> -->
       <div class="row" id="homes-list">
         <!-- Home items will be dynamically added here -->
       </div>
     </div>
 
+    <!-- <h1>Upload Home for Sale</h1> -->
     <form id="uploadForm" enctype="multipart/form-data">
       <label for="category">Category:</label><br />
       <select id="category" name="category" required>
-        <option value="" disabled selected>Select a category</option>
-      </select>
-      <br /><br />
+        <option value="" disabled selected>Select a category</option></select
+      ><br /><br />
 
       <label for="title">Title:</label><br />
       <input type="text" id="title" name="title" required /><br /><br />
@@ -246,13 +246,23 @@
     <a href="#" class="back-button" onclick="goBack()">Back</a>
 
     <script>
+      const token = localStorage.getItem('token');
+      if (!token) {
+        // Redirect to login page if token is not found
+        alert("Your login session expired. Please login to access this page");
+        window.location.href = '/';
+      }
       document.addEventListener("DOMContentLoaded", () => {
         fetchHomes();
         fetchCategories();
       });
 
       function fetchHomes() {
-        fetch("/homes/view")
+        fetch("/homes/view",{
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        })
           .then((response) => response.json())
           .then((homes) => {
             const homesList = document.getElementById("homes-list");
@@ -266,6 +276,7 @@
                                     <div class="card-body">
                                         <h5 class="card-title">${home.title}</h5>
                                         <p class="card-text">${home.description}</p>
+                                        <button class="btn btn-danger" onclick="deleteHome(${home.id})">Delete</button>
                                     </div>
                                 </div>
                             </div>
@@ -277,7 +288,11 @@
       }
 
       function fetchCategories() {
-        fetch("/homes/categories")
+        fetch("/homes/categories", {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        })
           .then((response) => response.json())
           .then((categories) => {
             const categorySelect = document.getElementById("category");
@@ -318,6 +333,23 @@
             }
           })
           .catch((error) => console.error("Error uploading home:", error));
+      }
+
+      function deleteHome(homeId) {
+        fetch(`/homes/${homeId}`, {
+          method: "DELETE",
+          headers: {
+            'Authorization': `Bearer ${token}`}
+        })
+          .then((response) => {
+            if (response.ok) {
+              alert("Home deleted successfully.");
+              fetchHomes(); // Refresh the list of homes
+            } else {
+              alert("Failed to delete home.");
+            }
+          })
+          .catch((error) => console.error("Error deleting home:", error));
       }
 
       function goBack() {

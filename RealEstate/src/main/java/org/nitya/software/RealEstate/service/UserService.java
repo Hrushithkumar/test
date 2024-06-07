@@ -58,4 +58,8 @@ public class UserService {
     public Optional<User> findByLastName(String lastName) {
         return userRepository.findByLastName(lastName);
     }
+
+    public List<User> findByUsernameContainingIgnoreCase(String username) {
+        return userRepository.findByUsernameContainingIgnoreCase(username);
+    }
 }

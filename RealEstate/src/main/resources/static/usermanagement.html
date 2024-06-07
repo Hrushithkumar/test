@@ -132,6 +132,7 @@
         display: block;
       }
     </style>
+    <script src="js/auth.js"></script>
   </head>
   <body>
     <header>
@@ -504,8 +505,15 @@
           .addEventListener("input", handleEmployeeSearchDelete);
       });
 
-      function fetchUsers(query = "") {
-        fetch(`${apiBaseURL}?name=${query}`)
+      function fetchUsers(query="") {
+        var modifiedQuery;
+        if (query !== "") {
+          modifiedQuery = `${apiBaseURL}/search?username=${query}`;
+        } else {
+          modifiedQuery = `${apiBaseURL}`;
+        }
+
+        fetchWithAuth(modifiedQuery)
           .then((response) => response.json())
           .then((users) => {
             const userTableBody = document.getElementById("userTableBody");
@@ -531,7 +539,7 @@
         <td>${user.email}</td>
         <td>${user.phoneNumber}</td>
         <td>
-          <button class="btn btn-warning btn-sm" onclick="editUser(${user.id})">Edit</button>
+          <button class="btn btn-warning btn-sm m-2" onclick="editUser(${user.id})">Update</button>
           <button class="btn btn-danger btn-sm" onclick="deleteUser(${user.id})">Delete</button>
         </td>
       `;
@@ -554,6 +562,7 @@
           method: method,
           headers: {
             "Content-Type": "application/json",
+              'Authorization': `Bearer ${token}`
           },
           body: JSON.stringify(data),
         })
@@ -570,7 +579,12 @@
       }
 
       function editUser(userId) {
-        fetch(`${apiBaseURL}/${userId}`)
+        fetch(`${apiBaseURL}/${userId}`,{
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+
+        })
           .then((response) => response.json())
           .then((user) => {
             document.getElementById("userId").value = user.id;
@@ -587,6 +601,9 @@
         if (confirm("Are you sure you want to delete this user?")) {
           fetch(`${apiBaseURL}/${userId}`, {
             method: "DELETE",
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
           })
             .then((response) => {
               if (!response.ok) {
@@ -600,7 +617,7 @@
       }
 
       function handleSearch(event) {
-        const query = event.target.value;
+        const query = event.target.value.trim();
         fetchUsers(query);
       }
 
@@ -608,6 +625,8 @@
         const query = event.target.value;
         fetchUsers(query);
       }
+
+      // Logic for CRUD Employees
 
       function fetchEmployees(query = "") {
         fetch(`${employeeApiBaseURL}?name=${query}`)

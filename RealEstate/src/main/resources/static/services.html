@@ -343,7 +343,7 @@
       <nav>
         <ul>
           <li>
-            <a href="/sample">Home</a>
+            <a href="/">Home</a>
             <!--            <ul>-->
             <!--              <li><a href="/sample.html">Main</a></li>-->
             <!--              <li><a href="#">Submenu 2</a></li>-->
@@ -402,13 +402,9 @@
     <section class="dynamic-ads">
       <div class="container">
         <h2>Our Projects</h2>
+
+        <label for="project-filter"></label>
         <select id="project-filter" class="form-select mb-4">
-          <!--          <option value="all">All Projects</option>-->
-          <!--          <option value="1-bhk">1 BHK</option>-->
-          <!--          <option value="2-bhk">2 BHK</option>-->
-          <!--          <option value="3-bhk">3 BHK</option>-->
-          <!--          <option value="commercial">Commercial</option>-->
-          <!--          <option value="industrial">Industrial</option>-->
         </select>
         <div class="row" id="listings">
           <!-- Listings will be dynamically added here -->
@@ -420,10 +416,6 @@
       <div class="container">
         <h2>Homes for Sale</h2>
         <select id="home-filter" class="form-select mb-4">
-          <option value="all">All Homes</option>
-          <option value="luxury-villa">Luxury Villa</option>
-          <option value="modern-apartment">Modern Apartment</option>
-          <option value="cozy-cottage">Cozy Cottage</option>
         </select>
         <div class="row" id="home-listings">
           <!-- Home listings will be dynamically added here -->
@@ -447,7 +439,7 @@
     <section class="contact-section">
       <div class="container d-flex">
         <img src="/images/contactus.jpg" alt="Contact Us Image" />
-        <form id="contact-form">
+        <form id="contact-form" method="POST" action="/api/contact">
           <h2>Contact Us</h2>
           <div class="mb-3">
             <label for="contact-name" class="form-label">Name:</label>
@@ -671,6 +663,7 @@
         fetchCategories();
         fetchListings();
         fetchHomeListings();
+        fetchHomeCategories();
 
         document
           .getElementById("contact-form")
@@ -707,8 +700,36 @@
               });
             })
             .catch((error) =>
-              console.error("Error fetching categories:", error)
+              console.error("Error fetching project categories:", error)
             );
+        } else {
+          alert("Session expired, please login");
+        }
+      }
+
+      function fetchHomeCategories() {
+        if (token) {
+          fetch("/homes/categories", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+                  .then((response) => response.json())
+                  .then((categories) => {
+                    const filterSelect = document.getElementById("home-filter");
+                    filterSelect.innerHTML =
+                            '<option value="all">All Homes</option>';
+
+                    categories.forEach((category) => {
+                      const option = document.createElement("option");
+                      option.value = category.toLowerCase().replace(/\s+/g, "-"); // Convert to lowercase and replace spaces with hyphens
+                      option.textContent = category;
+                      filterSelect.appendChild(option);
+                    });
+                  })
+                  .catch((error) =>
+                          console.error("Error fetching home categories:", error)
+                  );
         } else {
           alert("Session expired, please login");
         }
@@ -752,49 +773,40 @@
       }
 
       function fetchHomeListings() {
-        const homeListings = [
-          {
-            id: 1,
-            title: "Luxury Villa",
-            description: "Luxury villas for sale.",
-            image: "/uploads/LuxuryVilla.jpg",
-            type: "luxury-villa",
-          },
-          {
-            id: 2,
-            title: "Modern Apartment",
-            description: "Modern apartments for sale.",
-            image: "/uploads/ModernApartment.jpg",
-            type: "modern-apartment",
-          },
-          {
-            id: 3,
-            title: "Cozy Cottage",
-            description: "Cozy cottages for sale.",
-            image: "/uploads/CozyCottage.jpg",
-            type: "cozy-cottage",
-          },
-        ];
+        fetch('/homes/view',{
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        })
+          .then(response => response.json())
+          .then(homeListings => {
+            const homeListingsContainer = document.getElementById("home-listings");
 
-        const homeListingsContainer = document.getElementById("home-listings");
+            homeListingsContainer.innerHTML = '';
 
-        homeListingsContainer.innerHTML = "";
-
-        homeListings.forEach((homeListing) => {
-          const listingHTML = `
-              <div class="col-md-4">
-                  <div class="ad-item">
-                      <img src="${homeListing.image}" alt="${homeListing.title}">
-                      <h3>${homeListing.title}</h3>
-                      <p>${homeListing.description}</p>
-                      <div class="ad-popup">
-                          <p>Type: ${homeListing.type}</p>
+            if (homeListings.length === 0) {
+              homeListingsContainer.innerHTML = '<p class="col-12 text-center">No homes to display.</p>';
+            } else {
+                  homeListings.forEach(homeListing => {
+                    const listingHTML = `
+                  <div class="col-md-4 mb-3">
+                      <div class="ad-item">
+                          <img src="/uploads/${homeListing.image}" alt="${homeListing.title}">
+                          <h3>${homeListing.title}</h3>
+                          <p>${homeListing.description}</p>
+                          <div class="ad-popup">
+                              <p>Type: ${homeListing.category}</p>
+                          </div>
                       </div>
                   </div>
-              </div>
-          `;
-          homeListingsContainer.innerHTML += listingHTML;
-        });
+              `;
+                homeListingsContainer.innerHTML += listingHTML;
+              });
+              filterHomes(); // Apply filter after fetching homes
+                  }
+                })
+                .catch(error => console.error('Error fetching listings:', error));
+
       }
 
       function filterProjects() {
@@ -843,19 +855,40 @@
 
       function filterHomes() {
         const filter = document.getElementById("home-filter").value;
-        const listings = document.querySelectorAll("#home-listings .ad-item");
+        const homeListings = document.querySelectorAll("#home-listings .ad-item");
 
-        listings.forEach((listing) => {
-          const type = listing
+        let homesFound = false;
+
+        homeListings.forEach((homeListing) => {
+          const type = homeListing
             .querySelector(".ad-popup p")
             .textContent.split(":")[1]
             .trim();
           if (filter === "all" || type === filter) {
-            listing.style.display = "block";
+            homeListing.style.display = "block";
           } else {
-            listing.style.display = "none";
+            homeListing.style.display = "none";
           }
         });
+
+        const homesListingsContainer = document.getElementById('home-listings');
+        const noHomesMessage = document.getElementById('no-homes-message');
+
+        if (!homesFound && filter !== "all") {
+          // Add the message only if no projects found for the selected filter
+          if (!noHomesMessage) {
+            const message = document.createElement('p');
+            message.id = 'no-homes-message';
+            message.className = 'col-12 text-center';
+            message.textContent = 'No homes matching the selected filter.';
+            homesListingsContainer.appendChild(message);
+          }
+        } else {
+          // Remove the message if homes are found or if "all" filter is selected
+          if (noHomesMessage) {
+            noHomesMessage.remove();
+          }
+        }
       }
 
       function handleContactFormSubmit(event) {

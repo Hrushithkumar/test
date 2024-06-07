@@ -2,10 +2,11 @@ package org.nitya.software.RealEstate.controller;
 
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.tasks.UnsupportedFormatException;
-import org.nitya.software.RealEstate.dto.ProjectDto;
-import org.nitya.software.RealEstate.model.Project;
+import org.nitya.software.RealEstate.dto.HomeDto;
+import org.nitya.software.RealEstate.model.Home;
 import org.nitya.software.RealEstate.model.enums.Category;
-import org.nitya.software.RealEstate.repository.ProjectRepository;
+import org.nitya.software.RealEstate.model.enums.HomeCategory;
+import org.nitya.software.RealEstate.repository.HomeRepository;
 import org.springframework.core.io.PathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -21,16 +22,17 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
+
 @RestController
-@RequestMapping("/projects")
-public class ProjectController {
+@RequestMapping("/homes")
+public class HomeController {
 
     private static final String UPLOAD_DIR = "test/RealEstate/src/main/resources/uploads/";
 
-    private final ProjectRepository projectRepository;
+    private final HomeRepository homeRepository;
 
-    public ProjectController(ProjectRepository projectRepository) {
-        this.projectRepository = projectRepository;
+    public HomeController(HomeRepository homeRepository) {
+        this.homeRepository = homeRepository;
         // Create upload directory if it doesn't exist
         try {
             Path uploadPath = Paths.get(UPLOAD_DIR);
@@ -74,7 +76,7 @@ public class ProjectController {
      * @return
      */
     @PostMapping("/upload")
-    public ResponseEntity<?> uploadProject(
+    public ResponseEntity<?> uploadHome(
             @RequestParam("category") String category,
             @RequestParam("title") String title,
             @RequestParam("description") String description,
@@ -100,20 +102,20 @@ public class ProjectController {
                 return ResponseEntity.badRequest().body("Unsupported image format.");
             }
 
-            Category projectCategory = Arrays.stream(Category.values())
+            Category homeCategory = Arrays.stream(Category.values())
                     .filter(cat -> cat.getCategoryName().equalsIgnoreCase(category))
                     .findFirst()
                     .orElseThrow(() -> new IllegalArgumentException("Unknown category: " + category));
 
 
             // Save project details to the database
-            Project project = new Project();
-            project.setCategory(projectCategory);
-            project.setTitle(title);
-            project.setDescription(description);
-            project.setImage(imageName);
+            Home home = new Home();
+            home.setCategory(homeCategory);
+            home.setTitle(title);
+            home.setDescription(description);
+            home.setImage(imageName);
 
-            projectRepository.save(project);
+            homeRepository.save(home);
 
             Map<String, Object> response = new HashMap<>();
             response.put("success", true);
@@ -131,22 +133,22 @@ public class ProjectController {
      * @return
      */
     @GetMapping("/view")
-    public ResponseEntity<List<ProjectDto>> getAllProjects(){
-        List<Project> projectList = projectRepository.findAll();
+    public ResponseEntity<List<HomeDto>> getAllHomes(){
+        List<Home> homeList = homeRepository.findAll();
 
-        List<ProjectDto> projectDtos = new ArrayList<>();
+        List<HomeDto> homeDtos = new ArrayList<>();
 
-        for (Project project : projectList) {
-            ProjectDto projectDto = new ProjectDto();
-            projectDto.setId(project.getId());
-            projectDto.setCategory(project.getCategory().getCategoryName());
-            projectDto.setTitle(project.getTitle());
-            projectDto.setDescription(project.getDescription());
-            projectDto.setImage(project.getImage());
-            projectDtos.add(projectDto);
+        for (Home home : homeList) {
+            HomeDto homeDto = new HomeDto();
+            homeDto.setId(home.getId());
+            homeDto.setCategory(home.getCategory().getCategoryName());
+            homeDto.setTitle(home.getTitle());
+            homeDto.setDescription(home.getDescription());
+            homeDto.setImage(home.getImage());
+            homeDtos.add(homeDto);
         }
 
-        return ResponseEntity.ok(projectDtos);
+        return ResponseEntity.ok(homeDtos);
     }
 
     /**
@@ -155,9 +157,9 @@ public class ProjectController {
      * @return
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Project> getProjectById(@PathVariable Long id){
-        Optional<Project> project =  projectRepository.findById(id);
-        return project.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<Home> getHomeById(@PathVariable Long id){
+        Optional<Home> home =  homeRepository.findById(id);
+        return home.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     /**
@@ -165,9 +167,9 @@ public class ProjectController {
      * @return
      */
     @GetMapping("/categories")
-    public List<String> getCategories() {
-        return Arrays.stream(Category.values())
-                .map(Category::getCategoryName)
+    public List<String> getHomeCategories() {
+        return Arrays.stream(HomeCategory.values())
+                .map(HomeCategory::getCategoryName)
                 .collect(Collectors.toList());
     }
 
@@ -177,23 +179,22 @@ public class ProjectController {
      * @return
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteProject(@PathVariable Long id) {
+    public ResponseEntity<?> deleteHome(@PathVariable Long id) {
         try {
             // Find the project by ID
-            Project project = projectRepository.findById(id)
-                    .orElseThrow(() -> new IllegalArgumentException("Project not found with ID: " + id));
+            Home home = homeRepository.findById(id)
+                    .orElseThrow(() -> new IllegalArgumentException("Home not found with ID: " + id));
 
             // Delete the image file from the file system
-            String imageName = project.getImage();
+            String imageName = home.getImage();
             Path imagePath = Paths.get(UPLOAD_DIR + imageName);
             Files.deleteIfExists(imagePath);
 
             // Delete the project from the database
-            projectRepository.delete(project);
+            homeRepository.delete(home);
 
-            return ResponseEntity.ok("Project deleted successfully");
+            return ResponseEntity.ok("Home deleted successfully");
         } catch (Exception e) {
-            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete project.");
         }
     }
