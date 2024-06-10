@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/servicerequest")
@@ -60,5 +62,38 @@ public class ServiceRequestController {
         List<ServiceRequestDto> serviceRequestDtoList = new ArrayList<>();
         updateServiceRequestDto(serviceRequests, serviceRequestDtoList);
         return new ResponseEntity<>(serviceRequestDtoList, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteServiceRequestById(@PathVariable Long id){
+        Boolean isServiceRequestAvailable = serviceRequestService.isServiceReqPresent(id);
+        if(isServiceRequestAvailable){
+            serviceRequestService.deleteServiceRequestsById(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping("/{id}/status")
+    public ResponseEntity<ServiceRequestDto> updateStatus(@PathVariable Long id, @RequestBody Map<String, String> statusUpdate){
+        String status = statusUpdate.get("status");
+        Optional<ServiceRequest> updateServiceRequest = serviceRequestService.updateStatus(id, status);
+        if(updateServiceRequest.isPresent()){
+
+            ServiceRequestDto dto = new ServiceRequestDto();
+            ServiceRequest updatedServiceRequest = updateServiceRequest.get();
+            dto.setId(updatedServiceRequest.getId());
+            dto.setName(updatedServiceRequest.getName());
+            dto.setEmail(updatedServiceRequest.getEmail());
+            dto.setPhone(updatedServiceRequest.getPhone());
+            dto.setServiceRequested(updatedServiceRequest.getServiceRequested());
+            dto.setDescription(updatedServiceRequest.getDescription());
+            dto.setLocation(updatedServiceRequest.getLocation());
+            dto.setStatus(updatedServiceRequest.getStatus());
+            dto.setUserID(updatedServiceRequest.getUser().getId());
+            return ResponseEntity.ok(dto);
+        }
+        return ResponseEntity.notFound().build();
     }
 }

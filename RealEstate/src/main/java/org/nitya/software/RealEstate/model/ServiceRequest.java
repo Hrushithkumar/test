@@ -1,5 +1,6 @@
 package org.nitya.software.RealEstate.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -20,7 +21,8 @@ public class ServiceRequest {
     private String location;
     @Column(columnDefinition = "VARCHAR(10) DEFAULT 'unresolved'")
     private String status;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
     private User user;
 }

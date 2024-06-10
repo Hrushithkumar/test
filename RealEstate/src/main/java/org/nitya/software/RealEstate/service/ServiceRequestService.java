@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ServiceRequestService {
@@ -44,4 +45,22 @@ public class ServiceRequestService {
         return serviceRequestRepository.findByUserId(user.getId());
     }
 
+    public void deleteServiceRequestsById(Long serviceRequestId){
+        serviceRequestRepository.deleteById(serviceRequestId);
+    }
+
+    public Boolean isServiceReqPresent(Long id){
+        return serviceRequestRepository.existsById(id);
+    }
+
+    public Optional<ServiceRequest> updateStatus(Long id, String status){
+        Optional<ServiceRequest> serviceRequestOptional = serviceRequestRepository.findById(id);
+        if(serviceRequestOptional.isPresent()){
+            ServiceRequest serviceRequest = serviceRequestOptional.get();
+            serviceRequest.setStatus(status);
+            serviceRequestRepository.save(serviceRequest);
+            return Optional.of(serviceRequest);
+        }
+        return Optional.empty();
+    }
 }
