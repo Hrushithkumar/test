@@ -258,6 +258,7 @@
         display: block;
       }
     </style>
+    <script src="js/auth.js"></script>
   </head>
   <body>
     <header>
@@ -319,7 +320,7 @@
           <li>
             <a href="#">Admin</a>
             <ul>
-              <li><a href="/usermanagment.html">User Management</a></li>
+              <li><a href="/usermanagement.html">User Management</a></li>
               <li>
                 <a href="/employeemanagement.html">Employee Management</a>
               </li>
@@ -334,7 +335,7 @@
         <h2>Service Request Form</h2>
         <form id="serviceRequestForm" novalidate>
           <div class="form-group">
-            <label for="name">Name:</label>
+            <label for="name">Username:</label>
             <input
               type="text"
               id="name"
@@ -342,6 +343,7 @@
               required
               aria-required="true"
               aria-describedby="name-error"
+              disabled
             />
             <span class="error-message" id="name-error"></span>
           </div>
@@ -420,6 +422,7 @@
           </div>
         </form>
       </section>
+      <div id="userServiceRequests"></div>
     </div>
     <footer class="footer">
       <div class="container">
@@ -467,36 +470,158 @@
     </footer>
     <script>
 
-      const token = localStorage.getItem('token');
-      if (!token) {
-        // Redirect to login page if token is not found
-        alert("Your login session expired. Please login to access this page");
-        window.location.href = '/';
+      document.addEventListener("DOMContentLoaded", function () {
+        // Fetch logged-in user details
+        fetchWithAuth('/loggeduser')
+                .then(response => {
+                  if (!response.ok) {
+                    throw new Error('Failed to fetch user details');
+                  }
+                  return response.json();
+                })
+                .then(user => {
+                  // Auto-fill user details in the form
+                  document.getElementById('name').value = user.username;
+                  document.getElementById('email').value = user.email;
+                  document.getElementById('phone').value = user.phoneNumber;
+                })
+                .catch(error => {
+                  console.error('Error fetching user details:', error);
+                });
+      });
+
+
+      document.getElementById("serviceRequestForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+        const form = event.target;
+        const isValid = form.checkValidity();
+
+        if (isValid) {
+          const formData = {
+            name: form.name.value,
+            email: form.email.value,
+            phone: form.phone.value,
+            serviceRequested: form.service.value,
+            description: form.description.value,
+            location: form.location.value
+
+          };
+
+          fetchWithAuth('/api/servicerequest', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+          })
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error('Failed to submit service requestk');
+                }
+                return response.json();
+              })
+              .then(data => {
+                alert("Service request submitted successfully!");
+                form.reset(); // Clear the form after successful submission
+                loadUserRequests();
+              })
+              .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+              });
+        } else {
+          form.classList.add("was-validated");
+          const formGroups = form.querySelectorAll(".form-group");
+          formGroups.forEach((group) => {
+            const input = group.querySelector("input, textarea, select");
+            const errorMessage = group.querySelector(".error-message");
+            if (!input.validity.valid) {
+              group.classList.add("invalid");
+              errorMessage.textContent = input.validationMessage;
+            } else {
+              group.classList.remove("invalid");
+              errorMessage.textContent = "";
+            }
+          });
+        }
+      });
+
+      function loadUserRequests() {
+        // Fetch service requests by the logged-in user
+        fetchWithAuth('/api/servicerequest/id')
+                .then(response => {
+                  if (!response.ok) {
+                    throw new Error('Failed to fetch service requests');
+                  }
+                  return response.json();
+                })
+                .then(serviceRequests => {
+                  // Clear previous content
+                  const requestsContainer = document.getElementById('userServiceRequests');
+                  requestsContainer.innerHTML = '';
+
+                  // Create a Bootstrap container div
+                  const container = document.createElement('div');
+                  container.classList.add('container', 'mt-3', 'mb-3');
+
+                  // Add title for service requests
+                  const title = document.createElement('h3');
+                  title.textContent = 'Service Requests';
+                  container.appendChild(title);
+
+                  serviceRequests.forEach(request => {
+                    //request.resolved = undefined;
+                    // Create Bootstrap card for each service request
+                    const card = document.createElement('div');
+                    card.classList.add('card', 'mb-3');
+
+                    // Card body
+                    const cardBody = document.createElement('div');
+                    cardBody.classList.add('card-body');
+
+                    // Card title (Service Request ID)
+                    const cardTitle = document.createElement('h5');
+                    cardTitle.classList.add('card-title');
+                    cardTitle.textContent = `Service Request ID: ${request.id}`;
+                    cardBody.appendChild(cardTitle);
+
+                    // Other details
+                    const serviceRequested = document.createElement('p');
+                    serviceRequested.classList.add('card-text');
+                    serviceRequested.innerHTML = `<strong>Service Requested:</strong> ${request.serviceRequested}`;
+                    cardBody.appendChild(serviceRequested);
+
+                    const description = document.createElement('p');
+                    description.classList.add('card-text');
+                    description.innerHTML = `<strong>Description:</strong> ${request.description}`;
+                    cardBody.appendChild(description);
+
+                    const location = document.createElement('p');
+                    location.classList.add('card-text');
+                    location.innerHTML = `<strong>Location:</strong> ${request.location}`;
+                    cardBody.appendChild(location);
+
+                    const resolved = document.createElement('p');
+                    resolved.classList.add('card-text');
+                    resolved.innerHTML = `<strong>Status:</strong> ${request.status}`;
+                    cardBody.appendChild(resolved);
+
+                    // Append card body to card
+                    card.appendChild(cardBody);
+
+                    // Append card to container
+                    container.appendChild(card);
+                  });
+
+                  // Append container to requestsContainer
+                  requestsContainer.appendChild(container);
+                })
+                .catch(error => {
+                  console.error('Error fetching service requests:', error);
+                });
       }
-      document
-        .getElementById("serviceRequestForm")
-        .addEventListener("submit", function (event) {
-          event.preventDefault();
-          const form = event.target;
-          const isValid = form.checkValidity();
-          if (isValid) {
-            alert("Service request submitted!");
-          } else {
-            form.classList.add("was-validated");
-            const formGroups = form.querySelectorAll(".form-group");
-            formGroups.forEach((group) => {
-              const input = group.querySelector("input, textarea, select");
-              const errorMessage = group.querySelector(".error-message");
-              if (!input.validity.valid) {
-                group.classList.add("invalid");
-                errorMessage.textContent = input.validationMessage;
-              } else {
-                group.classList.remove("invalid");
-                errorMessage.textContent = "";
-              }
-            });
-          }
-        });
+
+
+      loadUserRequests();
 
       function logout() {
         localStorage.removeItem("token");

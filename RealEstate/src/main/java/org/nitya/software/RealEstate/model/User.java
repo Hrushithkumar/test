@@ -1,5 +1,6 @@
 package org.nitya.software.RealEstate.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -55,6 +56,7 @@ import java.util.Set;
         private Set<Role> roles;
 
         @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+        @JsonIgnoreProperties("user")
         private Set<ServiceRequest> serviceRequests;
 
 }

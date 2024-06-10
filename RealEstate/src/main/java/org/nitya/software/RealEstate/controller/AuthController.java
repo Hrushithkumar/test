@@ -6,6 +6,7 @@ import org.nitya.software.RealEstate.model.User;
 import org.nitya.software.RealEstate.repository.RoleRepository;
 import org.nitya.software.RealEstate.security.JwtUtil;
 import org.nitya.software.RealEstate.service.UserService;
+import org.nitya.software.RealEstate.utils.LoggedInUserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,6 +47,9 @@ public class AuthController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private LoggedInUserUtil loggedInUserUtil;
 
     @GetMapping("/")
     public StreamingResponseBody home(HttpServletResponse response) throws IOException {
@@ -120,5 +124,11 @@ public class AuthController {
             response.put("error", "User not found");
             return ResponseEntity.status(404).body(response);
         }
+    }
+
+    @GetMapping("/loggeduser")
+    public ResponseEntity<User> getLoggedInUser(){
+        User loggedInUser = loggedInUserUtil.getCurrentUserDetails();
+        return new ResponseEntity<>(loggedInUser, HttpStatus.OK);
     }
 }
