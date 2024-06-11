@@ -290,7 +290,7 @@
     <script src="js/auth.js"></script>
   </head>
   <body>
-  <div id="header-container"></div>
+    <div id="header-container"></div>
 
     <section class="hero">
       <div class="hero-content">
@@ -551,18 +551,13 @@
     </footer>
 
     <script>
-      fetch('Header.html')
-              .then(response => response.text())
-              .then(html => {
-                document.getElementById('header-container').innerHTML = html;
-              })
-              .catch(error => console.error('Error fetching header:', error));
+      fetch("Header.html")
+        .then((response) => response.text())
+        .then((html) => {
+          document.getElementById("header-container").innerHTML = html;
+        })
+        .catch((error) => console.error("Error fetching header:", error));
       const token = localStorage.getItem("token");
-      // if (!token) {
-      //   // Redirect to login page if token is not found
-      //   alert("Your login session expired. Please login to access this page");
-      //   window.location.href = "/";
-      // }
       document.addEventListener("DOMContentLoaded", () => {
         fetchCategories();
         fetchListings();
@@ -608,23 +603,22 @@
       }
 
       function fetchHomeCategories() {
+        fetchWithAuth("/homes/categories")
+          .then((response) => response.json())
+          .then((categories) => {
+            const filterSelect = document.getElementById("home-filter");
+            filterSelect.innerHTML = '<option value="all">All Homes</option>';
 
-          fetchWithAuth("/homes/categories")
-            .then((response) => response.json())
-            .then((categories) => {
-              const filterSelect = document.getElementById("home-filter");
-              filterSelect.innerHTML = '<option value="all">All Homes</option>';
-
-              categories.forEach((category) => {
-                const option = document.createElement("option");
-                option.value = category.toLowerCase().replace(/\s+/g, "-"); // Convert to lowercase and replace spaces with hyphens
-                option.textContent = category;
-                filterSelect.appendChild(option);
-              });
-            })
-            .catch((error) =>
-              console.error("Error fetching home categories:", error)
-            );
+            categories.forEach((category) => {
+              const option = document.createElement("option");
+              option.value = category.toLowerCase().replace(/\s+/g, "-"); // Convert to lowercase and replace spaces with hyphens
+              option.textContent = category;
+              filterSelect.appendChild(option);
+            });
+          })
+          .catch((error) =>
+            console.error("Error fetching home categories:", error)
+          );
       }
 
       function fetchListings() {
@@ -786,7 +780,7 @@
         fetchWithAuth("/contactus/submit", {
           method: "POST",
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           },
           body: JSON.stringify(formDataObject),
         })
@@ -814,14 +808,7 @@
         const service = event.target["quote-service"].value;
         const message = event.target["quote-message"].value;
 
-        if (
-                !name ||
-                !email ||
-                !location ||
-                !service ||
-                !phone ||
-                !message
-        ) {
+        if (!name || !email || !location || !service || !phone || !message) {
           alert("Please fill out all fields.");
           return;
         }
@@ -836,7 +823,7 @@
             phone,
             location,
             service,
-            message
+            message,
           }),
         })
           .then((response) => {
