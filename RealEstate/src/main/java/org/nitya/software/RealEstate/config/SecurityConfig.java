@@ -43,7 +43,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/register").permitAll()
                 .antMatchers("/", "/static/**", "/images/**", "/services.html", "/QuotePage.html","/usermanagement.html",
                         "/uploadhomeforsales.html","/deletehomeforsale.html","/contactuspage.html","/uploadproject.html",
-                        "/employeemanagement.html", "/deleteproject.html", "/servicespage.html", "/ListServiceRequests.html").permitAll()
+                        "/employeemanagement.html", "/deleteproject.html", "/servicespage.html", "/ListServiceRequests.html",
+                        "/QuotePage.html").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling()

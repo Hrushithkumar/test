@@ -286,6 +286,7 @@
         }
       }
     </style>
+    <script src="js/auth.js"></script>
   </head>
   <body>
     <header>
@@ -617,11 +618,11 @@
 
     <script>
       const token = localStorage.getItem("token");
-      if (!token) {
-        // Redirect to login page if token is not found
-        alert("Your login session expired. Please login to access this page");
-        window.location.href = "/";
-      }
+      // if (!token) {
+      //   // Redirect to login page if token is not found
+      //   alert("Your login session expired. Please login to access this page");
+      //   window.location.href = "/";
+      // }
       document.addEventListener("DOMContentLoaded", () => {
         fetchCategories();
         fetchListings();
@@ -644,11 +645,7 @@
 
       function fetchCategories() {
         if (token) {
-          fetch("/projects/categories", {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          })
+          fetchWithAuth("/projects/categories")
             .then((response) => response.json())
             .then((categories) => {
               const filterSelect = document.getElementById("project-filter");
@@ -671,12 +668,8 @@
       }
 
       function fetchHomeCategories() {
-        if (token) {
-          fetch("/homes/categories", {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          })
+
+          fetchWithAuth("/homes/categories")
             .then((response) => response.json())
             .then((categories) => {
               const filterSelect = document.getElementById("home-filter");
@@ -692,17 +685,10 @@
             .catch((error) =>
               console.error("Error fetching home categories:", error)
             );
-        } else {
-          alert("Session expired, please login");
-        }
       }
 
       function fetchListings() {
-        fetch("/projects/view", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
+        fetchWithAuth("/projects/view")
           .then((response) => response.json())
           .then((listings) => {
             const listingsContainer = document.getElementById("listings");
@@ -735,11 +721,7 @@
       }
 
       function fetchHomeListings() {
-        fetch("/homes/view", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
+        fetchWithAuth("/homes/view")
           .then((response) => response.json())
           .then((homeListings) => {
             const homeListingsContainer =
@@ -861,11 +843,10 @@
         const formData = new FormData(event.target);
         const formDataObject = Object.fromEntries(formData.entries());
 
-        fetch("/contactus/submit", {
+        fetchWithAuth("/contactus/submit", {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
           },
           body: JSON.stringify(formDataObject),
         })
@@ -884,16 +865,39 @@
 
       function handleQuoteFormSubmit(event) {
         event.preventDefault();
-        const formData = new FormData(event.target);
-        const formDataObject = Object.fromEntries(formData.entries());
+        //const formData = new FormData(event.target);
+        //const formDataObject = Object.fromEntries(formData.entries());
+        const name = event.target["quote-name"].value;
+        const email = event.target["quote-email"].value;
+        const phone = event.target["quote-phone"].value;
+        const location = event.target["quote-location"].value;
+        const service = event.target["quote-service"].value;
+        const message = event.target["quote-message"].value;
 
-        fetch("/quotes/submit", {
+        if (
+                !name ||
+                !email ||
+                !location ||
+                !service ||
+                !phone ||
+                !message
+        ) {
+          alert("Please fill out all fields.");
+          return;
+        }
+        fetchWithAuth("/quotes", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify(formDataObject),
+          body: JSON.stringify({
+            name,
+            email,
+            phone,
+            location,
+            service,
+            message
+          }),
         })
           .then((response) => {
             if (response.ok) {

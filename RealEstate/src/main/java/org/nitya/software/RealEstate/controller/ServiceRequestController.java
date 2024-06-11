@@ -22,9 +22,6 @@ public class ServiceRequestController {
     @Autowired
     private ServiceRequestService serviceRequestService;
 
-    @Autowired
-    private LoggedInUserUtil loggedInUserUtil;
-
     @GetMapping
     public ResponseEntity<List<ServiceRequestDto>> getAllServiceRequests(){
         List<ServiceRequest> serviceRequests = serviceRequestService.getAllServiceRequests();
