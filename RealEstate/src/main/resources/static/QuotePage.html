@@ -1,398 +1,484 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Submitted Quotes - Iron Pillar Engineering and Construction</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-  <link href="css/HeaderFooter.css" rel="stylesheet" />
-
-  <style>
-    body {
-      font-family: "Montserrat", sans-serif;
-      background-color: #f4f7f6;
-      color: #333;
-      line-height: 1.6;
-      margin: 0;
-      padding-top: 80px;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-    header {
-      background-color: #2c3e50;
-      padding: 10px 20px;
-      position: fixed;
-      width: 100%;
-      top: 0;
-      z-index: 1000;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    header .logo {
-      display: flex;
-      align-items: center;
-      color: #fff;
-      font-size: 1.5em;
-      font-weight: bold;
-    }
-    header .logo img {
-      max-width: 50px;
-      height: auto;
-      margin-right: 10px;
-    }
-    header nav ul {
-      list-style: none;
-      display: flex;
-      margin: 0;
-      padding: 0;
-    }
-    header nav ul li {
-      margin: 0 15px;
-      position: relative;
-    }
-    header nav ul li a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1em;
-      transition: color 0.3s;
-    }
-    header nav ul li a:hover {
-      color: #f39c12;
-    }
-    header nav ul li ul {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      background: #2c3e50;
-      padding: 0;
-      margin: 0;
-      list-style: none;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    header nav ul li:hover ul {
-      display: block;
-    }
-    header nav ul li ul li {
-      margin: 0;
-    }
-    header nav ul li ul li a {
-      padding: 10px 15px;
-      display: block;
-      color: #fff;
-    }
-    header nav ul li ul li a:hover {
-      background: #34495e;
-    }
-    .main-content {
-      flex: 1;
-    }
-    .container {
-      margin-top: 100px;
-    }
-    .back-button {
-      display: inline-block;
-      margin-bottom: 20px;
-      padding: 10px 20px;
-      background-color: #2c3e50;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-    }
-    .back-button:hover {
-      background-color: #34495e;
-      color: #f39c12;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    table, th, td {
-      border: 1px solid #ddd;
-    }
-    th, td {
-      padding: 15px;
-      text-align: left;
-    }
-    th {
-      background-color: #2c3e50;
-      color: white;
-    }
-    footer {
-      background-color: #2c3e50;
-      color: white;
-      text-align: center;
-      padding: 15px 0;
-      position: relative;
-      margin-top: auto;
-      border-top: 10px solid #34495e;
-    }
-    footer .container {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-    }
-    footer h5 {
-      font-size: 1.2em;
-    }
-    footer ul {
-      list-style: none;
-      padding: 0;
-    }
-    footer ul li {
-      margin-bottom: 10px;
-    }
-    footer ul li a {
-      color: white;
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-    footer ul li a:hover {
-      color: #f39c12;
-    }
-    .footer .social-icons {
-      display: flex;
-      gap: 10px;
-    }
-    .footer .social-icons a {
-      color: #fff;
-      font-size: 1.4rem;
-      transition: color 0.3s;
-    }
-    .footer .social-icons a:hover {
-      color: #f39c12;
-    }
-    footer p {
-      font-size: 0.9em;
-    }
-    @media (max-width: 768px) {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Submitted Quotes - Iron Pillar Engineering and Construction</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"
+      rel="stylesheet"
+    />
+    <link href="css/HeaderFooter.css" rel="stylesheet" />
+    <style>
+      body {
+        font-family: "Montserrat", sans-serif;
+        background-color: #f4f7f6;
+        color: #333;
+        line-height: 1.6;
+        margin: 0;
+        padding-top: 80px;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
       header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      header nav ul {
-        flex-direction: column;
+        background-color: #2c3e50;
+        padding: 10px 20px;
+        position: fixed;
         width: 100%;
-        margin-top: 10px;
-      }
-      header nav ul li {
-        margin: 5px 0;
-      }
-      .footer .container {
-        flex-direction: column;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: space-between;
         align-items: center;
       }
-      .footer .social-icons {
-        margin-top: 10px;
+      header .logo {
+        display: flex;
+        align-items: center;
+        color: #fff;
+        font-size: 1.5em;
+        font-weight: bold;
       }
-    }
-    .comment-display {
-      border: 1px solid #ccc;
-      padding: 5px;
-      cursor: pointer;
-    }
-    .comment-edit {
-      display: none;
-    }
-  </style>
-  <script src="js/auth.js"></script>
-</head>
-<body>
-<div id="header-container"></div>
+      header .logo img {
+        max-width: 50px;
+        height: auto;
+        margin-right: 10px;
+      }
+      header nav ul {
+        list-style: none;
+        display: flex;
+        margin: 0;
+        padding: 0;
+      }
+      header nav ul li {
+        margin: 0 15px;
+        position: relative;
+      }
+      header nav ul li a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 1em;
+        transition: color 0.3s;
+      }
+      header nav ul li a:hover {
+        color: #f39c12;
+      }
+      header nav ul li ul {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: #2c3e50;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      header nav ul li:hover ul {
+        display: block;
+      }
+      header nav ul li ul li {
+        margin: 0;
+      }
+      header nav ul li ul li a {
+        padding: 10px 15px;
+        display: block;
+        color: #fff;
+      }
+      header nav ul li ul li a:hover {
+        background: #34495e;
+      }
+      .main-content {
+        flex: 1;
+      }
+      .container {
+        margin-top: 100px;
+        margin-bottom: 100px;
+      }
+      .back-button {
+        display: inline-block;
+        margin-bottom: 20px;
+        padding: 10px 20px;
+        background-color: #2c3e50;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+      }
+      .back-button:hover {
+        background-color: #34495e;
+        color: #f39c12;
+      }
+      .print-button {
+        display: inline-block;
+        margin-bottom: 20px;
+        padding: 10px 20px;
+        background-color: #28a745;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        margin-left: 10px;
+      }
+      .print-button:hover {
+        background-color: #218838;
+        color: #f39c12;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid #ddd;
+      }
+      th,
+      td {
+        padding: 15px;
+        text-align: left;
+      }
+      th {
+        background-color: #2c3e50;
+        color: white;
+      }
+      .dataTables_filter {
+        margin-bottom: 20px; /* Added margin for the search box */
+      }
+      footer {
+        background-color: #2c3e50;
+        color: white;
+        text-align: center;
+        padding: 15px 0;
+        position: relative;
+        margin-top: auto;
+        border-top: 10px solid #34495e;
+      }
+      footer .container {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+      footer h5 {
+        font-size: 1.2em;
+      }
+      footer ul {
+        list-style: none;
+        padding: 0;
+      }
+      footer ul li {
+        margin-bottom: 10px;
+      }
+      footer ul li a {
+        color: white;
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+      footer ul li a:hover {
+        color: #f39c12;
+      }
+      .footer .social-icons {
+        display: flex;
+        gap: 10px;
+      }
+      .footer .social-icons a {
+        color: #fff;
+        font-size: 1.4rem;
+        transition: color 0.3s;
+      }
+      .footer .social-icons a:hover {
+        color: #f39c12;
+      }
+      footer p {
+        font-size: 0.9em;
+      }
+      @media (max-width: 768px) {
+        header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        header nav ul {
+          flex-direction: column;
+          width: 100%;
+          margin-top: 10px;
+        }
+        header nav ul li {
+          margin: 5px 0;
+        }
+        .footer .container {
+          flex-direction: column;
+          align-items: center;
+        }
+        .footer .social-icons {
+          margin-top: 10px;
+        }
+      }
+      .comment-display {
+        border: 1px solid #ccc;
+        padding: 5px;
+        cursor: pointer;
+      }
+      .comment-edit {
+        display: none;
+      }
+      @media print {
+        body * {
+          visibility: hidden;
+        }
+        .print-container,
+        .print-container * {
+          visibility: visible;
+        }
+        .print-container {
+          position: absolute;
+          left: 0;
+          top: 0;
+        }
+      }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="js/auth.js"></script>
+  </head>
+  <body>
+    <div id="header-container"></div>
 
-<div class="main-content">
-  <div class="container">
-    <h2>Submitted Quotes</h2>
-    <table>
-      <thead>
-      <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Phone</th>
-        <th>Location</th>
-        <th>Service</th>
-        <th>Message</th>
-        <th>Status</th>
-        <th>Comment</th>
-        <th>Action</th>
-      </tr>
-      </thead>
-      <tbody id="quotes-table-body">
-      <!-- Quotes will be dynamically added here -->
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<footer class="footer">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-4">
-        <h5>Quick Links</h5>
-        <ul class="list-unstyled">
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Projects</a></li>
-          <li><a href="#">Services</a></li>
-          <li><a href="#">Homes for Sale</a></li>
-          <li><a href="#">About Us</a></li>
-          <li><a href="#">Contact</a></li>
-        </ul>
-      </div>
-      <div class="col-md-4">
-        <h5>Contact Us</h5>
-        <p>
-          123 Engineering Way,<br>
-          City, State, 12345<br>
-          Email: info@ironpillar.com<br>
-          Phone: (123) 456-7890
-        </p>
-      </div>
-      <div class="col-md-4">
-        <h5>Follow Us</h5>
-        <div class="social-icons">
-          <a href="#" class="text-white me-2"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" class="text-white me-2"><i class="fab fa-twitter"></i></a>
-          <a href="#" class="text-white"><i class="fab fa-instagram"></i></a>
-        </div>
+    <div class="main-content">
+      <div class="container print-container">
+        <h2>Submitted Quotes</h2>
+        <button class="print-button" onclick="window.print()">
+          Print Table
+        </button>
+        <table id="quotes-table" class="display">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Location</th>
+              <th>Service</th>
+              <th>Message</th>
+              <th>Status</th>
+              <th>Comment</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="quotes-table-body">
+            <!-- Quotes will be dynamically added here -->
+          </tbody>
+        </table>
       </div>
     </div>
-    <p class="mt-3">
-      &copy; 2024 Iron Pillar Engineering and Construction. All rights reserved.
-    </p>
-  </div>
-</footer>
 
-<script>
-  fetch('Header.html')
-          .then(response => response.text())
-          .then(html => {
-            document.getElementById('header-container').innerHTML = html;
-          })
-          .catch(error => console.error('Error fetching header:', error));
-  document.addEventListener("DOMContentLoaded", () => {
-    fetchQuotes();
-  });
+    <footer class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <h5>Quick Links</h5>
+            <ul class="list-unstyled">
+              <li><a href="#">Home</a></li>
+              <li><a href="#">Projects</a></li>
+              <li><a href="#">Services</a></li>
+              <li><a href="#">Homes for Sale</a></li>
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Contact</a></li>
+            </ul>
+          </div>
+          <div class="col-md-4">
+            <h5>Contact Us</h5>
+            <p>
+              123 Engineering Way,<br />
+              City, State, 12345<br />
+              Email: info@ironpillar.com<br />
+              Phone: (123) 456-7890
+            </p>
+          </div>
+          <div class="col-md-4">
+            <h5>Follow Us</h5>
+            <div class="social-icons">
+              <a href="#" class="text-white me-2"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
+              <a href="#" class="text-white me-2"
+                ><i class="fab fa-twitter"></i
+              ></a>
+              <a href="#" class="text-white"
+                ><i class="fab fa-instagram"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+        <p class="mt-3">
+          &copy; 2024 Iron Pillar Engineering and Construction. All rights
+          reserved.
+        </p>
+      </div>
+    </footer>
 
-  function fetchQuotes() {
-    fetchWithAuth("/quotes")
-            .then(response => response.json())
-            .then(quotes => {
-              const tableBody = document.getElementById("quotes-table-body");
-              tableBody.innerHTML = "";
+    <script>
+      fetch("Header.html")
+        .then((response) => response.text())
+        .then((html) => {
+          document.getElementById("header-container").innerHTML = html;
+        })
+        .catch((error) => console.error("Error fetching header:", error));
 
-              quotes.forEach(quote => {
-                const row = document.createElement("tr");
-                row.innerHTML = `
-                            <td>${quote.name}</td>
-                            <td>${quote.email}</td>
-                            <td>${quote.phone}</td>
-                            <td>${quote.location}</td>
-                            <td>${quote.service}</td>
-                            <td>${quote.message}</td>
-                            <td>
-                                <select id="status-${quote.id}">
-                                    <option value="Pending" ${quote.status === "Pending" ? "selected" : ""}>Pending</option>
-                                    <option value="Done" ${quote.status === "Done" ? "selected" : ""}>Done</option>
-                                </select>
-                            </td>
-                            <td>
-                                <div class="comment-display" id="comment-display-${quote.id}" onclick="editComment(${quote.id})">${quote.comment || ""}</div>
-                                <textarea class="comment-edit" id="comment-edit-${quote.id}">${quote.comment || ""}</textarea>
-                            </td>
-                            <td>
-                                <button class="btn btn-primary m-2" onclick="updateStatus(${quote.id})"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+      document.addEventListener("DOMContentLoaded", () => {
+        fetchQuotes();
+      });
+
+      function fetchQuotes() {
+        fetchWithAuth("/quotes")
+          .then((response) => response.json())
+          .then((quotes) => {
+            const tableBody = document.getElementById("quotes-table-body");
+            tableBody.innerHTML = "";
+
+            quotes.forEach((quote) => {
+              const row = document.createElement("tr");
+              row.innerHTML = `
+              <td>${quote.name}</td>
+              <td>${quote.email}</td>
+              <td>${quote.phone}</td>
+              <td>${quote.location}</td>
+              <td>${quote.service}</td>
+              <td>${quote.message}</td>
+              <td>
+                <select id="status-${quote.id}">
+                  <option value="Pending" ${
+                    quote.status === "Pending" ? "selected" : ""
+                  }>Pending</option>
+                  <option value="Done" ${
+                    quote.status === "Done" ? "selected" : ""
+                  }>Done</option>
+                </select>
+              </td>
+              <td>
+                <div class="comment-display" id="comment-display-${
+                  quote.id
+                }" onclick="editComment(${quote.id})">${
+                quote.comment || ""
+              }</div>
+                <textarea class="comment-edit" id="comment-edit-${quote.id}">${
+                quote.comment || ""
+              }</textarea>
+              </td>
+              <td>
+                <button class="btn btn-primary m-2" onclick="updateStatus(${
+                  quote.id
+                })"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
   <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
   <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
 </svg> Status</button>
-                                <button class="btn btn-secondary m-2" onclick="updateComment(${quote.id})"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                <button class="btn btn-secondary m-2" onclick="updateComment(${
+                  quote.id
+                })"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
   <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
   <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
 </svg> Comment</button>
-                            </td>
-                        `;
-                tableBody.appendChild(row);
-              });
-            })
-            .catch(error => console.error("Error fetching quotes:", error));
-  }
+              </td>
+            `;
+              tableBody.appendChild(row);
+            });
 
-  function updateStatus(quoteId) {
-    const status = document.getElementById(`status-${quoteId}`).value;
+            // Initialize DataTables
+            $("#quotes-table").DataTable();
+          })
+          .catch((error) => console.error("Error fetching quotes:", error));
+      }
 
-    fetchWithAuth(`/quotes/${quoteId}/update/status`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ status })
-    })
-            .then(response => {
-              if (response.ok) {
-                alert("Quote status updated successfully");
-                fetchQuotes(); // Refresh the quotes list
-              } else {
-                alert("Failed to update quote status");
-              }
-            })
-            .catch(error => console.error("Error updating quote status:", error));
-  }
+      function updateStatus(quoteId) {
+        const status = document.getElementById(`status-${quoteId}`).value;
 
-  function editComment(quoteId) {
-    const commentDisplay = document.getElementById(`comment-display-${quoteId}`);
-    const commentEdit = document.getElementById(`comment-edit-${quoteId}`);
+        fetchWithAuth(`/quotes/${quoteId}/update/status`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ status }),
+        })
+          .then((response) => {
+            if (response.ok) {
+              alert("Quote status updated successfully");
+              fetchQuotes(); // Refresh the quotes list
+            } else {
+              alert("Failed to update quote status");
+            }
+          })
+          .catch((error) =>
+            console.error("Error updating quote status:", error)
+          );
+      }
 
-    commentDisplay.style.display = "none";
-    commentEdit.style.display = "block";
-    commentEdit.focus();
-  }
+      function editComment(quoteId) {
+        const commentDisplay = document.getElementById(
+          `comment-display-${quoteId}`
+        );
+        const commentEdit = document.getElementById(`comment-edit-${quoteId}`);
 
-  function updateComment(quoteId) {
-    const commentEdit = document.getElementById(`comment-edit-${quoteId}`);
-    const comment = commentEdit.value;
+        commentDisplay.style.display = "none";
+        commentEdit.style.display = "block";
+        commentEdit.focus();
+      }
 
-    fetchWithAuth(`/quotes/${quoteId}/update/comment`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ comment })
-    })
-            .then(response => {
-              if (response.ok) {
-                alert("Quote comment updated successfully");
-                const commentDisplay = document.getElementById(`comment-display-${quoteId}`);
-                commentDisplay.textContent = comment;
+      function updateComment(quoteId) {
+        const commentEdit = document.getElementById(`comment-edit-${quoteId}`);
+        const comment = commentEdit.value;
 
-                commentEdit.style.display = "none";
-                commentDisplay.style.display = "block";
-                fetchQuotes(); // Refresh the quotes list
-              } else {
-                alert("Failed to update quote comment");
-              }
-            })
-            .catch(error => console.error("Error updating quote comment:", error));
-  }
+        fetchWithAuth(`/quotes/${quoteId}/update/comment`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ comment }),
+        })
+          .then((response) => {
+            if (response.ok) {
+              alert("Quote comment updated successfully");
+              const commentDisplay = document.getElementById(
+                `comment-display-${quoteId}`
+              );
+              commentDisplay.textContent = comment;
 
-  function logout() {
-    localStorage.removeItem("token");
-    window.location.href = "/";
-  }
+              commentEdit.style.display = "none";
+              commentDisplay.style.display = "block";
+              fetchQuotes(); // Refresh the quotes list
+            } else {
+              alert("Failed to update quote comment");
+            }
+          })
+          .catch((error) =>
+            console.error("Error updating quote comment:", error)
+          );
+      }
 
-  function fetchWithAuth(url, options) {
-    const token = localStorage.getItem("token");
-    options = options || {};
-    options.headers = options.headers || {};
-    options.headers.Authorization = `Bearer ${token}`;
+      function logout() {
+        localStorage.removeItem("token");
+        window.location.href = "/";
+      }
 
-    return fetch(url, options);
-  }
-</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+      function fetchWithAuth(url, options) {
+        const token = localStorage.getItem("token");
+        options = options || {};
+        options.headers = options.headers || {};
+        options.headers.Authorization = `Bearer ${token}`;
+
+        return fetch(url, options);
+      }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+  </body>
 </html>

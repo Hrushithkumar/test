@@ -16,7 +16,6 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
       rel="stylesheet"
     />
-
     <link href="css/HeaderFooter.css" rel="stylesheet" />
     <style>
       body {
@@ -259,14 +258,62 @@
         font-size: 0.9em;
         display: block;
       }
+
+      /* Modal styles */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+      }
+
+      .modal-content {
+        background-color: #fefefe;
+        margin: 10% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 500px;
+        border-radius: 10px;
+      }
+
+      .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+
+      .close:hover,
+      .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+      }
     </style>
     <script src="js/auth.js"></script>
   </head>
   <body>
-  <div id="header-container"></div>
+    <div id="header-container"></div>
 
-  <div class="main-content">
+    <div class="main-content">
       <section class="container mt-5">
+        <h2>Service Requests</h2>
+        <button id="newServiceRequestBtn" class="btn btn-primary mb-3">
+          New Service Request
+        </button>
+        <div id="userServiceRequests"></div>
+      </section>
+    </div>
+
+    <div id="serviceRequestModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
         <h2>Service Request Form</h2>
         <form id="serviceRequestForm" novalidate>
           <div class="form-group">
@@ -356,9 +403,9 @@
             <button type="submit" class="btn btn-primary">Submit</button>
           </div>
         </form>
-      </section>
-      <div id="userServiceRequests"></div>
+      </div>
     </div>
+
     <footer class="footer">
       <div class="container">
         <div class="row">
@@ -403,167 +450,199 @@
         </p>
       </div>
     </footer>
-    <script>
 
-      fetch('Header.html')
-              .then(response => response.text())
-              .then(html => {
-                document.getElementById('header-container').innerHTML = html;
-              })
-              .catch(error => console.error('Error fetching header:', error));
+    <script>
+      fetch("Header.html")
+        .then((response) => response.text())
+        .then((html) => {
+          document.getElementById("header-container").innerHTML = html;
+        })
+        .catch((error) => console.error("Error fetching header:", error));
 
       document.addEventListener("DOMContentLoaded", function () {
         // Fetch logged-in user details
-        fetchWithAuth('/loggeduser')
-                .then(response => {
+        fetchWithAuth("/loggeduser")
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Failed to fetch user details");
+            }
+            return response.json();
+          })
+          .then((user) => {
+            // Auto-fill user details in the form
+            document.getElementById("name").value = user.username;
+            document.getElementById("email").value = user.email;
+            document.getElementById("phone").value = user.phoneNumber;
+          })
+          .catch((error) => {
+            console.error("Error fetching user details:", error);
+          });
+
+        // Load user requests
+        loadUserRequests();
+
+        // Show modal
+        const modal = document.getElementById("serviceRequestModal");
+        const btn = document.getElementById("newServiceRequestBtn");
+        const span = document.getElementsByClassName("close")[0];
+
+        btn.onclick = function () {
+          modal.style.display = "block";
+        };
+
+        span.onclick = function () {
+          modal.style.display = "none";
+        };
+
+        window.onclick = function (event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        };
+
+        // Handle form submission
+        document
+          .getElementById("serviceRequestForm")
+          .addEventListener("submit", function (event) {
+            event.preventDefault();
+            const form = event.target;
+            const isValid = form.checkValidity();
+
+            if (isValid) {
+              const formData = {
+                name: form.name.value,
+                email: form.email.value,
+                phone: form.phone.value,
+                serviceRequested: form.service.value,
+                description: form.description.value,
+                location: form.location.value,
+              };
+
+              fetchWithAuth("/api/servicerequest", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+              })
+                .then((response) => {
                   if (!response.ok) {
-                    throw new Error('Failed to fetch user details');
+                    throw new Error("Failed to submit service request");
                   }
                   return response.json();
                 })
-                .then(user => {
-                  // Auto-fill user details in the form
-                  document.getElementById('name').value = user.username;
-                  document.getElementById('email').value = user.email;
-                  document.getElementById('phone').value = user.phoneNumber;
+                .then((data) => {
+                  alert("Service request submitted successfully!");
+                  form.reset(); // Clear the form after successful submission
+                  loadUserRequests();
+                  modal.style.display = "none"; // Close the modal
                 })
-                .catch(error => {
-                  console.error('Error fetching user details:', error);
+                .catch((error) => {
+                  console.error(
+                    "There was a problem with the fetch operation:",
+                    error
+                  );
                 });
-      });
-
-
-      document.getElementById("serviceRequestForm").addEventListener("submit", function (event) {
-        event.preventDefault();
-        const form = event.target;
-        const isValid = form.checkValidity();
-
-        if (isValid) {
-          const formData = {
-            name: form.name.value,
-            email: form.email.value,
-            phone: form.phone.value,
-            serviceRequested: form.service.value,
-            description: form.description.value,
-            location: form.location.value
-
-          };
-
-          fetchWithAuth('/api/servicerequest', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-          })
-              .then(response => {
-                if (!response.ok) {
-                  throw new Error('Failed to submit service requestk');
-                }
-                return response.json();
-              })
-              .then(data => {
-                alert("Service request submitted successfully!");
-                form.reset(); // Clear the form after successful submission
-                loadUserRequests();
-              })
-              .catch(error => {
-                console.error('There was a problem with the fetch operation:', error);
-              });
-        } else {
-          form.classList.add("was-validated");
-          const formGroups = form.querySelectorAll(".form-group");
-          formGroups.forEach((group) => {
-            const input = group.querySelector("input, textarea, select");
-            const errorMessage = group.querySelector(".error-message");
-            if (!input.validity.valid) {
-              group.classList.add("invalid");
-              errorMessage.textContent = input.validationMessage;
             } else {
-              group.classList.remove("invalid");
-              errorMessage.textContent = "";
+              form.classList.add("was-validated");
+              const formGroups = form.querySelectorAll(".form-group");
+              formGroups.forEach((group) => {
+                const input = group.querySelector("input, textarea, select");
+                const errorMessage = group.querySelector(".error-message");
+                if (!input.validity.valid) {
+                  group.classList.add("invalid");
+                  errorMessage.textContent = input.validationMessage;
+                } else {
+                  group.classList.remove("invalid");
+                  errorMessage.textContent = "";
+                }
+              });
             }
           });
-        }
       });
 
       function loadUserRequests() {
         // Fetch service requests by the logged-in user
-        fetchWithAuth('/api/servicerequest/id')
-                .then(response => {
-                  if (!response.ok) {
-                    throw new Error('Failed to fetch service requests');
-                  }
-                  return response.json();
-                })
-                .then(serviceRequests => {
-                  // Clear previous content
-                  const requestsContainer = document.getElementById('userServiceRequests');
-                  requestsContainer.innerHTML = '';
+        fetchWithAuth("/api/servicerequest/id")
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Failed to fetch service requests");
+            }
+            return response.json();
+          })
+          .then((serviceRequests) => {
+            // Clear previous content
+            const requestsContainer = document.getElementById(
+              "userServiceRequests"
+            );
+            requestsContainer.innerHTML = "";
 
-                  // Create a Bootstrap container div
-                  const container = document.createElement('div');
-                  container.classList.add('container', 'mt-3', 'mb-3');
+            if (serviceRequests.length === 0) {
+              const noRequestsMessage = document.createElement("p");
+              noRequestsMessage.textContent = "No service requests available.";
+              requestsContainer.appendChild(noRequestsMessage);
+              return;
+            }
 
-                  // Add title for service requests
-                  const title = document.createElement('h3');
-                  title.textContent = 'Service Requests';
-                  container.appendChild(title);
+            // Create a Bootstrap container div
+            const container = document.createElement("div");
+            container.classList.add("container", "mt-3", "mb-3");
 
-                  serviceRequests.forEach(request => {
-                    //request.resolved = undefined;
-                    // Create Bootstrap card for each service request
-                    const card = document.createElement('div');
-                    card.classList.add('card', 'mb-3');
+            // Add title for service requests
+            const title = document.createElement("h3");
+            title.textContent = "Service Requests";
+            container.appendChild(title);
 
-                    // Card body
-                    const cardBody = document.createElement('div');
-                    cardBody.classList.add('card-body');
+            serviceRequests.forEach((request) => {
+              // Create Bootstrap card for each service request
+              const card = document.createElement("div");
+              card.classList.add("card", "mb-3");
 
-                    // Card title (Service Request ID)
-                    const cardTitle = document.createElement('h5');
-                    cardTitle.classList.add('card-title');
-                    cardTitle.textContent = `Service Request ID: ${request.id}`;
-                    cardBody.appendChild(cardTitle);
+              // Card body
+              const cardBody = document.createElement("div");
+              cardBody.classList.add("card-body");
 
-                    // Other details
-                    const serviceRequested = document.createElement('p');
-                    serviceRequested.classList.add('card-text');
-                    serviceRequested.innerHTML = `<strong>Service Requested:</strong> ${request.serviceRequested}`;
-                    cardBody.appendChild(serviceRequested);
+              // Card title (Service Request ID)
+              const cardTitle = document.createElement("h5");
+              cardTitle.classList.add("card-title");
+              cardTitle.textContent = `Service Request ID: ${request.id}`;
+              cardBody.appendChild(cardTitle);
 
-                    const description = document.createElement('p');
-                    description.classList.add('card-text');
-                    description.innerHTML = `<strong>Description:</strong> ${request.description}`;
-                    cardBody.appendChild(description);
+              // Other details
+              const serviceRequested = document.createElement("p");
+              serviceRequested.classList.add("card-text");
+              serviceRequested.innerHTML = `<strong>Service Requested:</strong> ${request.serviceRequested}`;
+              cardBody.appendChild(serviceRequested);
 
-                    const location = document.createElement('p');
-                    location.classList.add('card-text');
-                    location.innerHTML = `<strong>Location:</strong> ${request.location}`;
-                    cardBody.appendChild(location);
+              const description = document.createElement("p");
+              description.classList.add("card-text");
+              description.innerHTML = `<strong>Description:</strong> ${request.description}`;
+              cardBody.appendChild(description);
 
-                    const resolved = document.createElement('p');
-                    resolved.classList.add('card-text');
-                    resolved.innerHTML = `<strong>Status:</strong> ${request.status}`;
-                    cardBody.appendChild(resolved);
+              const location = document.createElement("p");
+              location.classList.add("card-text");
+              location.innerHTML = `<strong>Location:</strong> ${request.location}`;
+              cardBody.appendChild(location);
 
-                    // Append card body to card
-                    card.appendChild(cardBody);
+              const resolved = document.createElement("p");
+              resolved.classList.add("card-text");
+              resolved.innerHTML = `<strong>Status:</strong> ${request.status}`;
+              cardBody.appendChild(resolved);
 
-                    // Append card to container
-                    container.appendChild(card);
-                  });
+              // Append card body to card
+              card.appendChild(cardBody);
 
-                  // Append container to requestsContainer
-                  requestsContainer.appendChild(container);
-                })
-                .catch(error => {
-                  console.error('Error fetching service requests:', error);
-                });
+              // Append card to container
+              container.appendChild(card);
+            });
+
+            // Append container to requestsContainer
+            requestsContainer.appendChild(container);
+          })
+          .catch((error) => {
+            console.error("Error fetching service requests:", error);
+          });
       }
-
-
-      loadUserRequests();
 
       function logout() {
         localStorage.removeItem("token");
