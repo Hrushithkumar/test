@@ -507,7 +507,6 @@
 
     <div id="footer-container"></div>
 
-
     <script>
       fetch("Header.html")
         .then((response) => response.text())
@@ -515,15 +514,8 @@
           document.getElementById("header-container").innerHTML = html;
         })
         .catch((error) => console.error("Error fetching header:", error));
-
-      fetch("Footer.html")
-              .then((response) => response.text())
-              .then((html) => {
-                document.getElementById("footer-container").innerHTML = html;
-              })
-              .catch((error) => console.error("Error fetching footer:", error));
-
       const token = localStorage.getItem("token");
+
       document.addEventListener("DOMContentLoaded", () => {
         fetchCategories();
         fetchListings();
@@ -601,7 +593,7 @@
               listings.forEach((listing) => {
                 const listingHTML = `
                     <div class="col-md-4 mb-3">
-                        <div class="ad-item">
+                        <div class="ad-item" onclick="showPropertyModal('${listing.title}', '${listing.description}', '${listing.category}', '/uploads/${listing.image}')">
                             <img src="/uploads/${listing.image}" alt="${listing.title}">
                             <h3>${listing.title}</h3>
                             <p>${listing.description}</p>
@@ -636,7 +628,7 @@
               homeListings.forEach((homeListing) => {
                 const listingHTML = `
                   <div class="col-md-4 mb-3">
-                      <div class="ad-item">
+                      <div class="ad-item" onclick="showPropertyModal('${homeListing.title}', '${homeListing.description}', '${homeListing.category}', '/uploads/${homeListing.image}')">
                           <img src="/uploads/${homeListing.image}" alt="${homeListing.title}">
                           <h3>${homeListing.title}</h3>
                           <p>${homeListing.description}</p>
@@ -815,6 +807,28 @@
           .catch((error) => console.error("Error submitting quote:", error));
       }
 
+      function showPropertyModal(title, description, category, image) {
+        const modalTitle = document.getElementById("propertyTitle");
+        const modalDescription = document.getElementById("propertyDescription");
+        const modalCategory = document.getElementById("propertyCategory");
+        const carouselInner = document.getElementById("carousel-inner");
+
+        modalTitle.textContent = title;
+        modalDescription.textContent = description;
+        modalCategory.textContent = `Category: ${category}`;
+
+        carouselInner.innerHTML = `
+          <div class="carousel-item active">
+            <img src="${image}" class="d-block w-100" alt="${title}">
+          </div>
+        `;
+
+        const propertyModal = new bootstrap.Modal(
+          document.getElementById("propertyModal")
+        );
+        propertyModal.show();
+      }
+
       function logout() {
         // Add logout logic here
         localStorage.removeItem("token");
@@ -823,5 +837,7 @@
         window.location.href = "/";
       }
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
   </body>
 </html>
