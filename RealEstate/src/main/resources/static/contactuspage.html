@@ -204,9 +204,9 @@
       });
 
       function fetchContactUsSubmissions() {
-        const token = localStorage.getItem("token");
+        //const token = localStorage.getItem("token");
 
-        fetchWithAuth("/contactus/submissions")
+        fetchWithAuth("/employee/contacts")
           .then((response) => response.json())
           .then((submissions) => {
             const tableBody = document.getElementById("contact-us-table-body");

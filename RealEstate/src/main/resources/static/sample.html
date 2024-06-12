@@ -494,7 +494,7 @@
     <section class="section contact">
       <div class="container">
         <h2>Contact Us</h2>
-        <form>
+        <form id="contact-form" method="POST" action="/employee/contacts">
           <div class="mb-3">
             <label for="contact-name" class="form-label">Name</label>
             <input
@@ -921,6 +921,9 @@
         document
           .getElementById("forgot-password-form")
           .addEventListener("submit", handleForgotPasswordFormSubmit);
+        document
+                .getElementById("contact-form")
+                .addEventListener("submit", handleContactFormSubmit);
       });
 
       function handleLoginFormSubmit(event) {
@@ -980,6 +983,42 @@
           document.getElementById("login-error").innerText = "";
           document.getElementById("login-success").innerText = "";
         });
+      }
+
+      function handleContactFormSubmit(event) {
+        event.preventDefault();
+
+        const name = event.target["contact-name"].value;
+        const email = event.target["contact-email"].value;
+        const message = event.target["contact-message"].value;
+
+        if (!name || !email || !message) {
+          alert("Please fill out all fields.");
+          return;
+        }
+
+        fetch("/employee/contacts", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name,
+            email,
+            message
+          }),
+        })
+          .then((response) => {
+            if (response.ok) {
+              alert("Contact form submitted successfully");
+              event.target.reset();
+            } else {
+              alert("Failed to submit contact form");
+            }
+          })
+          .catch((error) =>
+                  console.error("Error submitting contact form:", error)
+          );
       }
 
       function fetchServices() {
