@@ -28,7 +28,7 @@ function removeExpiredToken() {
     if (decodedToken.exp < currentTime) {
         localStorage.removeItem('token');
         alert("Session expired. Please login again.");
-        window.location.href = '/login';
+        window.location.href = '/';
     }
 }
 
@@ -45,7 +45,7 @@ function fetchWithAuth(url, options = {}) {
     const token = localStorage.getItem('token');
     if (!token) {
         alert("Session expired. Please login again.");
-        window.location.href = '/login';
+        window.location.href = '/';
         return Promise.reject(new Error("No token found"));
     }
 

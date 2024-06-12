@@ -2,6 +2,7 @@ package org.nitya.software.RealEstate.controller;
 
 import org.nitya.software.RealEstate.dto.LoginRequest;
 import org.nitya.software.RealEstate.exception.CustomExceptions.*;
+import org.nitya.software.RealEstate.model.Role;
 import org.nitya.software.RealEstate.model.User;
 import org.nitya.software.RealEstate.repository.RoleRepository;
 import org.nitya.software.RealEstate.security.JwtUtil;
@@ -22,10 +23,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 public class AuthController {
@@ -84,6 +84,9 @@ public class AuthController {
 
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setRoles(Collections.singleton(roleRepository.findByName("ROLE_USER")));
+            LocalDate now = LocalDate.now();
+            user.setCreatedAt(now);
+            user.setUpdatedAt(now);
             User savedUser = userService.save(user);
             response.put("message", "User created successfully");
             response.put("user", savedUser);
@@ -108,12 +111,18 @@ public class AuthController {
 
         if (user.isPresent()) {
             if (passwordEncoder.matches(authenticationRequest.getPassword(), user.get().getPassword())) {
+                // Fetch roles associated with the user
+                List<String> roles = user.get().getRoles().stream()
+                                .map(Role::getName)
+                                        .collect(Collectors.toList());
+
                 final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
                 final String jwt = jwtUtil.generateToken(userDetails.getUsername());
 
 
                 response.put("message", "Login successful");
                 response.put("jwtToken", jwt);
+                response.put("roles", roles);
 
                 return ResponseEntity.ok().body(response);
             } else {

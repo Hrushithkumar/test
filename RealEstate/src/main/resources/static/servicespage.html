@@ -16,6 +16,7 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
       rel="stylesheet"
     />
+
     <link href="css/HeaderFooter.css" rel="stylesheet" />
     <style>
       body {
@@ -30,92 +31,92 @@
         min-height: 100vh;
       }
 
-      header {
-        background-color: #2c3e50;
-        padding: 10px 20px;
-        position: fixed;
-        width: 100%;
-        top: 0;
-        z-index: 1000;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
+      /*header {*/
+      /*  background-color: #2c3e50;*/
+      /*  padding: 10px 20px;*/
+      /*  position: fixed;*/
+      /*  width: 100%;*/
+      /*  top: 0;*/
+      /*  z-index: 1000;*/
+      /*  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);*/
+      /*  display: flex;*/
+      /*  justify-content: space-between;*/
+      /*  align-items: center;*/
+      /*}*/
 
-      header .logo {
-        display: flex;
-        align-items: center;
-        color: #fff;
-        font-size: 1.5em;
-        font-weight: bold;
-      }
+      /*header .logo {*/
+      /*  display: flex;*/
+      /*  align-items: center;*/
+      /*  color: #fff;*/
+      /*  font-size: 1.5em;*/
+      /*  font-weight: bold;*/
+      /*}*/
 
-      header .logo img {
-        max-width: 50px;
-        height: auto;
-        margin-right: 10px;
-      }
+      /*header .logo img {*/
+      /*  max-width: 50px;*/
+      /*  height: auto;*/
+      /*  margin-right: 10px;*/
+      /*}*/
 
-      header nav ul {
-        list-style: none;
-        display: flex;
-        margin: 0;
-        padding: 0;
-      }
+      /*header nav ul {*/
+      /*  list-style: none;*/
+      /*  display: flex;*/
+      /*  margin: 0;*/
+      /*  padding: 0;*/
+      /*}*/
 
-      header nav ul li {
-        margin: 0 15px;
-        position: relative;
-      }
+      /*header nav ul li {*/
+      /*  margin: 0 15px;*/
+      /*  position: relative;*/
+      /*}*/
 
-      header nav ul li a {
-        color: #fff;
-        text-decoration: none;
-        font-weight: bold;
-        font-size: 1em;
-        transition: color 0.3s;
-      }
+      /*header nav ul li a {*/
+      /*  color: #fff;*/
+      /*  text-decoration: none;*/
+      /*  font-weight: bold;*/
+      /*  font-size: 1em;*/
+      /*  transition: color 0.3s;*/
+      /*}*/
 
-      header nav ul li a:hover {
-        color: #f39c12;
-      }
+      /*header nav ul li a:hover {*/
+      /*  color: #f39c12;*/
+      /*}*/
 
-      header nav ul li ul {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        background: #2c3e50;
-        padding: 0;
-        margin: 0;
-        list-style: none;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      }
+      /*header nav ul li ul {*/
+      /*  display: none;*/
+      /*  position: absolute;*/
+      /*  top: 100%;*/
+      /*  left: 0;*/
+      /*  background: #2c3e50;*/
+      /*  padding: 0;*/
+      /*  margin: 0;*/
+      /*  list-style: none;*/
+      /*  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);*/
+      /*}*/
 
-      header nav ul li:hover ul {
-        display: block;
-      }
+      /*header nav ul li:hover ul {*/
+      /*  display: block;*/
+      /*}*/
 
-      header nav ul li ul li {
-        margin: 0;
-      }
+      /*header nav ul li ul li {*/
+      /*  margin: 0;*/
+      /*}*/
 
-      header nav ul li ul li a {
-        padding: 10px 15px;
-        display: block;
-        color: #fff;
-      }
+      /*header nav ul li ul li a {*/
+      /*  padding: 10px 15px;*/
+      /*  display: block;*/
+      /*  color: #fff;*/
+      /*}*/
 
-      header nav ul li ul li a:hover {
-        background: #34495e;
-      }
+      /*header nav ul li ul li a:hover {*/
+      /*  background: #34495e;*/
+      /*}*/
 
       .main-content {
         flex: 1;
       }
 
-      .container {
+      .container.service{
         max-width: 900px;
         margin: 0 auto;
         padding: 20px;
@@ -163,88 +164,88 @@
         background-color: #45a049;
       }
 
-      footer {
-        background-color: #2c3e50;
-        color: white;
-        text-align: center;
-        padding: 15px 0;
-        position: relative;
-        margin-top: auto;
-        border-top: 10px solid #34495e;
-      }
+      /*footer {*/
+      /*  background-color: #2c3e50;*/
+      /*  color: white;*/
+      /*  text-align: center;*/
+      /*  padding: 15px 0;*/
+      /*  position: relative;*/
+      /*  margin-top: auto;*/
+      /*  border-top: 10px solid #34495e;*/
+      /*}*/
 
-      footer .container {
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
-      }
+      /*footer .container {*/
+      /*  display: flex;*/
+      /*  justify-content: space-between;*/
+      /*  flex-wrap: wrap;*/
+      /*}*/
 
-      footer h5 {
-        font-size: 1.2em;
-      }
+      /*footer h5 {*/
+      /*  font-size: 1.2em;*/
+      /*}*/
 
-      footer ul {
-        list-style: none;
-        padding: 0;
-      }
+      /*footer ul {*/
+      /*  list-style: none;*/
+      /*  padding: 0;*/
+      /*}*/
 
-      footer ul li {
-        margin-bottom: 10px;
-      }
+      /*footer ul li {*/
+      /*  margin-bottom: 10px;*/
+      /*}*/
 
-      footer ul li a {
-        color: white;
-        text-decoration: none;
-        transition: color 0.3s;
-      }
+      /*footer ul li a {*/
+      /*  color: white;*/
+      /*  text-decoration: none;*/
+      /*  transition: color 0.3s;*/
+      /*}*/
 
-      footer ul li a:hover {
-        color: #f39c12;
-      }
+      /*footer ul li a:hover {*/
+      /*  color: #f39c12;*/
+      /*}*/
 
-      .footer .social-icons {
-        display: flex;
-        gap: 10px;
-      }
+      /*.footer .social-icons {*/
+      /*  display: flex;*/
+      /*  gap: 10px;*/
+      /*}*/
 
-      .footer .social-icons a {
-        color: #fff;
-        font-size: 1.4rem;
-        transition: color 0.3s;
-      }
+      /*.footer .social-icons a {*/
+      /*  color: #fff;*/
+      /*  font-size: 1.4rem;*/
+      /*  transition: color 0.3s;*/
+      /*}*/
 
-      .footer .social-icons a:hover {
-        color: #f39c12;
-      }
+      /*.footer .social-icons a:hover {*/
+      /*  color: #f39c12;*/
+      /*}*/
 
-      footer p {
-        font-size: 0.9em;
-      }
+      /*footer p {*/
+      /*  font-size: 0.9em;*/
+      /*}*/
 
       @media (max-width: 768px) {
-        header {
-          flex-direction: column;
-          align-items: flex-start;
-        }
+      /*  header {*/
+      /*    flex-direction: column;*/
+      /*    align-items: flex-start;*/
+      /*  }*/
 
-        header nav ul {
-          flex-direction: column;
-          width: 100%;
-          margin-top: 10px;
-        }
+      /*  header nav ul {*/
+      /*    flex-direction: column;*/
+      /*    width: 100%;*/
+      /*    margin-top: 10px;*/
+      /*  }*/
 
-        header nav ul li {
-          margin: 5px 0;
-        }
+      /*  header nav ul li {*/
+      /*    margin: 5px 0;*/
+      /*  }*/
 
-        .footer .container {
-          flex-direction: column;
-          align-items: center;
-        }
+      /*  .footer .container {*/
+      /*    flex-direction: column;*/
+      /*    align-items: center;*/
+      /*  }*/
 
-        .footer .social-icons {
-          margin-top: 10px;
-        }
+      /*  .footer .social-icons {*/
+      /*    margin-top: 10px;*/
+      /*  }*/
       }
 
       .form-group.invalid input,
@@ -258,62 +259,14 @@
         font-size: 0.9em;
         display: block;
       }
-
-      /* Modal styles */
-      .modal {
-        display: none;
-        position: fixed;
-        z-index: 1000;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.4);
-      }
-
-      .modal-content {
-        background-color: #fefefe;
-        margin: 10% auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 80%;
-        max-width: 500px;
-        border-radius: 10px;
-      }
-
-      .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-      }
-
-      .close:hover,
-      .close:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-      }
     </style>
     <script src="js/auth.js"></script>
   </head>
   <body>
-    <div id="header-container"></div>
+  <div id="header-container"></div>
 
-    <div class="main-content">
-      <section class="container mt-5">
-        <h2>Service Requests</h2>
-        <button id="newServiceRequestBtn" class="btn btn-primary mb-3">
-          New Service Request
-        </button>
-        <div id="userServiceRequests"></div>
-      </section>
-    </div>
-
-    <div id="serviceRequestModal" class="modal">
-      <div class="modal-content">
-        <span class="close">&times;</span>
+  <div class="main-content">
+      <section class="container service mt-5">
         <h2>Service Request Form</h2>
         <form id="serviceRequestForm" novalidate>
           <div class="form-group">
@@ -403,246 +356,180 @@
             <button type="submit" class="btn btn-primary">Submit</button>
           </div>
         </form>
-      </div>
+      </section>
+      <div id="userServiceRequests"></div>
     </div>
 
-    <footer class="footer">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-4">
-            <h5>Quick Links</h5>
-            <ul class="list-unstyled">
-              <li><a href="#">Home</a></li>
-              <li><a href="#">Projects</a></li>
-              <li><a href="#">Services</a></li>
-              <li><a href="#">Homes for Sale</a></li>
-              <li><a href="#">About Us</a></li>
-              <li><a href="#">Contact</a></li>
-            </ul>
-          </div>
-          <div class="col-md-4">
-            <h5>Contact Us</h5>
-            <p>
-              123 Engineering Way,<br />
-              City, State, 12345<br />
-              Email: info@ironpillar.com<br />
-              Phone: (123) 456-7890
-            </p>
-          </div>
-          <div class="col-md-4">
-            <h5>Follow Us</h5>
-            <div class="social-icons">
-              <a href="#" class="text-white me-2"
-                ><i class="fab fa-facebook-f"></i
-              ></a>
-              <a href="#" class="text-white me-2"
-                ><i class="fab fa-twitter"></i
-              ></a>
-              <a href="#" class="text-white"
-                ><i class="fab fa-instagram"></i
-              ></a>
-            </div>
-          </div>
-        </div>
-        <p class="mt-3">
-          &copy; 2024 Iron Pillar Engineering and Construction. All rights
-          reserved.
-        </p>
-      </div>
-    </footer>
 
+    <div id="footer-container"></div>
     <script>
-      fetch("Header.html")
-        .then((response) => response.text())
-        .then((html) => {
-          document.getElementById("header-container").innerHTML = html;
-        })
-        .catch((error) => console.error("Error fetching header:", error));
+
+      fetch('Header.html')
+              .then(response => response.text())
+              .then(html => {
+                document.getElementById('header-container').innerHTML = html;
+              })
+              .catch(error => console.error('Error fetching header:', error));
+
+      fetch("Footer.html")
+              .then((response) => response.text())
+              .then((html) => {
+                document.getElementById("footer-container").innerHTML = html;
+              })
+              .catch((error) => console.error("Error fetching footer:", error));
 
       document.addEventListener("DOMContentLoaded", function () {
         // Fetch logged-in user details
-        fetchWithAuth("/loggeduser")
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error("Failed to fetch user details");
-            }
-            return response.json();
-          })
-          .then((user) => {
-            // Auto-fill user details in the form
-            document.getElementById("name").value = user.username;
-            document.getElementById("email").value = user.email;
-            document.getElementById("phone").value = user.phoneNumber;
-          })
-          .catch((error) => {
-            console.error("Error fetching user details:", error);
-          });
-
-        // Load user requests
-        loadUserRequests();
-
-        // Show modal
-        const modal = document.getElementById("serviceRequestModal");
-        const btn = document.getElementById("newServiceRequestBtn");
-        const span = document.getElementsByClassName("close")[0];
-
-        btn.onclick = function () {
-          modal.style.display = "block";
-        };
-
-        span.onclick = function () {
-          modal.style.display = "none";
-        };
-
-        window.onclick = function (event) {
-          if (event.target == modal) {
-            modal.style.display = "none";
-          }
-        };
-
-        // Handle form submission
-        document
-          .getElementById("serviceRequestForm")
-          .addEventListener("submit", function (event) {
-            event.preventDefault();
-            const form = event.target;
-            const isValid = form.checkValidity();
-
-            if (isValid) {
-              const formData = {
-                name: form.name.value,
-                email: form.email.value,
-                phone: form.phone.value,
-                serviceRequested: form.service.value,
-                description: form.description.value,
-                location: form.location.value,
-              };
-
-              fetchWithAuth("/api/servicerequest", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify(formData),
-              })
-                .then((response) => {
+        fetchWithAuth('/loggeduser')
+                .then(response => {
                   if (!response.ok) {
-                    throw new Error("Failed to submit service request");
+                    throw new Error('Failed to fetch user details');
                   }
                   return response.json();
                 })
-                .then((data) => {
-                  alert("Service request submitted successfully!");
-                  form.reset(); // Clear the form after successful submission
-                  loadUserRequests();
-                  modal.style.display = "none"; // Close the modal
+                .then(user => {
+                  // Auto-fill user details in the form
+                  document.getElementById('name').value = user.username;
+                  document.getElementById('email').value = user.email;
+                  document.getElementById('phone').value = user.phoneNumber;
                 })
-                .catch((error) => {
-                  console.error(
-                    "There was a problem with the fetch operation:",
-                    error
-                  );
+                .catch(error => {
+                  console.error('Error fetching user details:', error);
                 });
-            } else {
-              form.classList.add("was-validated");
-              const formGroups = form.querySelectorAll(".form-group");
-              formGroups.forEach((group) => {
-                const input = group.querySelector("input, textarea, select");
-                const errorMessage = group.querySelector(".error-message");
-                if (!input.validity.valid) {
-                  group.classList.add("invalid");
-                  errorMessage.textContent = input.validationMessage;
-                } else {
-                  group.classList.remove("invalid");
-                  errorMessage.textContent = "";
+      });
+
+
+      document.getElementById("serviceRequestForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+        const form = event.target;
+        const isValid = form.checkValidity();
+
+        if (isValid) {
+          const formData = {
+            name: form.name.value,
+            email: form.email.value,
+            phone: form.phone.value,
+            serviceRequested: form.service.value,
+            description: form.description.value,
+            location: form.location.value
+
+          };
+
+          fetchWithAuth('/api/servicerequest', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+          })
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error('Failed to submit service request');
                 }
+                return response.json();
+              })
+              .then(data => {
+                alert("Service request submitted successfully!");
+                form.reset(); // Clear the form after successful submission
+                loadUserRequests();
+              })
+              .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
               });
+        } else {
+          form.classList.add("was-validated");
+          const formGroups = form.querySelectorAll(".form-group");
+          formGroups.forEach((group) => {
+            const input = group.querySelector("input, textarea, select");
+            const errorMessage = group.querySelector(".error-message");
+            if (!input.validity.valid) {
+              group.classList.add("invalid");
+              errorMessage.textContent = input.validationMessage;
+            } else {
+              group.classList.remove("invalid");
+              errorMessage.textContent = "";
             }
           });
+        }
       });
 
       function loadUserRequests() {
         // Fetch service requests by the logged-in user
-        fetchWithAuth("/api/servicerequest/id")
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error("Failed to fetch service requests");
-            }
-            return response.json();
-          })
-          .then((serviceRequests) => {
-            // Clear previous content
-            const requestsContainer = document.getElementById(
-              "userServiceRequests"
-            );
-            requestsContainer.innerHTML = "";
+        fetchWithAuth('/api/servicerequest/id')
+                .then(response => {
+                  if (!response.ok) {
+                    throw new Error('Failed to fetch service requests');
+                  }
+                  return response.json();
+                })
+                .then(serviceRequests => {
+                  // Clear previous content
+                  const requestsContainer = document.getElementById('userServiceRequests');
+                  requestsContainer.innerHTML = '';
 
-            if (serviceRequests.length === 0) {
-              const noRequestsMessage = document.createElement("p");
-              noRequestsMessage.textContent = "No service requests available.";
-              requestsContainer.appendChild(noRequestsMessage);
-              return;
-            }
+                  // Create a Bootstrap container div
+                  const container = document.createElement('div');
+                  container.classList.add('container', 'service', 'mt-3', 'mb-3');
 
-            // Create a Bootstrap container div
-            const container = document.createElement("div");
-            container.classList.add("container", "mt-3", "mb-3");
+                  // Add title for service requests
+                  const title = document.createElement('h3');
+                  title.textContent = 'Service Requests';
+                  container.appendChild(title);
 
-            // Add title for service requests
-            const title = document.createElement("h3");
-            title.textContent = "Service Requests";
-            container.appendChild(title);
+                  serviceRequests.forEach(request => {
+                    //request.resolved = undefined;
+                    // Create Bootstrap card for each service request
+                    const card = document.createElement('div');
+                    card.classList.add('card', 'mb-3');
 
-            serviceRequests.forEach((request) => {
-              // Create Bootstrap card for each service request
-              const card = document.createElement("div");
-              card.classList.add("card", "mb-3");
+                    // Card body
+                    const cardBody = document.createElement('div');
+                    cardBody.classList.add('card-body');
 
-              // Card body
-              const cardBody = document.createElement("div");
-              cardBody.classList.add("card-body");
+                    // Card title (Service Request ID)
+                    const cardTitle = document.createElement('h5');
+                    cardTitle.classList.add('card-title');
+                    cardTitle.textContent = `Service Request ID: ${request.id}`;
+                    cardBody.appendChild(cardTitle);
 
-              // Card title (Service Request ID)
-              const cardTitle = document.createElement("h5");
-              cardTitle.classList.add("card-title");
-              cardTitle.textContent = `Service Request ID: ${request.id}`;
-              cardBody.appendChild(cardTitle);
+                    // Other details
+                    const serviceRequested = document.createElement('p');
+                    serviceRequested.classList.add('card-text');
+                    serviceRequested.innerHTML = `<strong>Service Requested:</strong> ${request.serviceRequested}`;
+                    cardBody.appendChild(serviceRequested);
 
-              // Other details
-              const serviceRequested = document.createElement("p");
-              serviceRequested.classList.add("card-text");
-              serviceRequested.innerHTML = `<strong>Service Requested:</strong> ${request.serviceRequested}`;
-              cardBody.appendChild(serviceRequested);
+                    const description = document.createElement('p');
+                    description.classList.add('card-text');
+                    description.innerHTML = `<strong>Description:</strong> ${request.description}`;
+                    cardBody.appendChild(description);
 
-              const description = document.createElement("p");
-              description.classList.add("card-text");
-              description.innerHTML = `<strong>Description:</strong> ${request.description}`;
-              cardBody.appendChild(description);
+                    const location = document.createElement('p');
+                    location.classList.add('card-text');
+                    location.innerHTML = `<strong>Location:</strong> ${request.location}`;
+                    cardBody.appendChild(location);
 
-              const location = document.createElement("p");
-              location.classList.add("card-text");
-              location.innerHTML = `<strong>Location:</strong> ${request.location}`;
-              cardBody.appendChild(location);
+                    const resolved = document.createElement('p');
+                    resolved.classList.add('card-text');
+                    resolved.innerHTML = `<strong>Status:</strong> ${request.status}`;
+                    cardBody.appendChild(resolved);
 
-              const resolved = document.createElement("p");
-              resolved.classList.add("card-text");
-              resolved.innerHTML = `<strong>Status:</strong> ${request.status}`;
-              cardBody.appendChild(resolved);
+                    // Append card body to card
+                    card.appendChild(cardBody);
 
-              // Append card body to card
-              card.appendChild(cardBody);
+                    // Append card to container
+                    container.appendChild(card);
+                  });
 
-              // Append card to container
-              container.appendChild(card);
-            });
-
-            // Append container to requestsContainer
-            requestsContainer.appendChild(container);
-          })
-          .catch((error) => {
-            console.error("Error fetching service requests:", error);
-          });
+                  // Append container to requestsContainer
+                  requestsContainer.appendChild(container);
+                })
+                .catch(error => {
+                  console.error('Error fetching service requests:', error);
+                });
       }
+
+
+      loadUserRequests();
 
       function logout() {
         localStorage.removeItem("token");

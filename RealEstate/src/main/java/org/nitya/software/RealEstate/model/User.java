@@ -9,6 +9,8 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.Set;
 
 @Getter
@@ -46,6 +48,14 @@ import java.util.Set;
         @Column(nullable = false, unique = true)
         @Pattern(regexp = "^\\+?[1-9]\\d{1,14}$")
         private String phoneNumber;
+
+        @NonNull
+        @Column(nullable = false)
+        private LocalDate createdAt;
+
+        @NonNull
+        @Column(nullable = false)
+        private LocalDate updatedAt;
 
         @Column(nullable = false)
         @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})

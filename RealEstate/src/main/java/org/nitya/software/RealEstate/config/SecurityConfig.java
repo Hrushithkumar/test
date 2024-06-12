@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "/static/**", "/images/**", "/services.html", "/QuotePage.html","/usermanagement.html",
                         "/uploadhomeforsales.html","/deletehomeforsale.html","/contactuspage.html","/uploadproject.html",
                         "/employeemanagement.html", "/deleteproject.html", "/servicespage.html", "/ListServiceRequests.html",
-                        "/QuotePage.html", "/Header.html").permitAll()
+                        "/QuotePage.html", "/Header.html", "/Footer.html").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling()

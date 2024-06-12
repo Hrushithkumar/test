@@ -962,9 +962,9 @@
                 );
                 modal.hide();
                 fetchServices();
-                document.getElementById("login-success").style.display = "none";
-                document.getElementById("login-error").style.display = "none";
               }, 2000);
+              document.getElementById("login-success").style.display = "none";
+              document.getElementById("login-error").style.display = "none";
             }
           })
           .catch((error) => {
@@ -973,6 +973,13 @@
             document.getElementById("login-error").style.display = "block";
             document.getElementById("login-success").style.display = "none";
           });
+
+        document.getElementById("loginModal").addEventListener('hidden.bs.modal', () => {
+          document.getElementById("login-error").style.display = "none";
+          document.getElementById("login-success").style.display = "none";
+          document.getElementById("login-error").innerText = "";
+          document.getElementById("login-success").innerText = "";
+        });
       }
 
       function fetchServices() {
