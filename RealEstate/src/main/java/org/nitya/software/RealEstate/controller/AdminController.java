@@ -8,12 +8,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/admin")
+@RolesAllowed("ROLE_ADMIN")
 public class AdminController {
 
     private final UserService userService;
@@ -25,13 +27,6 @@ public class AdminController {
     @Autowired
     public AdminController(UserService userService) {
         this.userService = userService;
-    }
-
-    @GetMapping("/user/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
-        Optional<User> user = userService.findById(id);
-        return user.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PutMapping("/user/{id}")

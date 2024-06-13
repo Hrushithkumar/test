@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.security.RolesAllowed;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -74,6 +75,7 @@ public class ProjectController {
      * @return
      */
     @PostMapping("/upload")
+    @RolesAllowed({"ROLE_ADMIN", "ROLE_EMPLOYEE"})
     public ResponseEntity<?> uploadProject(
             @RequestParam("category") String category,
             @RequestParam("title") String title,
@@ -176,7 +178,8 @@ public class ProjectController {
      * @param id
      * @return
      */
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
+    @RolesAllowed({"ROLE_ADMIN", "ROLE_EMPLOYEE"})
     public ResponseEntity<?> deleteProject(@PathVariable Long id) {
         try {
             // Find the project by ID
@@ -193,7 +196,6 @@ public class ProjectController {
 
             return ResponseEntity.ok("Project deleted successfully");
         } catch (Exception e) {
-            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete project.");
         }
     }

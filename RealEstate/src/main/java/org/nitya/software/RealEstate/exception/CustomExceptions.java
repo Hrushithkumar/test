@@ -32,10 +32,16 @@ public class CustomExceptions {
             }
         }
 
-    public static class ExpiredJwtTokenException extends RuntimeException {
-        public ExpiredJwtTokenException(String message) {
-            super(message);
+        public static class UnauthorizedUserException extends RuntimeException{
+            public UnauthorizedUserException(String message){
+                super(message);
+            }
         }
-    }
+
+        public static class ExpiredJwtTokenException extends RuntimeException {
+            public ExpiredJwtTokenException(String message) {
+                super(message);
+            }
+        }
 
     }

@@ -11,6 +11,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -68,5 +69,12 @@ import java.util.Set;
         @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
         @JsonIgnoreProperties("user")
         private Set<ServiceRequest> serviceRequests;
+
+        public void addRole(Role role) {
+            if (roles == null) {
+                roles = new HashSet<>();
+            }
+            roles.add(role);
+        }
 
 }
