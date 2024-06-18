@@ -18,6 +18,7 @@
     />
 
     <link href="css/HeaderFooter.css" rel="stylesheet" />
+    <script src="js/dynamicNavbar.js" defer></script>
     <style>
       body {
         font-family: "Montserrat", sans-serif;
@@ -204,7 +205,7 @@
     <div id="footer-container"></div>
     <script>
 
-      fetch('Header.html')
+      fetch('/includes/header.html')
               .then(response => response.text())
               .then(html => {
                 document.getElementById('header-container').innerHTML = html;
@@ -373,6 +374,7 @@
 
       function logout() {
         localStorage.removeItem("token");
+        localStorage.removeItem("roles")
         window.location.href = "/";
       }
     </script>

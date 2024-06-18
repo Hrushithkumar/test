@@ -14,11 +14,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.security.RolesAllowed;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -75,12 +75,12 @@ public class ProjectController {
      * @return
      */
     @PostMapping("/upload")
-    @RolesAllowed({"ROLE_ADMIN", "ROLE_EMPLOYEE"})
     public ResponseEntity<?> uploadProject(
             @RequestParam("category") String category,
             @RequestParam("title") String title,
             @RequestParam("description") String description,
-            @RequestParam("image") MultipartFile image) {
+            @RequestParam("image") MultipartFile image,
+            @RequestParam("price") float price){
 
         try {
             // Save image to the file system
@@ -114,11 +114,13 @@ public class ProjectController {
             project.setTitle(title);
             project.setDescription(description);
             project.setImage(imageName);
+            project.setCreatedOn(LocalDate.now());
+            project.setPrice(price);
 
             projectRepository.save(project);
 
             Map<String, Object> response = new HashMap<>();
-            response.put("success", true);
+            response.put("success", Boolean.TRUE);
             response.put("filename", imageName);
 
             return ResponseEntity.ok(response);
@@ -178,8 +180,7 @@ public class ProjectController {
      * @param id
      * @return
      */
-    @DeleteMapping("/delete/{id}")
-    @RolesAllowed({"ROLE_ADMIN", "ROLE_EMPLOYEE"})
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteProject(@PathVariable Long id) {
         try {
             // Find the project by ID
@@ -196,6 +197,7 @@ public class ProjectController {
 
             return ResponseEntity.ok("Project deleted successfully");
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete project.");
         }
     }

@@ -50,7 +50,7 @@ public class ServiceRequestService {
     }
 
     public Boolean isServiceReqPresent(Long id){
-        return serviceRequestRepository.existsById(id);
+        return (Boolean) serviceRequestRepository.existsById(id);
     }
 
     public Optional<ServiceRequest> updateStatus(Long id, String status){

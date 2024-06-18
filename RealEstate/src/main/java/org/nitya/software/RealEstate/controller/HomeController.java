@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -82,7 +83,8 @@ public class HomeController {
             @RequestParam("category") String category,
             @RequestParam("title") String title,
             @RequestParam("description") String description,
-            @RequestParam("image") MultipartFile image) {
+            @RequestParam("image") MultipartFile image,
+            @RequestParam("price") float price) {
 
         try {
             // Save image to the file system
@@ -116,11 +118,13 @@ public class HomeController {
             home.setTitle(title);
             home.setDescription(description);
             home.setImage(imageName);
+            home.setCreatedOn(LocalDate.now());
+            home.setPrice(price);
 
             homeRepository.save(home);
 
             Map<String, Object> response = new HashMap<>();
-            response.put("success", true);
+            response.put("success", Boolean.TRUE);
             response.put("filename", imageName);
 
             return ResponseEntity.ok(response);

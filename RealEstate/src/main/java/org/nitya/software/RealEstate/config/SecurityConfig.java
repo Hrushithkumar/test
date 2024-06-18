@@ -42,18 +42,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors(Customizer.withDefaults())
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/authenticate").permitAll()
-                .antMatchers(HttpMethod.POST, "/register").permitAll()
-                .antMatchers(HttpMethod.POST, "/employee/contacts").permitAll()
+                .antMatchers( "/register").permitAll()
+                .antMatchers("/admin/employee/register").permitAll()
+                .antMatchers( "/employee/contacts").permitAll()
 //                .antMatchers("/", "/static/**", "/images/**", "/services.html", "/QuotePage.html","/usermanagement.html",
 //                        "/uploadhomeforsales.html","/deletehomeforsale.html","/contactuspage.html","/uploadproject.html",
 //                        "/employeemanagement.html", "/deleteproject.html", "/servicespage.html", "/ListServiceRequests.html",
-//                        "/QuotePage.html", "/Header.html", "/Footer.html").permitAll()
-                .antMatchers("/", "/static/**", "/images/**", "/css/**", "/js/**", "/uploads/**").permitAll()
+//                        "/QuotePage.html", "/header.html", "/Footer.html").permitAll()
+                .antMatchers("/", "/static/**", "/images/**", "/css/**", "/js/**", "/uploads/**", "/includes/**").permitAll()
                 .antMatchers("/*.html").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling()
+                .accessDeniedHandler((request, response, accessDeniedException) -> {
+                    System.out.println("Access Denied: " +  accessDeniedException.getMessage());
+                    response.sendError(HttpStatus.FORBIDDEN.value(), "Access Denied");
+                })
                 .authenticationEntryPoint((request, response, authException) -> {
+                    System.out.println("Authentication Denied: " + authException.getMessage());
                     response.sendError(HttpStatus.UNAUTHORIZED.value(), "Unauthorized");
                 })
                 .and()
@@ -79,8 +85,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/css/**" , "/js/**", "/index.html", "/images/**", "/uploads/**");
+    public void configure(WebSecurity web) {
+        web.ignoring().antMatchers("/css/**" , "/js/**", "/index.html", "/images/**", "/uploads/**", "/static/**", "/includes/**");
     }
 
 }

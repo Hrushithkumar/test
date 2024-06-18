@@ -22,7 +22,7 @@
       href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"
       rel="stylesheet"
     />
-    <link href="css/HeaderFooter.css" rel="stylesheet" />
+    <script src="js/dynamicNavbar.js" defer></script>
 
     <style>
       body {
@@ -186,7 +186,7 @@
     </div>
 
     <script>
-      fetch('Header.html')
+      fetch('/includes/header.html')
               .then(response => response.text())
               .then(html => {
                 document.getElementById('header-container').innerHTML = html;

@@ -7,6 +7,8 @@ import org.nitya.software.RealEstate.model.enums.Category;
 import org.nitya.software.RealEstate.model.enums.HomeCategory;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.Date;
 
 @Data
 @Entity
@@ -28,4 +30,10 @@ public class Home {
 
     @Column(nullable = true)
     private String image;
+
+    @Column(nullable = false)
+    private float price;
+
+    @Column(nullable = false)
+    private LocalDate createdOn;
 }

@@ -19,6 +19,7 @@
       rel="stylesheet"
     />
     <link href="css/HeaderFooter.css" rel="stylesheet" />
+    <script src="js/dynamicNavbar.js" defer></script>
     <style>
       body {
         font-family: "Montserrat", sans-serif;
@@ -240,7 +241,7 @@
 
     <script>
 
-      fetch('Header.html')
+      fetch('/includes/header.html')
               .then(response => response.text())
               .then(html => {
                 document.getElementById('header-container').innerHTML = html;
