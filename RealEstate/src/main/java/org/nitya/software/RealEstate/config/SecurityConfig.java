@@ -45,10 +45,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers( "/register").permitAll()
                 .antMatchers("/admin/employee/register").permitAll()
                 .antMatchers( "/employee/contacts").permitAll()
-//                .antMatchers("/", "/static/**", "/images/**", "/services.html", "/QuotePage.html","/usermanagement.html",
-//                        "/uploadhomeforsales.html","/deletehomeforsale.html","/contactuspage.html","/uploadproject.html",
-//                        "/employeemanagement.html", "/deleteproject.html", "/servicespage.html", "/ListServiceRequests.html",
-//                        "/QuotePage.html", "/header.html", "/Footer.html").permitAll()
+//                .antMatchers("/", "/static/**", "/images/**", "/main.html", "/custquoteslist.html","/empusermanagement.html",
+//                        "/uploadhome.html","/deletehomes.html","/custcontactslist.html","/uploadproject.html",
+//                        "/empsalgenerator.html", "/deleteprojects.html", "/servicerequestform.html", "/custservicereqlist.html",
+//                        "/custquoteslist.html", "/header.html", "/Footer.html").permitAll()
                 .antMatchers("/", "/static/**", "/images/**", "/css/**", "/js/**", "/uploads/**", "/includes/**").permitAll()
                 .antMatchers("/*.html").permitAll()
                 .anyRequest().authenticated()

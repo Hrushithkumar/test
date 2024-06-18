@@ -209,6 +209,9 @@
       <textarea id="description" name="description" required></textarea
       ><br /><br />
 
+      <label for="price">Price:</label><br />
+      <input type="number" id="price" name="price" step="0.01" min="0" required /><br /><br />
+
       <label for="image">Image:</label><br />
       <input
         type="file"
@@ -226,6 +229,7 @@
       <p id="projectCategory"></p>
       <p id="projectTitle"></p>
       <p id="projectDescription"></p>
+      <p id="projectPrice"></p>
       <img id="projectImage" src="" alt="Project Image" />
     </div>
 
@@ -287,6 +291,8 @@
                 "Title: " + formData.get("title");
               document.getElementById("projectDescription").textContent =
                 "Description: " + formData.get("description");
+              document.getElementById("projectPrice").textContent =
+                      "Price: $" + parseFloat(formData.get("price")).toFixed(2); // Display price
               document.getElementById("projectImage").src =
                 "/uploads/" + data.filename;
               form.reset();

@@ -54,7 +54,7 @@ public class AuthController {
     @GetMapping("/")
     public StreamingResponseBody home(HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
-        InputStream inputStream = getClass().getResourceAsStream("/static/sample.html");
+        InputStream inputStream = getClass().getResourceAsStream("/static/index.html");
         return outputStream -> {
             byte[] buffer = new byte[2048];
             int bytesRead;

@@ -127,21 +127,6 @@
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
       }
 
-      .back-button {
-        display: block;
-        margin: 20px auto;
-        text-align: center;
-        color: #fff;
-        background-color: #2c3e50;
-        padding: 10px 20px;
-        border-radius: 5px;
-        text-decoration: none;
-      }
-
-      .back-button:hover {
-        background-color: #34495e;
-      }
-
       form {
         max-width: 500px;
         margin: 0 auto;
@@ -189,12 +174,7 @@
   <div id="header-container"></div>
 
 
-  <section class="hero">
-      <div class="hero-content">
-        <h1>Welcome to Iron Pillar Engineering and Construction</h1>
-        <p>Building the future with innovation and excellence.</p>
-      </div>
-    </section>
+  <h1>Upload Homes</h1>
 
     <div class="container mt-5">
       <!-- <h2>Homes for Sale</h2> -->
@@ -217,6 +197,9 @@
       <textarea id="description" name="description" required></textarea
       ><br /><br />
 
+      <label for="price">Price:</label><br />
+      <input type="number" id="price" name="price" step="0.01" min="0" required /><br /><br />
+
       <label for="image">Image:</label><br />
       <input
         type="file"
@@ -234,6 +217,7 @@
       <p id="homeCategory"></p>
       <p id="homeTitle"></p>
       <p id="homeDescription"></p>
+      <p id="homePrice"></p>
       <img id="homeImage" src="" alt="Home Image" />
     </div>
 
@@ -325,6 +309,8 @@
                 "Title: " + formData.get("title");
               document.getElementById("homeDescription").textContent =
                 "Description: " + formData.get("description");
+              document.getElementById("homePrice").textContent =
+                      "Price: $" + parseFloat(formData.get("price")).toFixed(2);
               document.getElementById("homeImage").src =
                 "/uploads/" + data.filename;
               form.reset();
