@@ -3,6 +3,8 @@ package org.nitya.software.RealEstate.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class ProjectDto {
@@ -10,5 +12,5 @@ public class ProjectDto {
     private String category;
     private String title;
     private String description;
-    private String image;
+    private List<String> images;
 }

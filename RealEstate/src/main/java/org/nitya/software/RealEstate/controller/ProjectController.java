@@ -71,7 +71,7 @@ public class ProjectController {
      * @param category
      * @param title
      * @param description
-     * @param image
+     * @param images
      * @return
      */
     @PostMapping("/upload")
@@ -79,27 +79,31 @@ public class ProjectController {
             @RequestParam("category") String category,
             @RequestParam("title") String title,
             @RequestParam("description") String description,
-            @RequestParam("image") MultipartFile image,
+            @RequestParam("images") MultipartFile[] images,
             @RequestParam("price") float price){
 
         try {
-            // Save image to the file system
-            String imageName = image.getOriginalFilename();
-            if (imageName == null || imageName.trim().isEmpty()) {
-                imageName = UUID.randomUUID().toString() + ".jpg"; // You can change the extension as needed
-            }
+            List<String> imageNames = new ArrayList<>();
 
-            // Sanitize the filename to remove any path traversal characters
-            imageName = imageName.replaceAll("[^a-zA-Z0-9\\.\\-]", "_");
-            Path imagePath = Paths.get(UPLOAD_DIR).resolve(imageName);
-            //Files.write(imagePath, image.getBytes());
+            for(MultipartFile image: images){
+                // Save image to the file system
+                String imageName = image.getOriginalFilename();
+                if (imageName == null || imageName.trim().isEmpty()) {
+                    imageName = UUID.randomUUID().toString() + ".jpg"; // You can change the extension as needed
+                }
+                // Sanitize the filename to remove any path traversal characters
+                imageName = imageName.replaceAll("[^a-zA-Z0-9\\.\\-]", "_");
+                Path imagePath = Paths.get(UPLOAD_DIR).resolve(imageName);
+                //Files.write(imagePath, image.getBytes());
 
-            try {
-                Thumbnails.of(image.getInputStream())
-                        .size(300, 200)
-                        .toFile(imagePath.toFile());
-            } catch (UnsupportedFormatException e) {
-                return ResponseEntity.badRequest().body("Unsupported image format.");
+                try {
+                    Thumbnails.of(image.getInputStream())
+                            .size(300, 200)
+                            .toFile(imagePath.toFile());
+                } catch (UnsupportedFormatException e) {
+                    return ResponseEntity.badRequest().body("Unsupported image format.");
+                }
+                imageNames.add(imageName);
             }
 
             Category projectCategory = Arrays.stream(Category.values())
@@ -113,7 +117,7 @@ public class ProjectController {
             project.setCategory(projectCategory);
             project.setTitle(title);
             project.setDescription(description);
-            project.setImage(imageName);
+            project.setImages(imageNames);
             project.setCreatedOn(LocalDate.now());
             project.setPrice(price);
 
@@ -121,7 +125,7 @@ public class ProjectController {
 
             Map<String, Object> response = new HashMap<>();
             response.put("success", Boolean.TRUE);
-            response.put("filename", imageName);
+            response.put("filenames", imageNames);
 
             return ResponseEntity.ok(response);
         } catch (IOException e) {
@@ -146,7 +150,7 @@ public class ProjectController {
             projectDto.setCategory(project.getCategory().getCategoryName());
             projectDto.setTitle(project.getTitle());
             projectDto.setDescription(project.getDescription());
-            projectDto.setImage(project.getImage());
+            projectDto.setImages(project.getImages());
             projectDtos.add(projectDto);
         }
 
@@ -188,9 +192,11 @@ public class ProjectController {
                     .orElseThrow(() -> new IllegalArgumentException("Project not found with ID: " + id));
 
             // Delete the image file from the file system
-            String imageName = project.getImage();
-            Path imagePath = Paths.get(UPLOAD_DIR + imageName);
-            Files.deleteIfExists(imagePath);
+            List<String> imageNames = project.getImages();
+            for (String imageName : imageNames) {
+                Path imagePath = Paths.get(UPLOAD_DIR + imageName);
+                Files.deleteIfExists(imagePath);
+            }
 
             // Delete the project from the database
             projectRepository.delete(project);

@@ -16,6 +16,8 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
       rel="stylesheet"
     />
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <link href="css/HeaderFooter.css" rel="stylesheet" />
     <script src="js/dynamicNavbar.js" defer></script>
     <style>
@@ -128,10 +130,6 @@
         text-decoration: none;
       }
 
-      .back-button:hover {
-        background-color: #34495e;
-      }
-
       form {
         max-width: 500px;
         margin: 0 auto;
@@ -212,12 +210,13 @@
       <label for="price">Price:</label><br />
       <input type="number" id="price" name="price" step="0.01" min="0" required /><br /><br />
 
-      <label for="image">Image:</label><br />
+      <label for="images">Image:</label><br />
       <input
         type="file"
-        id="image"
-        name="image"
+        id="images"
+        name="images"
         accept="image/*"
+        multiple
         required
       /><br /><br />
 
@@ -230,8 +229,23 @@
       <p id="projectTitle"></p>
       <p id="projectDescription"></p>
       <p id="projectPrice"></p>
-      <img id="projectImage" src="" alt="Project Image" />
+      <div id="projectImagesContainer"></div>
     </div>
+
+    <!-- Loading Modal -->
+    <div class="modal fade" id="loadingModal" tabindex="-1" aria-labelledby="loadingModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-body text-center">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <p>Uploading please wait...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
     <div id="footer-container"></div>
 
@@ -275,7 +289,16 @@
 
       function uploadProject() {
         const form = document.getElementById("uploadForm");
+        const uploadButton = form.querySelector("button[type='button']"); // Select the upload button
+        uploadButton.disabled = true; // Disable the button
+
         const formData = new FormData(form);
+        // Show loading modal
+        const loadingModal = new bootstrap.Modal(document.getElementById("loadingModal"), {
+          backdrop: 'static', // Prevents closing by clicking outside
+          keyboard: false // Prevents closing by pressing Esc key
+        });
+        loadingModal.show();
 
         fetchWithAuth("/projects/upload", {
           method: "POST",
@@ -283,6 +306,8 @@
         })
           .then((response) => response.json())
           .then((data) => {
+            data.filenames = undefined;
+            loadingModal.hide();
             if (data.success) {
               document.getElementById("projectDetails").style.display = "block";
               document.getElementById("projectCategory").textContent =
@@ -293,14 +318,28 @@
                 "Description: " + formData.get("description");
               document.getElementById("projectPrice").textContent =
                       "Price: $" + parseFloat(formData.get("price")).toFixed(2); // Display price
-              document.getElementById("projectImage").src =
-                "/uploads/" + data.filename;
+              const projectImagesContainer = document.getElementById("projectImagesContainer");
+              projectImagesContainer.innerHTML = "";
+
+              data.filenames.forEach((filename) => {
+                const img = document.createElement("img");
+                img.src = "/uploads/" + filename;
+                img.alt = "Project Image";
+                img.style.maxWidth = "100%";
+                img.style.borderRadius = "5px";
+                img.style.marginTop = "10px";
+                projectImagesContainer.appendChild(img);
+              });
               form.reset();
             } else {
               alert("Failed to upload project.");
             }
           })
-          .catch((error) => console.error("Error uploading project:", error));
+          .catch((error) => console.error("Error uploading project:", error))
+                .finally( () => {
+                  loadingModal.hide(); // Hide loading modal
+                  uploadButton.disabled = false; // Enable the button after request completes
+                });
       }
     </script>
   </body>
