@@ -1,9 +1,9 @@
 package org.nitya.software.RealEstate.controller;
 
+import org.nitya.software.RealEstate.dto.DateRangeDto;
 import org.nitya.software.RealEstate.model.CustomerInfo;
 import org.nitya.software.RealEstate.service.CustomerInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -80,9 +80,9 @@ public class CustomerInfoController {
     }
 
     @PostMapping("/track-deals")
-    public ResponseEntity<Map<String, Object>> trackDeals(
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+    public ResponseEntity<Map<String, Object>> trackDeals(@RequestBody DateRangeDto dateRange) {
+        LocalDate startDate = dateRange.getStartDate();
+        LocalDate endDate = dateRange.getEndDate();
 
         List<CustomerInfo> deals = customerInfoService.findDealsByDateRange(startDate, endDate);
 

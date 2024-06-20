@@ -22,73 +22,60 @@
 </head>
 <body>
 <header>
-  <div class="logo">
-    <img src="/images/logo.png" alt="Logo" />
-    Iron Pillar Engineering and Construction
-  </div>
-  <nav>
-    <ul id="navbar">
-      <li>
-        <a href="/main.html"><i class="fas fa-home"></i> Home</a>
-      </li>
-      <li data-roles="ROLE_ADMIN">
-        <a href="#"><i class="fas fa-user-shield"></i> Administrator</a>
-        <ul>
-          <li>
-            <a href="/empusermanagement.html"><i class="fas fa-user-cog"></i> Users</a>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="/images/logo.png" alt="Logo" height="30" class="d-inline-block align-top">
+        Iron Pillar Engineering and Construction
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/main.html"><i class="fas fa-home"></i> Home</a>
           </li>
-          <li>
-            <a href="/empsalgenerator.html"><i class="fas fa-user-tie"></i> Employees Salary Management</a>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-user-shield"></i> Administrator
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/empusermanagement.html"><i class="fas fa-user-cog"></i> Users</a></li>
+              <li><a class="dropdown-item" href="/empsalgenerator.html"><i class="fas fa-file-invoice-dollar"></i> Employees Salary Management</a></li>
+              <li><a class="dropdown-item" href="/empsalarylist.html"><i class="fas fa-money-bill-wave"></i> Employee Salaries</a></li>
+            </ul>
           </li>
-          <li>
-            <a href="/empsalarylist.html"><i class="fas fa-tasks"></i> Employee Salaries</a>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-users"></i> Employee Management
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/custquoteslist.html"><i class="fas fa-quote-right"></i> Quotes</a></li>
+              <li><a class="dropdown-item" href="/custcontactslist.html"><i class="fas fa-address-book"></i> Contacts</a></li>
+              <li><a class="dropdown-item" href="/custservicereqlist.html"><i class="fas fa-tasks"></i> Service Requests</a></li>
+              <li><a class="dropdown-item" href="/custinformationform.html"><i class="fas fa-info-circle"></i> Customer Form</a></li>
+              <li><a class="dropdown-item" href="/custinvoice.html"><i class="fas fa-file-invoice"></i> Customer Invoice</a></li>
+              <li><a class="dropdown-item" href="/deletehomes.html"><i class="fas fa-trash-alt"></i> Delete Homes</a></li>
+              <li><a class="dropdown-item" href="/deleteprojects.html"><i class="fas fa-trash-alt"></i> Delete Projects</a></li>
+              <li><a class="dropdown-item" href="/uploadhome.html"><i class="fas fa-upload"></i> Upload Homes</a></li>
+              <li><a class="dropdown-item" href="/uploadproject.html"><i class="fas fa-upload"></i> Upload Projects</a></li>
+            </ul>
           </li>
-        </ul>
-      </li>
-      <li data-roles="ROLE_EMPLOYEE,ROLE_ADMIN">
-        <a href="#"><i class="fas fa-users"></i> Employee Management</a>
-        <ul>
-          <li>
-            <a href="/custquoteslist.html"><i class="fas fa-quote-right"></i> Quotes</a>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-cogs"></i> Services</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/servicerequestform.html"><i class="fas fa-wrench"></i> Service Request</a></li>
+            </ul>
           </li>
-          <li>
-            <a href="/custcontactslist.html"><i class="fas fa-address-book"></i> Contacts</a>
-          </li>
-          <li>
-            <a href="/custservicereqlist.html"><i class="fas fa-tasks"></i> Service Requests</a>
-          </li>
-          <li>
-            <a href="/custinformationform.html"><i class="fas fa-tasks"></i> Customer Form</a>
-          </li>
-          <li>
-            <a href="/custinvoice.html"><i class="fas fa-tasks"></i> Customer invoice</a>
-          </li>
-          <li>
-            <a href="/deletehomes.html"><i class="fas fa-tasks"></i> Delete Homes</a>
-          </li>
-          <li>
-            <a href="/deleteprojects.html"><i class="fas fa-tasks"></i> Delete Projects</a>
-          </li>
-          <li>
-            <a href="/uploadhome.html"><i class="fas fa-tasks"></i> Upload Homes</a>
-          </li>
-          <li>
-            <a href="/uploadproject.html"><i class="fas fa-tasks"></i> Upload Projects</a>
+          <li class="nav-item">
+            <a class="nav-link" href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
           </li>
         </ul>
-      </li>
-      <li data-roles="ROLE_USER,ROLE_ADMIN,ROLE_EMPLOYEE">
-        <a href="#"><i class="fas fa-cogs"></i> Services</a>
-        <ul>
-          <li>
-            <a href="/servicerequestform.html"><i class="fas fa-wrench"></i> Service Request</a>
-          </li>
-        </ul>
-      </li>
-      <li>
-        <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
-      </li>
-    </ul>
+      </div>
+    </div>
   </nav>
 </header>
 </body>

@@ -16,6 +16,7 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
       rel="stylesheet"
     />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <link href="css/HeaderFooter.css" rel="stylesheet" />
     <script src="js/dynamicNavbar.js" defer></script>
@@ -317,49 +318,57 @@
                   title.textContent = 'Service Requests';
                   container.appendChild(title);
 
-                  serviceRequests.forEach(request => {
-                    //request.resolved = undefined;
-                    // Create Bootstrap card for each service request
-                    const card = document.createElement('div');
-                    card.classList.add('card', 'mb-3');
+                  if (serviceRequests.length === 0) {
+                    // Display message when no service requests are available
+                    const noRequestsMessage = document.createElement('p');
+                    noRequestsMessage.textContent = 'No service requests available.';
+                    noRequestsMessage.classList.add('no-requests');
+                    container.appendChild(noRequestsMessage);
+                  } else {
+                    // Iterate over each service request
+                    serviceRequests.forEach(request => {
+                      // Create Bootstrap card for each service request
+                      const card = document.createElement('div');
+                      card.classList.add('card', 'mb-3');
 
-                    // Card body
-                    const cardBody = document.createElement('div');
-                    cardBody.classList.add('card-body');
+                      // Card body
+                      const cardBody = document.createElement('div');
+                      cardBody.classList.add('card-body');
 
-                    // Card title (Service Request ID)
-                    const cardTitle = document.createElement('h5');
-                    cardTitle.classList.add('card-title');
-                    cardTitle.textContent = `Service Request ID: ${request.id}`;
-                    cardBody.appendChild(cardTitle);
+                      // Card title (Service Request ID)
+                      const cardTitle = document.createElement('h5');
+                      cardTitle.classList.add('card-title');
+                      cardTitle.textContent = `Service Request ID: ${request.id}`;
+                      cardBody.appendChild(cardTitle);
 
-                    // Other details
-                    const serviceRequested = document.createElement('p');
-                    serviceRequested.classList.add('card-text');
-                    serviceRequested.innerHTML = `<strong>Service Requested:</strong> ${request.serviceRequested}`;
-                    cardBody.appendChild(serviceRequested);
+                      // Other details
+                      const serviceRequested = document.createElement('p');
+                      serviceRequested.classList.add('card-text');
+                      serviceRequested.innerHTML = `<strong>Service Requested:</strong> ${request.serviceRequested}`;
+                      cardBody.appendChild(serviceRequested);
 
-                    const description = document.createElement('p');
-                    description.classList.add('card-text');
-                    description.innerHTML = `<strong>Description:</strong> ${request.description}`;
-                    cardBody.appendChild(description);
+                      const description = document.createElement('p');
+                      description.classList.add('card-text');
+                      description.innerHTML = `<strong>Description:</strong> ${request.description}`;
+                      cardBody.appendChild(description);
 
-                    const location = document.createElement('p');
-                    location.classList.add('card-text');
-                    location.innerHTML = `<strong>Location:</strong> ${request.location}`;
-                    cardBody.appendChild(location);
+                      const location = document.createElement('p');
+                      location.classList.add('card-text');
+                      location.innerHTML = `<strong>Location:</strong> ${request.location}`;
+                      cardBody.appendChild(location);
 
-                    const resolved = document.createElement('p');
-                    resolved.classList.add('card-text');
-                    resolved.innerHTML = `<strong>Status:</strong> ${request.status}`;
-                    cardBody.appendChild(resolved);
+                      const resolved = document.createElement('p');
+                      resolved.classList.add('card-text');
+                      resolved.innerHTML = `<strong>Status:</strong> ${request.status}`;
+                      cardBody.appendChild(resolved);
 
-                    // Append card body to card
-                    card.appendChild(cardBody);
+                      // Append card body to card
+                      card.appendChild(cardBody);
 
-                    // Append card to container
-                    container.appendChild(card);
-                  });
+                      // Append card to container
+                      container.appendChild(card);
+                    });
+                  }
 
                   // Append container to requestsContainer
                   requestsContainer.appendChild(container);
@@ -370,14 +379,9 @@
       }
 
 
+
       loadUserRequests();
 
-      function logout() {
-        localStorage.removeItem("token");
-        localStorage.removeItem("roles")
-        window.location.href = "/";
-      }
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>

@@ -26,75 +26,75 @@
         margin: 0;
         padding-top: 80px;
       }
-      header {
-        background-color: #2c3e50;
-        padding: 10px 20px;
-        position: fixed;
-        width: 100%;
-        top: 0;
-        z-index: 1000;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-      header .logo {
-        display: flex;
-        align-items: center;
-        color: #fff;
-        font-size: 1.5em;
-        font-weight: bold;
-      }
-      header .logo img {
-        max-width: 50px;
-        height: auto;
-        margin-right: 10px;
-      }
-      header nav ul {
-        list-style: none;
-        display: flex;
-        margin: 0;
-        padding: 0;
-      }
-      header nav ul li {
-        margin: 0 15px;
-        position: relative;
-      }
-      header nav ul li a {
-        color: #fff;
-        text-decoration: none;
-        font-weight: bold;
-        font-size: 1em;
-        transition: color 0.3s;
-      }
-      header nav ul li a:hover {
-        color: #f39c12;
-      }
-      header nav ul li ul {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        background: #2c3e50;
-        padding: 0;
-        margin: 0;
-        list-style: none;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      }
-      header nav ul li:hover ul {
-        display: block;
-      }
-      header nav ul li ul li {
-        margin: 0;
-      }
-      header nav ul li ul li a {
-        padding: 10px 15px;
-        display: block;
-        color: #fff;
-      }
-      header nav ul li ul li a:hover {
-        background: #34495e;
-      }
+      /*header {*/
+      /*  background-color: #2c3e50;*/
+      /*  padding: 10px 20px;*/
+      /*  position: fixed;*/
+      /*  width: 100%;*/
+      /*  top: 0;*/
+      /*  z-index: 1000;*/
+      /*  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);*/
+      /*  display: flex;*/
+      /*  justify-content: space-between;*/
+      /*  align-items: center;*/
+      /*}*/
+      /*header .logo {*/
+      /*  display: flex;*/
+      /*  align-items: center;*/
+      /*  color: #fff;*/
+      /*  font-size: 1.5em;*/
+      /*  font-weight: bold;*/
+      /*}*/
+      /*header .logo img {*/
+      /*  max-width: 50px;*/
+      /*  height: auto;*/
+      /*  margin-right: 10px;*/
+      /*}*/
+      /*header nav ul {*/
+      /*  list-style: none;*/
+      /*  display: flex;*/
+      /*  margin: 0;*/
+      /*  padding: 0;*/
+      /*}*/
+      /*header nav ul li {*/
+      /*  margin: 0 15px;*/
+      /*  position: relative;*/
+      /*}*/
+      /*header nav ul li a {*/
+      /*  color: #fff;*/
+      /*  text-decoration: none;*/
+      /*  font-weight: bold;*/
+      /*  font-size: 1em;*/
+      /*  transition: color 0.3s;*/
+      /*}*/
+      /*header nav ul li a:hover {*/
+      /*  color: #f39c12;*/
+      /*}*/
+      /*header nav ul li ul {*/
+      /*  display: none;*/
+      /*  position: absolute;*/
+      /*  top: 100%;*/
+      /*  left: 0;*/
+      /*  background: #2c3e50;*/
+      /*  padding: 0;*/
+      /*  margin: 0;*/
+      /*  list-style: none;*/
+      /*  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);*/
+      /*}*/
+      /*header nav ul li:hover ul {*/
+      /*  display: block;*/
+      /*}*/
+      /*header nav ul li ul li {*/
+      /*  margin: 0;*/
+      /*}*/
+      /*header nav ul li ul li a {*/
+      /*  padding: 10px 15px;*/
+      /*  display: block;*/
+      /*  color: #fff;*/
+      /*}*/
+      /*header nav ul li ul li a:hover {*/
+      /*  background: #34495e;*/
+      /*}*/
       .container.employee {
         max-width: 1200px;
         margin: 30px auto;
@@ -241,18 +241,31 @@
               })
               .then(data => {
                 const tableBody = document.getElementById("salaryTableBody");
-                data.forEach(salary => {
-                  const row = document.createElement("tr");
-                  row.innerHTML = `
-              <td>${salary.employeeName}</td>
-              <td>${salary.payRate}</td>
-              <td>${salary.hours}</td>
-              <td>${salary.salary}</td>
-              <td>${salary.fromDate}</td>
-              <td>${salary.toDate}</td>
-            `;
-                  tableBody.appendChild(row);
-                });
+                tableBody.innerHTML = "";
+
+                if (data.length === 0) {
+                  const noDataRow = document.createElement("tr");
+                  const noDataCell = document.createElement("td");
+                  noDataCell.colSpan = 6; // Adjust the colspan to match the number of columns in your table
+                  noDataCell.textContent = "No salary records available";
+                  noDataCell.style.textAlign = "center"; // Optional: Center the text
+                  noDataRow.appendChild(noDataCell);
+
+                  tableBody.appendChild(noDataRow);
+                } else {
+                  data.forEach(salary => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+            <td>${salary.employeeName}</td>
+            <td>${salary.payRate}</td>
+            <td>${salary.hours}</td>
+            <td>${salary.salary}</td>
+            <td>${salary.fromDate}</td>
+            <td>${salary.toDate}</td>
+          `;
+                    tableBody.appendChild(row);
+                  });
+                }
               })
               .catch(error => console.error("Error fetching salaries:", error));
     });
