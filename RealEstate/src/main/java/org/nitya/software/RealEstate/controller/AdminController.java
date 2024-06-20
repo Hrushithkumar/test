@@ -9,11 +9,9 @@ import org.nitya.software.RealEstate.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.Collections;
@@ -23,7 +21,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/admin")
-//@RolesAllowed("ROLE_ADMIN")
 public class AdminController {
 
     private final UserService userService;
@@ -42,7 +39,6 @@ public class AdminController {
         this.userService = userService;
     }
 
-   // @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/user/{id}")
     public ResponseEntity<User> updateUser(@Valid @PathVariable Long id, @RequestBody User userDetails) {
         Optional<User> userOptional = userService.findById(id);
@@ -62,7 +58,6 @@ public class AdminController {
         }
     }
 
-    //@PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/user/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         Optional<User> userOptional = userService.findById(id);
@@ -74,7 +69,6 @@ public class AdminController {
         }
     }
 
-    //@PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/employee/register")
     public ResponseEntity<?> register(@Valid @RequestBody Employee employee) {
         Map<String, Object> response = new HashMap<>();
@@ -113,7 +107,6 @@ public class AdminController {
         }
     }
 
-    //@PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/employee/{id}")
     public ResponseEntity<Employee> updateEmployee(@Valid @PathVariable Long id, @RequestBody Employee employeeDetails) {
         Optional<Employee> userOptional = employeeService.findById(id);
@@ -134,7 +127,6 @@ public class AdminController {
         }
     }
 
-   // @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/employee/{id}")
     public ResponseEntity<Void> deleteEmployee(@PathVariable Long id) {
         Optional<Employee> userOptional = employeeService.findById(id);
@@ -145,6 +137,4 @@ public class AdminController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
-
 }

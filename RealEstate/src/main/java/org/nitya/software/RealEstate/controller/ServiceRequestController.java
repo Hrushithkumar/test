@@ -23,7 +23,6 @@ public class ServiceRequestController {
     private ServiceRequestService serviceRequestService;
 
     @GetMapping
-    @RolesAllowed({"ROLE_ADMIN", "ROLE_EMPLOYEE"})
     public ResponseEntity<List<ServiceRequestDto>> getAllServiceRequests(){
         List<ServiceRequest> serviceRequests = serviceRequestService.getAllServiceRequests();
         List<ServiceRequestDto> serviceRequestDtoList = new ArrayList<>();
@@ -55,7 +54,6 @@ public class ServiceRequestController {
     }
 
     @GetMapping("/id")
-    @RolesAllowed({"ROLE_ADMIN", "ROLE_EMPLOYEE"})
     public ResponseEntity<List<ServiceRequestDto>> getServiceRequestsByUserID(){
         List<ServiceRequest> serviceRequests = serviceRequestService.getServiceRequestsByUserId();
         List<ServiceRequestDto> serviceRequestDtoList = new ArrayList<>();
@@ -64,7 +62,6 @@ public class ServiceRequestController {
     }
 
     @DeleteMapping("/{id}")
-    @RolesAllowed({"ROLE_ADMIN"})
     public ResponseEntity<Void> deleteServiceRequestById(@PathVariable Long id){
         Boolean isServiceRequestAvailable = serviceRequestService.isServiceReqPresent(id);
         if(isServiceRequestAvailable){
@@ -76,7 +73,6 @@ public class ServiceRequestController {
     }
 
     @PutMapping("/{id}/status")
-    @RolesAllowed({"ROLE_ADMIN", "ROLE_EMPLOYEE"})
     public ResponseEntity<ServiceRequestDto> updateStatus(@PathVariable Long id, @RequestBody Map<String, String> statusUpdate){
         String status = statusUpdate.get("status");
         Optional<ServiceRequest> updateServiceRequest = serviceRequestService.updateStatus(id, status);

@@ -296,7 +296,8 @@
 
   <section class="container user mt-5">
       <h2>User Management System</h2>
-      <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <div id="alert-placeholder"></div>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
           <button
             class="nav-link active"
@@ -496,6 +497,7 @@
 
     <section class="container user mt-5 print-container">
       <h2>Employee Management System</h2>
+      <div id="alert-employee-placeholder"></div>
       <button class="btn btn-secondary mb-3" onclick="window.print()">
         Print
       </button>
@@ -827,31 +829,51 @@
         })
         .then((response) => response.json())
         .then((data) => {
-          const messageDiv = document.getElementById("message");
+          //const messageDiv = document.getElementById("message");
+          const alertPlaceholder = document.getElementById("alert-placeholder");
           if (data.error) {
-            messageDiv.className = "message error";
-            messageDiv.textContent = data.error;
+            // messageDiv.className = "message error";
+            // messageDiv.textContent = data.error;
+            alertPlaceholder.innerHTML = `
+                <div class="alert alert-danger" role="alert">
+                    ${data.error}
+                </div>
+            `;
           } else {
              fetchUsers();
             // form.reset();
             document.getElementById("userId").value = "";
-            messageDiv.className = "message success";
-            messageDiv.textContent = "User created successfully ";
+            // messageDiv.className = "message success";
+            // messageDiv.textContent = "User created successfully ";
+              alertPlaceholder.innerHTML = `
+                <div class="alert alert-success" role="alert">
+                    User created successfully
+                </div>
+            `;
+            event.target.reset();
           }
-          messageDiv.style.display = "block";
+          //messageDiv.style.display = "block";
          setTimeout(() => {
-           messageDiv.style.display = "none";
-         }, 5000); // Hide message after 3 seconds
-          event.target.reset();
+           //messageDiv.style.display = "none";
+           alertPlaceholder.innerHTML = "";
+         }, 8000); // Hide message after 5 seconds
+
         })
         .catch((error) => {
-          const messageDiv = document.getElementById("message");
-          messageDiv.className = "message error";
-          messageDiv.textContent = "An unexpected error occurred: " + error.message;
-          messageDiv.style.display = "block";
+          // const messageDiv = document.getElementById("message");
+          // messageDiv.className = "message error";
+          // messageDiv.textContent = "An unexpected error occurred: " + error.message;
+          // messageDiv.style.display = "block";
+          const alertPlaceholder = document.getElementById("alert-placeholder");
+          alertPlaceholder.innerHTML = `
+            <div class="alert alert-danger" role="alert">
+                An unexpected error occurred: ${error.message}
+            </div>
+        `;
           setTimeout(() => {
-           messageDiv.style.display = "none";
-          }, 5000); // Hide message after 3 seconds
+          // messageDiv.style.display = "none";
+            alertPlaceholder.innerHTML = "";
+          }, 8000); // Hide message after 3 seconds
         });
       }
 
@@ -988,29 +1010,49 @@
         })
           .then((response) => response.json())
           .then((data) => {
-            const messageDiv = document.getElementById("employeeMessage");
+            const alertPlaceholder = document.getElementById("alert-employee-placeholder");
             if (data.error) {
-              messageDiv.className = "employeeMessage error";
-              messageDiv.textContent = data.error;
+              // messageDiv.className = "employeeMessage error";
+              // messageDiv.textContent = data.error;
+              alertPlaceholder.innerHTML = `
+                <div class="alert alert-danger" role="alert">
+                    ${data.error}
+                </div>
+            `;
             } else {
+              fetchEmployees();
               document.getElementById("employeeId").value = "";
-              messageDiv.className = "employeeMessage success";
-              messageDiv.textContent = "Employee created successfully ";
+              // messageDiv.className = "employeeMessage success";
+              // messageDiv.textContent = "Employee created successfully ";
+              alertPlaceholder.innerHTML = `
+                <div class="alert alert-success" role="alert">
+                    Employee created successfully
+                </div>
+            `;
+              event.target.reset();
             }
-            messageDiv.style.display = "block";
+            //messageDiv.style.display = "block";
             setTimeout(() => {
-              messageDiv.style.display = "none";
+              alertPlaceholder.innerHTML = "";
+              //messageDiv.style.display = "none";
             }, 5000); // Hide message after 5 seconds
-            event.target.reset();
+
           })
           .catch((error) => {
-            const messageDiv = document.getElementById("employeeMessage");
-            messageDiv.className = "employeeMessage error";
-            messageDiv.textContent = "An unexpected error occurred: " + error.message;
-            messageDiv.style.display = "block";
+            const alertPlaceholder = document.getElementById("alert-employee-placeholder");
+            alertPlaceholder.innerHTML = `
+            <div class="alert alert-danger" role="alert">
+                An unexpected error occurred: ${error.message}
+            </div>
+        `;
+            // const messageDiv = document.getElementById("employeeMessage");
+            // messageDiv.className = "employeeMessage error";
+            // messageDiv.textContent = "An unexpected error occurred: " + error.message;
+            // messageDiv.style.display = "block";
             setTimeout(() => {
-              messageDiv.style.display = "none";
-            }, 5000); // Hide message after 3 seconds
+              //messageDiv.style.display = "none";
+              alertPlaceholder.innerHTML = ""
+            }, 8000); // Hide message after 8 seconds
           });
       }
 
