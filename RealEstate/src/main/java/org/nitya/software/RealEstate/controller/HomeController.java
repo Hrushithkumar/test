@@ -4,7 +4,6 @@ import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.tasks.UnsupportedFormatException;
 import org.nitya.software.RealEstate.dto.HomeDto;
 import org.nitya.software.RealEstate.model.Home;
-import org.nitya.software.RealEstate.model.enums.Category;
 import org.nitya.software.RealEstate.model.enums.HomeCategory;
 import org.nitya.software.RealEstate.repository.HomeRepository;
 import org.springframework.core.io.PathResource;

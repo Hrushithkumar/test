@@ -31,7 +31,6 @@ public class ContactController {
 //    }
 
     @GetMapping("/contacts")
-    @RolesAllowed({"ROLE_ADMIN", "ROLE_EMPLOYEE"})
     public ResponseEntity<List<ContactForm>> getAllContactsUsDetails(){
         List<ContactForm> contactFormsList = contactUsServices.getContactFormDetails();
         return new ResponseEntity<>(contactFormsList, HttpStatus.OK);

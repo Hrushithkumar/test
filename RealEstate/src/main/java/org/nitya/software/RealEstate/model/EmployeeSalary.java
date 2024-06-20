@@ -32,6 +32,6 @@ public class EmployeeSalary {
     private LocalDate fromDate;
 
     @Column(nullable = false)
-    private LocalDate toData;
+    private LocalDate toDate;
 
 }

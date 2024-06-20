@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/employeesalary/")
+@RequestMapping("/employeesalary")
 public class EmployeeSalaryController {
 
     private final EmployeeSalaryService employeeSalaryService;
@@ -32,7 +32,7 @@ public class EmployeeSalaryController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping
+    @PostMapping("/add")
     public EmployeeSalary createEmployeeSalary(@RequestBody EmployeeSalary employeeSalary) {
         return employeeSalaryService.save(employeeSalary);
     }
