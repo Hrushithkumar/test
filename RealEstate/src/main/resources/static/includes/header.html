@@ -33,11 +33,11 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-        <ul class="navbar-nav">
+        <ul class="navbar-nav" id="navbar">
           <li class="nav-item">
             <a class="nav-link" href="/main.html"><i class="fas fa-home"></i> Home</a>
           </li>
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown" data-roles="ROLE_ADMIN">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="fas fa-user-shield"></i> Administrator
             </a>
@@ -47,7 +47,7 @@
               <li><a class="dropdown-item" href="/empsalarylist.html"><i class="fas fa-money-bill-wave"></i> Employee Salaries</a></li>
             </ul>
           </li>
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown" data-roles="ROLE_EMPLOYEE,ROLE_ADMIN">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="fas fa-users"></i> Employee Management
             </a>
@@ -63,9 +63,10 @@
               <li><a class="dropdown-item" href="/uploadproject.html"><i class="fas fa-upload"></i> Upload Projects</a></li>
             </ul>
           </li>
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown" data-roles="ROLE_USER,ROLE_ADMIN,ROLE_EMPLOYEE">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="fas fa-cogs"></i> Services</a>
+              <i class="fas fa-cogs"></i> Services
+            </a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="/servicerequestform.html"><i class="fas fa-wrench"></i> Service Request</a></li>
             </ul>
