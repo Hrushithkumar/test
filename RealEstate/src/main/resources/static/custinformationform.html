@@ -20,6 +20,8 @@
       rel="stylesheet"
     />
     <script src="js/dynamicNavbar.js" defer></script>
+    <script src="js/auth.js"></script>
+
     <style>
       body {
         font-family: "Montserrat", sans-serif;
@@ -188,7 +190,6 @@
   </head>
   <body>
     <header>
-      <a href="/index.html" class="back-button">Back to Home</a>
     </header>
     <section class="container mt-5">
       <h2>Customer Information and Deal Tracker</h2>
@@ -351,80 +352,171 @@
     </section>
 
     <script>
-      document
-        .getElementById("customerForm")
-        .addEventListener("submit", function (event) {
+      document.addEventListener("DOMContentLoaded", () => {
+        const customerForm = document.getElementById("customerForm");
+        const dealTrackerForm = document.getElementById("dealTrackerForm");
+        const dealSummary = document.getElementById("dealSummary");
+
+        // Customer Form Submission Handler
+        customerForm.addEventListener("submit", (event) => {
           event.preventDefault();
-          const form = event.target;
-          const isValid = form.checkValidity();
-          if (isValid) {
-            alert("Customer information submitted!");
-            // Add your form submission logic here
-          } else {
-            form.classList.add("was-validated");
-            const formGroups = form.querySelectorAll(".form-group");
-            formGroups.forEach((group) => {
-              const input = group.querySelector("input, textarea, select");
-              const errorMessage = group.querySelector(".error-message");
-              if (!input.validity.valid) {
-                group.classList.add("invalid");
-                errorMessage.textContent = input.validationMessage;
-              } else {
-                group.classList.remove("invalid");
-                errorMessage.textContent = "";
-              }
-            });
+
+          const name = document.getElementById("name").value;
+          const email = document.getElementById("email").value;
+          const phone = document.getElementById("phone").value;
+          const address = document.getElementById("address").value;
+          const dealDate = document.getElementById("dealDate").value;
+          const dealValue = document.getElementById("dealValue").value;
+
+          // Basic form validation
+          if (!name || !email || !phone || !address || !dealDate || !dealValue) {
+            alert("Please fill out all fields.");
+            return;
           }
+
+          // Construct the data object to send
+          const customerInfo = {
+            customerName: name,
+            customerEmail: email,
+            phoneNumber: phone,
+            customerAddress: address,
+            dealDate: dealDate,
+            dealValue: parseFloat(dealValue).toFixed(2), // Convert to float and round to 2 decimal places
+          };
+
+          // Example of sending the customerInfo to server (replace with actual endpoint)
+          fetchWithAuth("/customer-info/create", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(customerInfo),
+          })
+                  .then((response) => response.json())
+                  .then((data) => {
+                    // Handle success or error response from server
+                    alert("Customer information submitted successfully!");
+                    customerForm.reset(); // Clear the form after submission
+                  })
+                  .catch((error) => {
+                    console.error("Error:", error);
+                    alert("Error submitting customer information.");
+                  });
         });
 
-      document
-        .getElementById("dealTrackerForm")
-        .addEventListener("submit", function (event) {
+        // Deal Tracker Form Submission Handler
+        dealTrackerForm.addEventListener("submit", (event) => {
           event.preventDefault();
-          const form = event.target;
-          const isValid = form.checkValidity();
-          if (isValid) {
-            // Simulate fetching deal data from a database
-            const deals = [
-              { date: "2024-01-01", value: 50000 },
-              { date: "2024-01-15", value: 70000 },
-              { date: "2024-01-20", value: 60000 },
-              { date: "2024-02-05", value: 80000 },
-            ];
 
-            const startDate = new Date(form.startDate.value);
-            const endDate = new Date(form.endDate.value);
-            let totalDeals = 0;
-            let totalValue = 0;
+          const startDate = document.getElementById("startDate").value;
+          const endDate = document.getElementById("endDate").value;
 
-            deals.forEach((deal) => {
-              const dealDate = new Date(deal.date);
-              if (dealDate >= startDate && dealDate <= endDate) {
-                totalDeals += 1;
-                totalValue += deal.value;
-              }
-            });
-
-            document.getElementById("totalDeals").textContent = totalDeals;
-            document.getElementById("totalValue").textContent =
-              totalValue.toFixed(2);
-            document.getElementById("dealSummary").style.display = "block";
-          } else {
-            form.classList.add("was-validated");
-            const formGroups = form.querySelectorAll(".form-group");
-            formGroups.forEach((group) => {
-              const input = group.querySelector("input, select");
-              const errorMessage = group.querySelector(".error-message");
-              if (!input.validity.valid) {
-                group.classList.add("invalid");
-                errorMessage.textContent = input.validationMessage;
-              } else {
-                group.classList.remove("invalid");
-                errorMessage.textContent = "";
-              }
-            });
+          // Basic form validation
+          if (!startDate || !endDate) {
+            alert("Please select both start date and end date.");
+            return;
           }
+
+          // Example calculation of deal summary (replace with actual logic)
+          const totalDeals = Math.floor(Math.random() * 100); // Random number for demo purpose
+          const totalValue = (Math.random() * 100000).toFixed(2); // Random value for demo purpose
+
+          // Display deal summary
+          document.getElementById("totalDeals").textContent = totalDeals;
+          document.getElementById("totalValue").textContent = totalValue;
+          dealSummary.style.display = "block";
         });
+      });
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const dealTrackerForm = document.getElementById("dealTrackerForm");
+        const dealSummary = document.getElementById("dealSummary");
+        const totalDealsElement = document.getElementById("totalDeals");
+        const totalValueElement = document.getElementById("totalValue");
+
+        dealTrackerForm.addEventListener("submit", (event) => {
+          event.preventDefault();
+
+          const startDate = document.getElementById("startDate").value;
+          const endDate = document.getElementById("endDate").value;
+
+          fetchWithAuth("/customer-info/track-deals", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              startDate,
+              endDate,
+            }),
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+              }
+              return response.json();
+            })
+            .then((data) => {
+              totalDealsElement.textContent = data.totalDeals;
+              totalValueElement.textContent = data.totalValue.toFixed(2); // Format as currency if needed
+              dealSummary.style.display = "block";
+            })
+            .catch((error) => {
+              console.error("Error tracking deals:", error);
+              alert("Failed to track deals. Please try again.");
+            });
+        });
+      });
+
+
+      // document
+      //   .getElementById("dealTrackerForm")
+      //   .addEventListener("submit", function (event) {
+      //     event.preventDefault();
+      //     const form = event.target;
+      //     const isValid = form.checkValidity();
+      //     if (isValid) {
+      //       // Simulate fetching deal data from a database
+      //       const deals = [
+      //         { date: "2024-01-01", value: 50000 },
+      //         { date: "2024-01-15", value: 70000 },
+      //         { date: "2024-01-20", value: 60000 },
+      //         { date: "2024-02-05", value: 80000 },
+      //       ];
+      //
+      //       const startDate = new Date(form.startDate.value);
+      //       const endDate = new Date(form.endDate.value);
+      //       let totalDeals = 0;
+      //       let totalValue = 0;
+      //
+      //       deals.forEach((deal) => {
+      //         const dealDate = new Date(deal.date);
+      //         if (dealDate >= startDate && dealDate <= endDate) {
+      //           totalDeals += 1;
+      //           totalValue += deal.value;
+      //         }
+      //       });
+      //
+      //       document.getElementById("totalDeals").textContent = totalDeals;
+      //       document.getElementById("totalValue").textContent =
+      //         totalValue.toFixed(2);
+      //       document.getElementById("dealSummary").style.display = "block";
+      //     } else {
+      //       form.classList.add("was-validated");
+      //       const formGroups = form.querySelectorAll(".form-group");
+      //       formGroups.forEach((group) => {
+      //         const input = group.querySelector("input, select");
+      //         const errorMessage = group.querySelector(".error-message");
+      //         if (!input.validity.valid) {
+      //           group.classList.add("invalid");
+      //           errorMessage.textContent = input.validationMessage;
+      //         } else {
+      //           group.classList.remove("invalid");
+      //           errorMessage.textContent = "";
+      //         }
+      //       });
+      //     }
+      //   });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
