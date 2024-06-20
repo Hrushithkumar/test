@@ -6,6 +6,7 @@ import org.nitya.software.RealEstate.service.CustomerInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -21,7 +22,7 @@ public class CustomerInfoController {
     @Autowired
     private CustomerInfoService customerInfoService;
 
-    // Create a new customer info record
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')")
     @PostMapping("/create")
     public ResponseEntity<CustomerInfo> createCustomerInfo(@RequestBody CustomerInfo customerInfo) {
         try {
@@ -32,7 +33,7 @@ public class CustomerInfoController {
         }
     }
 
-    // Retrieve all customer info records
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')")
     @GetMapping("/list")
     public ResponseEntity<List<CustomerInfo>> getAllCustomerInfos() {
         List<CustomerInfo> customerInfos = customerInfoService.findAll();
@@ -42,7 +43,7 @@ public class CustomerInfoController {
         return new ResponseEntity<>(customerInfos, HttpStatus.OK);
     }
 
-    // Retrieve a single customer info record by ID
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')")
     @GetMapping("/{id}")
     public ResponseEntity<CustomerInfo> getCustomerInfoById(@PathVariable Long id) {
         Optional<CustomerInfo> customerInfo = customerInfoService.findById(id);
@@ -50,7 +51,7 @@ public class CustomerInfoController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    // Update a customer info record by ID
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')")
     @PutMapping("/update/{id}")
     public ResponseEntity<CustomerInfo> updateCustomerInfo(@PathVariable Long id, @RequestBody CustomerInfo customerInfo) {
         Optional<CustomerInfo> customerInfoData = customerInfoService.findById(id);
@@ -68,7 +69,8 @@ public class CustomerInfoController {
         }
     }
 
-    // Delete a customer info record by ID
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<HttpStatus> deleteCustomerInfo(@PathVariable Long id) {
         try {
@@ -79,6 +81,7 @@ public class CustomerInfoController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')")
     @PostMapping("/track-deals")
     public ResponseEntity<Map<String, Object>> trackDeals(@RequestBody DateRangeDto dateRange) {
         LocalDate startDate = dateRange.getStartDate();

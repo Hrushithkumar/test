@@ -9,6 +9,7 @@ import org.nitya.software.RealEstate.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,6 +41,7 @@ public class AdminController {
     }
 
     @PutMapping("/user/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')")
     public ResponseEntity<User> updateUser(@Valid @PathVariable Long id, @RequestBody User userDetails) {
         Optional<User> userOptional = userService.findById(id);
         if (userOptional.isPresent()) {
@@ -59,6 +61,7 @@ public class AdminController {
     }
 
     @DeleteMapping("/user/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         Optional<User> userOptional = userService.findById(id);
         if (userOptional.isPresent()) {
@@ -70,6 +73,7 @@ public class AdminController {
     }
 
     @PostMapping("/employee/register")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> register(@Valid @RequestBody Employee employee) {
         Map<String, Object> response = new HashMap<>();
         try {
@@ -108,6 +112,7 @@ public class AdminController {
     }
 
     @PutMapping("/employee/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Employee> updateEmployee(@Valid @PathVariable Long id, @RequestBody Employee employeeDetails) {
         Optional<Employee> userOptional = employeeService.findById(id);
         if (userOptional.isPresent()) {
@@ -128,6 +133,7 @@ public class AdminController {
     }
 
     @DeleteMapping("/employee/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteEmployee(@PathVariable Long id) {
         Optional<Employee> userOptional = employeeService.findById(id);
         if (userOptional.isPresent()) {

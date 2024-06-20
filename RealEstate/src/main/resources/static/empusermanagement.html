@@ -652,18 +652,15 @@
             </div>
             <div class="form-group">
               <label for="employeeJobTitle">Job Title:</label>
-              <input
-                      type="text"
-                      id="employeeJobTitle"
-                      name="jobTitle"
-                      required
-                      aria-required="true"
-                      aria-describedby="employee-jobTitle-error"
-              />
-              <span
-                      class="error-message"
-                      id="employee-jobTitle-error"
-              ></span>
+              <select id="employeeJobTitle" name="jobTitle" required aria-required="true" aria-describedby="employee-jobTitle-error">
+                <option value="">Select Job Title</option>
+                <option value="Manager">Manager</option>
+                <option value="Engineer">Engineer</option>
+                <option value="Technician">Technician</option>
+                <option value="Assistant">Assistant</option>
+                <!-- Add more options as needed -->
+              </select>
+              <span class="error-message" id="employee-jobTitle-error"></span>
             </div>
             <div class="form-group">
               <label for="employeePassword">Password:</label>
@@ -1012,7 +1009,7 @@
         };
 
         // Perform the fetch request
-        fetch(url, {
+        fetchWithAuth(url, {
           method: method,
           headers: {
             "Content-Type": "application/json",
@@ -1090,7 +1087,7 @@
 
       function deleteEmployee(employeeId) {
         if (confirm("Are you sure you want to delete this employee?")) {
-          fetch(`${adminApiBaseURL}${employeeApiBaseURL}/${employeeId}`, {
+          fetchWithAuth(`${adminApiBaseURL}${employeeApiBaseURL}/${employeeId}`, {
             method: "DELETE",
           })
             .then((response) => {

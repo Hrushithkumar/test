@@ -5,9 +5,9 @@ import org.nitya.software.RealEstate.service.QuoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +31,7 @@ public class QuoteController {
     }
 
     @PutMapping("/{id}/update/status")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')")
     public ResponseEntity<Quote> updateStatus(@PathVariable Long id, @RequestBody Map<String,String> statusUpdate){
         String status = statusUpdate.get("status");
         Optional<Quote> updatedQuote = quoteService.updateStatus(id, status);
@@ -39,6 +40,7 @@ public class QuoteController {
     }
 
     @PutMapping("/{id}/update/comment")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')")
     public ResponseEntity<Quote> updateComment(@PathVariable Long id, @RequestBody Map<String,String> statusUpdate){
         String comment = statusUpdate.get("comment");
         Optional<Quote> updatedQuote = quoteService.updateComment(id, comment);
@@ -46,6 +48,7 @@ public class QuoteController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteQuote(@PathVariable Long id){
         quoteService.deleteQuoteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

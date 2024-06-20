@@ -22,7 +22,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-//@EnableGlobalMethodSecurity(jsr250Enabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -43,12 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/authenticate").permitAll()
                 .antMatchers( "/register").permitAll()
-                .antMatchers("/admin/employee/register").permitAll()
-                .antMatchers( "/employee/contacts").permitAll()
-//                .antMatchers("/", "/static/**", "/images/**", "/main.html", "/custquoteslist.html","/empusermanagement.html",
-//                        "/uploadhome.html","/deletehomes.html","/custcontactslist.html","/uploadproject.html",
-//                        "/empsalgenerator.html", "/deleteprojects.html", "/servicerequestform.html", "/custservicereqlist.html",
-//                        "/custquoteslist.html", "/header.html", "/Footer.html").permitAll()
+                .antMatchers( "/employee/contacts").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/", "/static/**", "/images/**", "/css/**", "/js/**", "/uploads/**", "/includes/**").permitAll()
                 .antMatchers("/*.html").permitAll()
                 .anyRequest().authenticated()
@@ -61,6 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint((request, response, authException) -> {
                     System.out.println("Authentication Denied: " + authException.getMessage());
                     response.sendError(HttpStatus.UNAUTHORIZED.value(), "Unauthorized");
+
                 })
                 .and()
                 .sessionManagement()

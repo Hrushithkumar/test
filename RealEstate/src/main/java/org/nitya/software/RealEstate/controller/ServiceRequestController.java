@@ -6,9 +6,9 @@ import org.nitya.software.RealEstate.service.ServiceRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +62,7 @@ public class ServiceRequestController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteServiceRequestById(@PathVariable Long id){
         Boolean isServiceRequestAvailable = serviceRequestService.isServiceReqPresent(id);
         if(isServiceRequestAvailable){
@@ -73,6 +74,7 @@ public class ServiceRequestController {
     }
 
     @PutMapping("/{id}/status")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')")
     public ResponseEntity<ServiceRequestDto> updateStatus(@PathVariable Long id, @RequestBody Map<String, String> statusUpdate){
         String status = statusUpdate.get("status");
         Optional<ServiceRequest> updateServiceRequest = serviceRequestService.updateStatus(id, status);

@@ -128,7 +128,7 @@ public class AuthController {
                     .toList();
 
             UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
-            String jwtToken = jwtUtil.generateToken(userDetails);
+            String jwtToken = jwtUtil.generateToken(userDetails, employeeRoles);
 
             response.put("message", "Employee login successful");
             response.put("jwtToken", jwtToken);
@@ -150,7 +150,7 @@ public class AuthController {
                                 .collect(Collectors.toList());
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
-        final String jwt = jwtUtil.generateToken(userDetails);
+        final String jwt = jwtUtil.generateToken(userDetails, roles);
 
 
         response.put("message", "User login successful");

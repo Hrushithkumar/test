@@ -11,10 +11,10 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.security.RolesAllowed;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -77,7 +77,7 @@ public class HomeController {
      * @return
      */
     @PostMapping("/upload")
-    @RolesAllowed({"ROLE_ADMIN", "ROLE_EMPLOYEE"})
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')")
     public ResponseEntity<?> uploadHome(
             @RequestParam("category") String category,
             @RequestParam("title") String title,
@@ -184,7 +184,7 @@ public class HomeController {
      * @return
      */
     @DeleteMapping("/{id}")
-    @RolesAllowed({"ROLE_ADMIN", "ROLE_EMPLOYEE"})
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')")
     public ResponseEntity<?> deleteHome(@PathVariable Long id) {
         try {
             // Find the project by ID

@@ -5,9 +5,9 @@ import org.nitya.software.RealEstate.service.ContactUsServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.RolesAllowed;
 import java.util.List;
 
 @RestController
@@ -30,6 +30,7 @@ public class ContactController {
 //        return "Email sent successfully";
 //    }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')")
     @GetMapping("/contacts")
     public ResponseEntity<List<ContactForm>> getAllContactsUsDetails(){
         List<ContactForm> contactFormsList = contactUsServices.getContactFormDetails();
