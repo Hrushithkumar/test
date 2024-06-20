@@ -16,6 +16,8 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
       rel="stylesheet"
     />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
     <style>
       body {
         font-family: "Montserrat", sans-serif;
@@ -2655,7 +2657,7 @@
           return;
         }
 
-        fetch("/users/forgot-password", {
+        fetch("/api/forgot-password", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email }),
@@ -2668,10 +2670,13 @@
               document.getElementById("forgot-password-success").style.display =
                 "none";
             } else {
+              document.getElementById("forgot-password-success").innerText =
+                      "Password reset email sent. Please check your inbox.";
               document.getElementById("forgot-password-success").style.display =
                 "block";
               document.getElementById("forgot-password-error").style.display =
                 "none";
+
               setTimeout(() => {
                 var modal = bootstrap.Modal.getInstance(
                   document.getElementById("forgotPasswordModal")
@@ -2691,6 +2696,5 @@
           });
       }
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>

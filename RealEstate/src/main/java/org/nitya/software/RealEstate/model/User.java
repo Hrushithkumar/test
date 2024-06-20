@@ -58,6 +58,8 @@ import java.util.Set;
         @Column(nullable = false)
         private LocalDate updatedAt;
 
+        private String resetToken;
+
         @Column(nullable = false)
         @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
         @OnDelete(action = OnDeleteAction.CASCADE)
@@ -70,11 +72,5 @@ import java.util.Set;
         @JsonIgnoreProperties("user")
         private Set<ServiceRequest> serviceRequests;
 
-        public void addRole(Role role) {
-            if (roles == null) {
-                roles = new HashSet<>();
-            }
-            roles.add(role);
-        }
 
 }
