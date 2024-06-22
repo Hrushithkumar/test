@@ -21,6 +21,15 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/dynamicNavbar.js" defer></script>
     <script src="js/auth.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const userRoles = JSON.parse(localStorage.getItem("roles"));
+        if (!userRoles.includes("ROLE_ADMIN")) {
+          alert("Oops! you are not authorized");
+          window.location.href = "main.html";
+        }
+      });
+    </script>
     <style>
       /* Existing styles */
       body {
@@ -31,7 +40,7 @@
         padding-top: 80px;
       }
 
-      .container.empuser{
+      .container.empuser {
         max-width: 1200px;
         margin: 0 auto;
         padding: 20px;
@@ -138,7 +147,6 @@
         }
       }
     </style>
-
   </head>
   <body>
     <div id="header-container"></div>
@@ -235,7 +243,6 @@
 
     <div id="footer-container"></div>
 
-
     <script>
       fetch("/includes/header.html")
         .then((response) => response.text())
@@ -244,13 +251,12 @@
         })
         .catch((error) => console.error("Error fetching header:", error));
 
-      fetch('Footer.html')
-              .then(response => response.text())
-              .then(html => {
-                document.getElementById('footer-container').innerHTML = html;
-              })
-              .catch(error => console.error('Error fetching footer:', error));
-
+      fetch("Footer.html")
+        .then((response) => response.text())
+        .then((html) => {
+          document.getElementById("footer-container").innerHTML = html;
+        })
+        .catch((error) => console.error("Error fetching footer:", error));
 
       document.addEventListener("DOMContentLoaded", () => {
         fetchEmployees();
@@ -312,7 +318,9 @@
         const employeeName = document.getElementById("employeeName").value;
         const payRate = parseFloat(document.getElementById("payRate").value);
         const hours = parseInt(document.getElementById("hoursWorked").value);
-        const salary = parseFloat(document.getElementById("salaryAmount").value);
+        const salary = parseFloat(
+          document.getElementById("salaryAmount").value
+        );
         const fromDate = document.getElementById("fromDate").value;
         const toDate = document.getElementById("toDate").value;
 

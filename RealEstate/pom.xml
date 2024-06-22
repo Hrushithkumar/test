@@ -10,10 +10,10 @@
 	</parent>
 	<groupId>org.nitya.software</groupId>
 	<artifactId>RealEstate</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<name>RealEstateApplication</name>
 	<description>Demo project for Spring Boot</description>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<properties>
 		<java.version>17</java.version>
 	</properties>

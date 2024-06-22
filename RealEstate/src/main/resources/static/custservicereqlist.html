@@ -22,6 +22,21 @@
     />
     <script src="js/dynamicNavbar.js" defer></script>
     <link href="css/HeaderFooter.css" rel="stylesheet" />
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const userRoles = JSON.parse(localStorage.getItem("roles"));
+        console.log("Checking user roles for authorization");
+
+        if (
+          !userRoles.some(
+            (role) => role === "ROLE_ADMIN" || role === "ROLE_EMPLOYEE"
+          )
+        ) {
+          alert("Oops! you are not authorized");
+          window.location.href = "main.html";
+        }
+      });
+    </script>
 
     <style>
       body {
@@ -35,87 +50,6 @@
         flex-direction: column;
         min-height: 100vh;
       }
-
-      /*header {*/
-      /*  background-color: #2c3e50;*/
-      /*  padding: 10px 20px;*/
-      /*  position: fixed;*/
-      /*  width: 100%;*/
-      /*  top: 0;*/
-      /*  z-index: 1000;*/
-      /*  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);*/
-      /*  display: flex;*/
-      /*  justify-content: space-between;*/
-      /*  align-items: center;*/
-      /*}*/
-
-      /*header .logo {*/
-      /*  display: flex;*/
-      /*  align-items: center;*/
-      /*  color: #fff;*/
-      /*  font-size: 1.5em;*/
-      /*  font-weight: bold;*/
-      /*}*/
-
-      /*header .logo img {*/
-      /*  max-width: 50px;*/
-      /*  height: auto;*/
-      /*  margin-right: 10px;*/
-      /*}*/
-
-      /*header nav ul {*/
-      /*  list-style: none;*/
-      /*  display: flex;*/
-      /*  margin: 0;*/
-      /*  padding: 0;*/
-      /*}*/
-
-      /*header nav ul li {*/
-      /*  margin: 0 15px;*/
-      /*  position: relative;*/
-      /*}*/
-
-      /*header nav ul li a {*/
-      /*  color: #fff;*/
-      /*  text-decoration: none;*/
-      /*  font-weight: bold;*/
-      /*  font-size: 1em;*/
-      /*  transition: color 0.3s;*/
-      /*}*/
-
-      /*header nav ul li a:hover {*/
-      /*  color: #f39c12;*/
-      /*}*/
-
-      /*header nav ul li ul {*/
-      /*  display: none;*/
-      /*  position: absolute;*/
-      /*  top: 100%;*/
-      /*  left: 0;*/
-      /*  background: #2c3e50;*/
-      /*  padding: 0;*/
-      /*  margin: 0;*/
-      /*  list-style: none;*/
-      /*  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);*/
-      /*}*/
-
-      /*header nav ul li:hover ul {*/
-      /*  display: block;*/
-      /*}*/
-
-      /*header nav ul li ul li {*/
-      /*  margin: 0;*/
-      /*}*/
-
-      /*header nav ul li ul li a {*/
-      /*  padding: 10px 15px;*/
-      /*  display: block;*/
-      /*  color: #fff;*/
-      /*}*/
-
-      /*header nav ul li ul li a:hover {*/
-      /*  background: #34495e;*/
-      /*}*/
 
       .main-content {
         flex: 1;
@@ -182,80 +116,6 @@
         border-top: 10px solid #34495e;
       }
 
-      /*footer .container {*/
-      /*  display: flex;*/
-      /*  justify-content: space-between;*/
-      /*  flex-wrap: wrap;*/
-      /*}*/
-
-      /*footer h5 {*/
-      /*  font-size: 1.2em;*/
-      /*}*/
-
-      /*footer ul {*/
-      /*  list-style: none;*/
-      /*  padding: 0;*/
-      /*}*/
-
-      /*footer ul li {*/
-      /*  margin-bottom: 10px;*/
-      /*}*/
-
-      /*footer ul li a {*/
-      /*  color: white;*/
-      /*  text-decoration: none;*/
-      /*  transition: color 0.3s;*/
-      /*}*/
-
-      /*footer ul li a:hover {*/
-      /*  color: #f39c12;*/
-      /*}*/
-
-      /*.footer .social-icons {*/
-      /*  display: flex;*/
-      /*  gap: 10px;*/
-      /*}*/
-
-      /*.footer .social-icons a {*/
-      /*  color: #fff;*/
-      /*  font-size: 1.4rem;*/
-      /*  transition: color 0.3s;*/
-      /*}*/
-
-      /*.footer .social-icons a:hover {*/
-      /*  color: #f39c12;*/
-      /*}*/
-
-      /*footer p {*/
-      /*  font-size: 0.9em;*/
-      /*}*/
-
-      /*@media (max-width: 768px) {*/
-      /*  header {*/
-      /*    flex-direction: column;*/
-      /*    align-items: flex-start;*/
-      /*  }*/
-
-      /*  header nav ul {*/
-      /*    flex-direction: column;*/
-      /*    width: 100%;*/
-      /*    margin-top: 10px;*/
-      /*  }*/
-
-      /*  header nav ul li {*/
-      /*    margin: 5px 0;*/
-      /*  }*/
-
-      /*  .footer .container {*/
-      /*    flex-direction: column;*/
-      /*    align-items: center;*/
-      /*  }*/
-
-      /*  .footer .social-icons {*/
-      /*    margin-top: 10px;*/
-      /*  }*/
-      /*}*/
-
       @media print {
         body * {
           visibility: hidden;
@@ -313,12 +173,12 @@
         })
         .catch((error) => console.error("Error fetching header:", error));
 
-      fetch('Footer.html')
-              .then(response => response.text())
-              .then(html => {
-                document.getElementById('footer-container').innerHTML = html;
-              })
-              .catch(error => console.error('Error fetching footer:', error));
+      fetch("Footer.html")
+        .then((response) => response.text())
+        .then((html) => {
+          document.getElementById("footer-container").innerHTML = html;
+        })
+        .catch((error) => console.error("Error fetching footer:", error));
 
       document.addEventListener("DOMContentLoaded", () => {
         fetchServiceRequests();
@@ -370,7 +230,7 @@
         fetchWithAuth(`/api/servicerequest/${id}/status`, {
           method: "PUT",
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({ status: status }),
         })

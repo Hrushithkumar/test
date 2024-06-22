@@ -8,9 +8,12 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-          integrity="sha384-5e2ESR8Ycmos6g3gAKr1Jvwye8sW4U1u/cAKulfVJnkakCcMqhOudbtPnvJ+nbv7" crossorigin="anonymous">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      integrity="sha384-5e2ESR8Ycmos6g3gAKr1Jvwye8sW4U1u/cAKulfVJnkakCcMqhOudbtPnvJ+nbv7"
+      crossorigin="anonymous"
+    />
 
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
@@ -19,6 +22,15 @@
     <link href="css/HeaderFooter.css" rel="stylesheet" />
     <script src="js/dynamicNavbar.js" defer></script>
 
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const userRoles = JSON.parse(localStorage.getItem("roles"));
+        if (!userRoles.includes("ROLE_ADMIN")) {
+          alert("Oops! you are not authorized");
+          window.location.href = "main.html";
+        }
+      });
+    </script>
     <style>
       body {
         font-family: "Montserrat", sans-serif;
@@ -30,122 +42,6 @@
         flex-direction: column;
         min-height: 100vh;
       }
-      /*header {*/
-      /*  background-color: #2c3e50;*/
-      /*  padding: 10px 20px;*/
-      /*  position: fixed;*/
-      /*  width: 100%;*/
-      /*  top: 0;*/
-      /*  z-index: 1000;*/
-      /*  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);*/
-      /*  display: flex;*/
-      /*  justify-content: space-between;*/
-      /*  align-items: center;*/
-      /*}*/
-      /*header .logo {*/
-      /*  display: flex;*/
-      /*  align-items: center;*/
-      /*  color: #fff;*/
-      /*  font-size: 1.5em;*/
-      /*  font-weight: bold;*/
-      /*}*/
-      /*header .logo img {*/
-      /*  max-width: 50px;*/
-      /*  height: auto;*/
-      /*  margin-right: 10px;*/
-      /*}*/
-      /*header nav ul {*/
-      /*  list-style: none;*/
-      /*  display: flex;*/
-      /*  margin: 0;*/
-      /*  padding: 0;*/
-      /*}*/
-      /*header nav ul li {*/
-      /*  margin: 0 15px;*/
-      /*  position: relative;*/
-      /*}*/
-      /*header nav ul li a {*/
-      /*  color: #fff;*/
-      /*  text-decoration: none;*/
-      /*  font-weight: bold;*/
-      /*  font-size: 1em;*/
-      /*  transition: color 0.3s;*/
-      /*}*/
-      /*header nav ul li a:hover {*/
-      /*  color: #f39c12;*/
-      /*}*/
-      /*header nav ul li ul {*/
-      /*  display: none;*/
-      /*  position: absolute;*/
-      /*  top: 100%;*/
-      /*  left: 0;*/
-      /*  background: #2c3e50;*/
-      /*  padding: 0;*/
-      /*  margin: 0;*/
-      /*  list-style: none;*/
-      /*  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);*/
-      /*}*/
-      /*header nav ul li:hover ul {*/
-      /*  display: block;*/
-      /*}*/
-      /*header nav ul li ul li {*/
-      /*  margin: 0;*/
-      /*}*/
-      /*header nav ul li ul li a {*/
-      /*  padding: 10px 15px;*/
-      /*  display: block;*/
-      /*  color: #fff;*/
-      /*}*/
-      /*header nav ul li ul li a:hover {*/
-      /*  background: #34495e;*/
-      /*}*/
-      /*footer {*/
-      /*  background-color: #2c3e50;*/
-      /*  color: white;*/
-      /*  text-align: center;*/
-      /*  padding: 15px 0;*/
-      /*  position: relative;*/
-      /*  margin-top: auto;*/
-      /*  border-top: 10px solid #34495e;*/
-      /*}*/
-      /*footer.container {*/
-      /*  display: flex;*/
-      /*  justify-content: space-between;*/
-      /*  flex-wrap: wrap;*/
-      /*}*/
-      /*footer h5 {*/
-      /*  font-size: 1.2em;*/
-      /*}*/
-      /*footer ul {*/
-      /*  list-style: none;*/
-      /*  padding: 0;*/
-      /*}*/
-      /*footer ul li {*/
-      /*  margin-bottom: 10px;*/
-      /*}*/
-      /*footer ul li a {*/
-      /*  color: white;*/
-      /*  text-decoration: none;*/
-      /*  transition: color 0.3s;*/
-      /*}*/
-      /*footer ul li a:hover {*/
-      /*  color: #f39c12;*/
-      /*}*/
-      /*.footer .social-icons {*/
-      /*  display: flex;*/
-      /*  gap: 10px;*/
-      /*}*/
-      /*.footer .social-icons a {*/
-      /*  color: #fff;*/
-      /*  font-size: 1.4rem;*/
-      /*  transition: color 0.3s;*/
-      /*}*/
-      /*.footer .social-icons a:hover {*/
-      /*  color: #f39c12;*/
-      /*}*/
-      /*footer p {*/
-      /*  font-size: 0.9em;*/
-      /*}*/
       .container .user {
         max-width: 1200px;
         margin: 20px auto;
@@ -293,11 +189,10 @@
   <body>
     <div id="header-container"></div>
 
-
-  <section class="container user mt-5">
+    <section class="container user mt-5">
       <h2>User Management System</h2>
-    <div id="alert-placeholder"></div>
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <div id="alert-placeholder"></div>
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
           <button
             class="nav-link active"
@@ -396,24 +291,24 @@
             <div class="form-group">
               <label for="firstName">First Name:</label>
               <input
-                      type="text"
-                      id="firstName"
-                      name="firstName"
-                      required
-                      aria-required="true"
-                      aria-describedby="firstname-error"
+                type="text"
+                id="firstName"
+                name="firstName"
+                required
+                aria-required="true"
+                aria-describedby="firstname-error"
               />
               <span class="error-message" id="firstname-error"></span>
             </div>
             <div class="form-group">
               <label for="lastName">Last Name:</label>
               <input
-                      type="text"
-                      id="lastName"
-                      name="lastName"
-                      required
-                      aria-required="true"
-                      aria-describedby="lastName-error"
+                type="text"
+                id="lastName"
+                name="lastName"
+                required
+                aria-required="true"
+                aria-describedby="lastName-error"
               />
               <span class="error-message" id="lastName-error"></span>
             </div>
@@ -601,24 +496,24 @@
             <div class="form-group">
               <label for="employeeFirstName">First Name:</label>
               <input
-                      type="text"
-                      id="employeeFirstName"
-                      name="firstName"
-                      required
-                      aria-required="true"
-                      aria-describedby="firstname-error"
+                type="text"
+                id="employeeFirstName"
+                name="firstName"
+                required
+                aria-required="true"
+                aria-describedby="firstname-error"
               />
               <span class="error-message" id="employee-firstname-error"></span>
             </div>
             <div class="form-group">
               <label for="employeeLastName">Last Name:</label>
               <input
-                      type="text"
-                      id="employeeLastName"
-                      name="lastName"
-                      required
-                      aria-required="true"
-                      aria-describedby="lastName-error"
+                type="text"
+                id="employeeLastName"
+                name="lastName"
+                required
+                aria-required="true"
+                aria-describedby="lastName-error"
               />
               <span class="error-message" id="employee-lastName-error"></span>
             </div>
@@ -652,7 +547,13 @@
             </div>
             <div class="form-group">
               <label for="employeeJobTitle">Job Title:</label>
-              <select id="employeeJobTitle" name="jobTitle" required aria-required="true" aria-describedby="employee-jobTitle-error">
+              <select
+                id="employeeJobTitle"
+                name="jobTitle"
+                required
+                aria-required="true"
+                aria-describedby="employee-jobTitle-error"
+              >
                 <option value="">Select Job Title</option>
                 <option value="Manager">Manager</option>
                 <option value="Engineer">Engineer</option>
@@ -717,23 +618,21 @@
       </div>
     </section>
 
-  <div id="footer-container"></div>
+    <div id="footer-container"></div>
     <script>
+      fetch("/includes/header.html")
+        .then((response) => response.text())
+        .then((html) => {
+          document.getElementById("header-container").innerHTML = html;
+        })
+        .catch((error) => console.error("Error fetching header:", error));
 
-      fetch('/includes/header.html')
-              .then(response => response.text())
-              .then(html => {
-                document.getElementById('header-container').innerHTML = html;
-              })
-              .catch(error => console.error('Error fetching header:', error));
-
-      fetch('Footer.html')
-              .then(response => response.text())
-              .then(html => {
-                document.getElementById('footer-container').innerHTML = html;
-              })
-              .catch(error => console.error('Error fetching footer:', error));
-
+      fetch("Footer.html")
+        .then((response) => response.text())
+        .then((html) => {
+          document.getElementById("footer-container").innerHTML = html;
+        })
+        .catch((error) => console.error("Error fetching footer:", error));
 
       const adminApiBaseURL = "/admin";
       const userApiBaseURL = "/users";
@@ -820,60 +719,60 @@
         fetch(url, {
           method: method,
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           },
           body: JSON.stringify(data),
         })
-        .then((response) => response.json())
-        .then((data) => {
-          //const messageDiv = document.getElementById("message");
-          const alertPlaceholder = document.getElementById("alert-placeholder");
-          if (data.error) {
-            // messageDiv.className = "message error";
-            // messageDiv.textContent = data.error;
-            alertPlaceholder.innerHTML = `
+          .then((response) => response.json())
+          .then((data) => {
+            //const messageDiv = document.getElementById("message");
+            const alertPlaceholder =
+              document.getElementById("alert-placeholder");
+            if (data.error) {
+              // messageDiv.className = "message error";
+              // messageDiv.textContent = data.error;
+              alertPlaceholder.innerHTML = `
                 <div class="alert alert-danger" role="alert">
                     ${data.error}
                 </div>
             `;
-          } else {
-             fetchUsers();
-            // form.reset();
-            document.getElementById("userId").value = "";
-            // messageDiv.className = "message success";
-            // messageDiv.textContent = "User created successfully ";
+            } else {
+              fetchUsers();
+              // form.reset();
+              document.getElementById("userId").value = "";
+              // messageDiv.className = "message success";
+              // messageDiv.textContent = "User created successfully ";
               alertPlaceholder.innerHTML = `
                 <div class="alert alert-success" role="alert">
                     User created successfully
                 </div>
             `;
-            event.target.reset();
-          }
-          //messageDiv.style.display = "block";
-         setTimeout(() => {
-           //messageDiv.style.display = "none";
-           alertPlaceholder.innerHTML = "";
-         }, 8000); // Hide message after 5 seconds
-
-        })
-        .catch((error) => {
-          // const messageDiv = document.getElementById("message");
-          // messageDiv.className = "message error";
-          // messageDiv.textContent = "An unexpected error occurred: " + error.message;
-          // messageDiv.style.display = "block";
-          const alertPlaceholder = document.getElementById("alert-placeholder");
-          alertPlaceholder.innerHTML = `
+              event.target.reset();
+            }
+            //messageDiv.style.display = "block";
+            setTimeout(() => {
+              //messageDiv.style.display = "none";
+              alertPlaceholder.innerHTML = "";
+            }, 8000); // Hide message after 5 seconds
+          })
+          .catch((error) => {
+            // const messageDiv = document.getElementById("message");
+            // messageDiv.className = "message error";
+            // messageDiv.textContent = "An unexpected error occurred: " + error.message;
+            // messageDiv.style.display = "block";
+            const alertPlaceholder =
+              document.getElementById("alert-placeholder");
+            alertPlaceholder.innerHTML = `
             <div class="alert alert-danger" role="alert">
                 An unexpected error occurred: ${error.message}
             </div>
         `;
-          setTimeout(() => {
-          // messageDiv.style.display = "none";
-            alertPlaceholder.innerHTML = "";
-          }, 8000); // Hide message after 3 seconds
-        });
+            setTimeout(() => {
+              // messageDiv.style.display = "none";
+              alertPlaceholder.innerHTML = "";
+            }, 8000); // Hide message after 3 seconds
+          });
       }
-
 
       function editUser(userId) {
         fetchWithAuth(`${userApiBaseURL}/${userId}`)
@@ -894,7 +793,7 @@
       function deleteUser(userId) {
         if (confirm("Are you sure you want to delete this user?")) {
           fetchWithAuth(`${adminApiBaseURL}/user/${userId}`, {
-            method: "DELETE"
+            method: "DELETE",
           })
             .then((response) => {
               if (!response.ok) {
@@ -927,32 +826,39 @@
           modifiedQuery = `${employeeApiBaseURL}`;
         }
         fetchWithAuth(modifiedQuery)
-                .then((response) => response.json())
-                .then((employees) => {
-                  const employeeTableBody = document.getElementById("employeeTableBody");
-                  const deleteEmployeeTableBody = document.getElementById("deleteEmployeeTableBody");
+          .then((response) => response.json())
+          .then((employees) => {
+            const employeeTableBody =
+              document.getElementById("employeeTableBody");
+            const deleteEmployeeTableBody = document.getElementById(
+              "deleteEmployeeTableBody"
+            );
 
-                  employeeTableBody.innerHTML = "";
-                  deleteEmployeeTableBody.innerHTML = "";
+            employeeTableBody.innerHTML = "";
+            deleteEmployeeTableBody.innerHTML = "";
 
-                  if (employees.length === 0) {
-                    const noEmployeesRow = document.createElement("tr");
-                    const noEmployeesCell = document.createElement("td");
-                    noEmployeesCell.colSpan = 8; // Adjust the colspan to match the number of columns in your table
-                    noEmployeesCell.textContent = "No employees available";
-                    noEmployeesCell.style.textAlign = "center"; // Optional: Center the text
-                    noEmployeesRow.appendChild(noEmployeesCell);
+            if (employees.length === 0) {
+              const noEmployeesRow = document.createElement("tr");
+              const noEmployeesCell = document.createElement("td");
+              noEmployeesCell.colSpan = 8; // Adjust the colspan to match the number of columns in your table
+              noEmployeesCell.textContent = "No employees available";
+              noEmployeesCell.style.textAlign = "center"; // Optional: Center the text
+              noEmployeesRow.appendChild(noEmployeesCell);
 
-                    employeeTableBody.appendChild(noEmployeesRow);
-                    deleteEmployeeTableBody.appendChild(noEmployeesRow.cloneNode(true));
-                  } else {
-                    employees.forEach((employee) => {
-                      const employeeRow = createEmployeeRow(employee);
-                      employeeTableBody.appendChild(employeeRow);
-                      deleteEmployeeTableBody.appendChild(employeeRow.cloneNode(true));
-                    });
-                  }
-                })
+              employeeTableBody.appendChild(noEmployeesRow);
+              deleteEmployeeTableBody.appendChild(
+                noEmployeesRow.cloneNode(true)
+              );
+            } else {
+              employees.forEach((employee) => {
+                const employeeRow = createEmployeeRow(employee);
+                employeeTableBody.appendChild(employeeRow);
+                deleteEmployeeTableBody.appendChild(
+                  employeeRow.cloneNode(true)
+                );
+              });
+            }
+          })
           .catch((error) => console.error("Error fetching employees:", error));
       }
 
@@ -988,13 +894,23 @@
         const employeeId = document.getElementById("employeeId").value;
 
         // Validate form fields
-        if (!firstName || !lastName || !email || !password || !username || !phone || ! jobTitle) {
+        if (
+          !firstName ||
+          !lastName ||
+          !email ||
+          !password ||
+          !username ||
+          !phone ||
+          !jobTitle
+        ) {
           alert("Please fill out all fields.");
           return;
         }
 
         // Determine URL and method based on whether we're creating or updating
-        const url = employeeId ? `${adminApiBaseURL}/employee/${employeeId}` : `${adminApiBaseURL}/employee/register`;
+        const url = employeeId
+          ? `${adminApiBaseURL}/employee/${employeeId}`
+          : `${adminApiBaseURL}/employee/register`;
         const method = employeeId ? "PUT" : "POST";
 
         // Prepare data object
@@ -1005,7 +921,7 @@
           password,
           username,
           jobTitle,
-          phoneNumber: phone
+          phoneNumber: phone,
         };
 
         // Perform the fetch request
@@ -1018,7 +934,9 @@
         })
           .then((response) => response.json())
           .then((data) => {
-            const alertPlaceholder = document.getElementById("alert-employee-placeholder");
+            const alertPlaceholder = document.getElementById(
+              "alert-employee-placeholder"
+            );
             if (data.error) {
               // messageDiv.className = "employeeMessage error";
               // messageDiv.textContent = data.error;
@@ -1044,10 +962,11 @@
               alertPlaceholder.innerHTML = "";
               //messageDiv.style.display = "none";
             }, 5000); // Hide message after 5 seconds
-
           })
           .catch((error) => {
-            const alertPlaceholder = document.getElementById("alert-employee-placeholder");
+            const alertPlaceholder = document.getElementById(
+              "alert-employee-placeholder"
+            );
             alertPlaceholder.innerHTML = `
             <div class="alert alert-danger" role="alert">
                 An unexpected error occurred: ${error.message}
@@ -1059,37 +978,45 @@
             // messageDiv.style.display = "block";
             setTimeout(() => {
               //messageDiv.style.display = "none";
-              alertPlaceholder.innerHTML = ""
+              alertPlaceholder.innerHTML = "";
             }, 8000); // Hide message after 8 seconds
           });
       }
 
       function editEmployee(employeeId) {
         fetchWithAuth(`${employeeApiBaseURL}/${employeeId}`)
-                .then((response) => response.json())
-                .then((employee) => {
-                  document.getElementById("employeeId").value = employee.id;
-                  document.getElementById("employeeUsername").value = employee.username;
-                  document.getElementById("employeeEmail").value = employee.email;
-                  document.getElementById("employeeFirstName").value = employee.firstName;
-                  document.getElementById("employeeLastName").value = employee.lastName;
-                  document.getElementById("employeePhoneNumber").value = employee.phoneNumber;
-                  document.getElementById("employeeJobTitle").value = employee.jobTitle;
-                  document.getElementById("employeePassword").value = employee.password;
+          .then((response) => response.json())
+          .then((employee) => {
+            document.getElementById("employeeId").value = employee.id;
+            document.getElementById("employeeUsername").value =
+              employee.username;
+            document.getElementById("employeeEmail").value = employee.email;
+            document.getElementById("employeeFirstName").value =
+              employee.firstName;
+            document.getElementById("employeeLastName").value =
+              employee.lastName;
+            document.getElementById("employeePhoneNumber").value =
+              employee.phoneNumber;
+            document.getElementById("employeeJobTitle").value =
+              employee.jobTitle;
+            document.getElementById("employeePassword").value =
+              employee.password;
 
-                  const messageDiv = document.getElementById("employeeMessage");
-                  messageDiv.style.display = "none";
-                  messageDiv.textContent = "";
-
-                })
-                .catch((error) => console.error("Error fetching employee:", error));
+            const messageDiv = document.getElementById("employeeMessage");
+            messageDiv.style.display = "none";
+            messageDiv.textContent = "";
+          })
+          .catch((error) => console.error("Error fetching employee:", error));
       }
 
       function deleteEmployee(employeeId) {
         if (confirm("Are you sure you want to delete this employee?")) {
-          fetchWithAuth(`${adminApiBaseURL}${employeeApiBaseURL}/${employeeId}`, {
-            method: "DELETE",
-          })
+          fetchWithAuth(
+            `${adminApiBaseURL}${employeeApiBaseURL}/${employeeId}`,
+            {
+              method: "DELETE",
+            }
+          )
             .then((response) => {
               if (!response.ok) {
                 throw new Error("Network response was not ok");
@@ -1110,9 +1037,9 @@
         const query = event.target.value;
         fetchEmployees(query);
       }
-
     </script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>s
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+    s
   </body>
 </html>

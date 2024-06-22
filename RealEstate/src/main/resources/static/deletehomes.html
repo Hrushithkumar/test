@@ -1,164 +1,188 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Delete Home for Sale - Iron Pillar Engineering and Construction</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Delete Home for Sale - Iron Pillar Engineering and Construction
+    </title>
 
-  <!-- CSS styles -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-  <link href="css/HeaderFooter.css" rel="stylesheet">
-  <style>
-    /* Your additional styles */
-    body {
-      font-family: "Montserrat", sans-serif;
-      background-color: #f4f7f6;
-      margin: 0;
-      padding: 20px;
-      /*padding-top: 80px;*/
-    }
+    <!-- CSS styles -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link href="css/HeaderFooter.css" rel="stylesheet" />
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const userRoles = JSON.parse(localStorage.getItem("roles"));
+        if (
+          !userRoles.some(
+            (role) => role === "ROLE_ADMIN" || role === "ROLE_EMPLOYEE"
+          )
+        ) {
+          alert("Oops! you are not authorized");
+          window.location.href = "main.html";
+        }
+      });
+    </script>
+    <style>
+      /* Your additional styles */
+      body {
+        font-family: "Montserrat", sans-serif;
+        background-color: #f4f7f6;
+        margin: 0;
+        padding: 20px;
+        /*padding-top: 80px;*/
+      }
 
-    .container.homes {
-      max-width: 800px;
-      margin: auto;
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
+      .container.homes {
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
 
-    .card {
-      transition: transform 0.3s ease;
-    }
+      .card {
+        transition: transform 0.3s ease;
+      }
 
-    .card:hover {
-      transform: translateY(-10px) rotateX(5deg);
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-    }
+      .card:hover {
+        transform: translateY(-10px) rotateX(5deg);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      }
 
-    form {
-      max-width: 500px;
-      margin: 20px auto;
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-      transition: transform 0.3s ease;
-    }
+      form {
+        max-width: 500px;
+        margin: 20px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease;
+      }
 
-    form:hover {
-      transform: translateY(-10px);
-    }
+      form:hover {
+        transform: translateY(-10px);
+      }
 
-    label {
-      font-weight: bold;
-    }
+      label {
+        font-weight: bold;
+      }
 
-    input[type="text"],
-    textarea,
-    select,
-    input[type="file"],
-    button {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      box-sizing: border-box;
-    }
+      input[type="text"],
+      textarea,
+      select,
+      input[type="file"],
+      button {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+      }
 
-    button {
-      background-color: #4caf50;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
+      button {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
 
-    button:hover {
-      background-color: #45a049;
-    }
-  </style>
-</head>
+      button:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
 
-<body>
-<!-- Include header from external file -->
-<div id="header-container"></div>
+  <body>
+    <!-- Include header from external file -->
+    <div id="header-container"></div>
 
-<div class="container homes mt-5">
-  <div class="row" id="homes-list">
-    <!-- Home items will be dynamically added here -->
-  </div>
-</div>
+    <div class="container homes mt-5">
+      <div class="row" id="homes-list">
+        <!-- Home items will be dynamically added here -->
+      </div>
+    </div>
 
-<div id="homeDetails" style="display: none">
-  <h2>Home Details</h2>
-  <p id="homeCategory"></p>
-  <p id="homeTitle"></p>
-  <p id="homeDescription"></p>
-  <img id="homeImage" src="" alt="Home Image" />
-</div>
+    <div id="homeDetails" style="display: none">
+      <h2>Home Details</h2>
+      <p id="homeCategory"></p>
+      <p id="homeTitle"></p>
+      <p id="homeDescription"></p>
+      <img id="homeImage" src="" alt="Home Image" />
+    </div>
 
-<!-- Include footer from external file -->
-<div id="footer-container"></div>
+    <!-- Include footer from external file -->
+    <div id="footer-container"></div>
 
-<!-- JavaScript imports -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="js/auth.js"></script>
-<script src="js/dynamicNavbar.js" defer></script>
+    <!-- JavaScript imports -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/dynamicNavbar.js" defer></script>
 
-<!-- JavaScript for dynamic content -->
-<script>
-  // Fetch and inject header
-  fetch('/includes/header.html')
-          .then(response => response.text())
-          .then(html => {
-            document.getElementById('header-container').innerHTML = html;
-          })
-          .catch(error => console.error('Error fetching header:', error));
+    <!-- JavaScript for dynamic content -->
+    <script>
+      // Fetch and inject header
+      fetch("/includes/header.html")
+        .then((response) => response.text())
+        .then((html) => {
+          document.getElementById("header-container").innerHTML = html;
+        })
+        .catch((error) => console.error("Error fetching header:", error));
 
-  // Fetch and inject footer
-  fetch('Footer.html')
-          .then(response => response.text())
-          .then(html => {
-            document.getElementById('footer-container').innerHTML = html;
-          })
-          .catch(error => console.error('Error fetching footer:', error));
+      // Fetch and inject footer
+      fetch("Footer.html")
+        .then((response) => response.text())
+        .then((html) => {
+          document.getElementById("footer-container").innerHTML = html;
+        })
+        .catch((error) => console.error("Error fetching footer:", error));
 
-  // Fetch homes and populate the list
-  document.addEventListener("DOMContentLoaded", () => {
-    fetchHomes();
-  });
+      // Fetch homes and populate the list
+      document.addEventListener("DOMContentLoaded", () => {
+        fetchHomes();
+      });
 
-  function fetchHomes() {
-    fetchWithAuth("/homes/view")
-            .then(response => response.json())
-            .then(homes => {
-              const homesList = document.getElementById("homes-list");
-              homesList.innerHTML = "";
+      function fetchHomes() {
+        fetchWithAuth("/homes/view")
+          .then((response) => response.json())
+          .then((homes) => {
+            const homesList = document.getElementById("homes-list");
+            homesList.innerHTML = "";
 
-              const container = document.createElement("div");
-              container.classList.add("container", "mt-5");
+            const container = document.createElement("div");
+            container.classList.add("container", "mt-5");
 
-              const title = document.createElement("h2");
-              title.textContent = "Delete Homes";
-              container.appendChild(title);
+            const title = document.createElement("h2");
+            title.textContent = "Delete Homes";
+            container.appendChild(title);
 
-              if (homes.length === 0) {
-                const noHomesCard = document.createElement("div");
-                noHomesCard.classList.add("col-12", "mt-3");
-                noHomesCard.innerHTML = `
+            if (homes.length === 0) {
+              const noHomesCard = document.createElement("div");
+              noHomesCard.classList.add("col-12", "mt-3");
+              noHomesCard.innerHTML = `
             <div class="card">
               <div class="card-body">
                 <p class="card-text">No homes available to delete.</p>
               </div>
             </div>
           `;
-                container.appendChild(noHomesCard);
-              } else {
-                homes.forEach(home => {
-                  const homeHTML = `
+              container.appendChild(noHomesCard);
+            } else {
+              homes.forEach((home) => {
+                const homeHTML = `
               <div class="col-md-4 mb-4">
                 <div class="card">
                   <img src="/uploads/${home.image}" class="card-img-top" alt="${home.title}">
@@ -170,32 +194,32 @@
                 </div>
               </div>
             `;
-                  container.innerHTML += homeHTML;
-                });
-              }
+                container.innerHTML += homeHTML;
+              });
+            }
 
-              homesList.appendChild(container);
-            })
-            .catch(error => console.error("Error fetching homes:", error));
-  }
-
-  function deleteHomeById(homeId) {
-    fetch(`/homes/${homeId}`, {
-      method: "DELETE",
-      headers: {
-        'Authorization': `Bearer ${token}`
+            homesList.appendChild(container);
+          })
+          .catch((error) => console.error("Error fetching homes:", error));
       }
-    })
-            .then(response => {
-              if (response.ok) {
-                alert("Home deleted successfully.");
-                fetchHomes(); // Refresh the list of homes
-              } else {
-                alert("Failed to delete home.");
-              }
-            })
-            .catch(error => console.error("Error deleting home:", error));
-  }
-</script>
-</body>
+
+      function deleteHomeById(homeId) {
+        fetch(`/homes/${homeId}`, {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+          .then((response) => {
+            if (response.ok) {
+              alert("Home deleted successfully.");
+              fetchHomes(); // Refresh the list of homes
+            } else {
+              alert("Failed to delete home.");
+            }
+          })
+          .catch((error) => console.error("Error deleting home:", error));
+      }
+    </script>
+  </body>
 </html>

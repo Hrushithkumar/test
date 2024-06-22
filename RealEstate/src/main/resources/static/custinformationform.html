@@ -1,459 +1,465 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>
-    Customer Information and Deal Tracker - Iron Pillar Engineering and
-    Construction
-  </title>
-  <link
-          href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-  />
-  <link
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-          rel="stylesheet"
-  />
-  <link
-          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
-          rel="stylesheet"
-  />
-  <link href="css/HeaderFooter.css" rel="stylesheet" />
-  <script src="js/dynamicNavbar.js" defer></script>
-  <script src="js/auth.js"></script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Customer Information and Deal Tracker - Iron Pillar Engineering and
+      Construction
+    </title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link href="css/HeaderFooter.css" rel="stylesheet" />
+    <script src="js/dynamicNavbar.js" defer></script>
+    <script src="js/auth.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const userRoles = JSON.parse(localStorage.getItem("roles"));
+        if (
+          !userRoles.some(
+            (role) => role === "ROLE_ADMIN" || role === "ROLE_EMPLOYEE"
+          )
+        ) {
+          alert("Oops! you are not authorized");
+          window.location.href = "main.html";
+        }
+      });
+    </script>
 
-  <style>
-    body {
-      font-family: "Montserrat", sans-serif;
-      background-color: #f4f7f6;
-      color: #333;
-      line-height: 1.6;
-      margin: 0;
-      padding-top: 80px;
-      overflow-x: hidden;
-    }
+    <style>
+      body {
+        font-family: "Montserrat", sans-serif;
+        background-color: #f4f7f6;
+        color: #333;
+        line-height: 1.6;
+        margin: 0;
+        padding-top: 80px;
+        overflow-x: hidden;
+      }
 
-    .container.deals {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 20px;
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .form-group {
-      margin-bottom: 15px;
-      position: relative;
-    }
-    .form-group label {
-      font-weight: bold;
-      display: block;
-      transition: color 0.3s, transform 0.3s;
-    }
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      box-sizing: border-box;
-      transition: all 0.3s;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      border-color: #4caf50;
-      box-shadow: 0 0 15px rgba(76, 175, 80, 0.5);
-      transform: scale(1.02);
-    }
-    .form-group input:focus + label,
-    .form-group select:focus + label,
-    .form-group textarea:focus + label {
-      color: #4caf50;
-      transform: translateY(-20px);
-    }
-    .form-group button {
-      background-color: #4caf50;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      cursor: pointer;
-      border-radius: 5px;
-      transition: background-color 0.3s, transform 0.3s;
-      display: block;
-      width: 100%;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    .form-group button:hover {
-      background-color: #45a049;
-      transform: scale(1.05);
-      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
-    }
+      .container.deals {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      h2 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .form-group {
+        margin-bottom: 15px;
+        position: relative;
+      }
+      .form-group label {
+        font-weight: bold;
+        display: block;
+        transition: color 0.3s, transform 0.3s;
+      }
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        transition: all 0.3s;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      .form-group input:focus,
+      .form-group select:focus,
+      .form-group textarea:focus {
+        border-color: #4caf50;
+        box-shadow: 0 0 15px rgba(76, 175, 80, 0.5);
+        transform: scale(1.02);
+      }
+      .form-group input:focus + label,
+      .form-group select:focus + label,
+      .form-group textarea:focus + label {
+        color: #4caf50;
+        transform: translateY(-20px);
+      }
+      .form-group button {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s, transform 0.3s;
+        display: block;
+        width: 100%;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      .form-group button:hover {
+        background-color: #45a049;
+        transform: scale(1.05);
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+      }
 
-    .form-group {
-      margin-bottom: 15px;
-      position: relative;
-    }
-    .form-group label {
-      font-weight: bold;
-      display: block;
-      transition: color 0.3s, transform 0.3s;
-    }
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      box-sizing: border-box;
-      transition: all 0.3s;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      border-color: #4caf50;
-      box-shadow: 0 0 15px rgba(76, 175, 80, 0.5);
-      transform: scale(1.02);
-    }
-    .form-group input:focus + label,
-    .form-group select:focus + label,
-    .form-group textarea:focus + label {
-      color: #4caf50;
-      transform: translateY(-20px);
-    }
-    .form-group button {
-      background-color: #4caf50;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      cursor: pointer;
-      border-radius: 5px;
-      transition: background-color 0.3s, transform 0.3s;
-      display: block;
-      width: 100%;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    .form-group button:hover {
-      background-color: #45a049;
-      transform: scale(1.05);
-      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
-    }
-  </style>
-</head>
-<body>
-<header></header>
-<section class="container deals mt-5">
-  <h2>Customer Information and Deal Tracker</h2>
-  <ul class="nav nav-tabs" id="myTab" role="tablist">
-    <li class="nav-item" role="presentation">
-      <button
-              class="nav-link active"
-              id="customer-info-tab"
-              data-bs-toggle="tab"
-              data-bs-target="#customer-info"
-              type="button"
-              role="tab"
-              aria-controls="customer-info"
-              aria-selected="true"
-      >
-        Customer Info
-      </button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button
-              class="nav-link"
-              id="deal-tracker-tab"
-              data-bs-toggle="tab"
-              data-bs-target="#deal-tracker"
-              type="button"
-              role="tab"
-              aria-controls="deal-tracker"
-              aria-selected="false"
-      >
-        Deal Tracker
-      </button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button
-              class="nav-link"
-              id="all-customers-tab"
-              data-bs-toggle="tab"
-              data-bs-target="#all-customers"
-              type="button"
-              role="tab"
-              aria-controls="all-customers"
-              aria-selected="false"
-      >
-        All Customers
-      </button>
-    </li>
-  </ul>
-  <div class="tab-content" id="myTabContent">
-    <div
-            class="tab-pane fade show active"
-            id="customer-info"
-            role="tabpanel"
-            aria-labelledby="customer-info-tab"
-    >
-      <form id="customerInfoForm" class="mt-3">
-        <div class="form-group">
-          <label for="customerName">Customer Name:</label>
-          <input
-                  type="text"
-                  id="customerName"
-                  class="form-control"
-                  required
-          />
-        </div>
-        <div class="form-group">
-          <label for="customerEmail">Customer Email:</label>
-          <input
-                  type="email"
-                  id="customerEmail"
-                  class="form-control"
-                  required
-          />
-        </div>
-        <div class="form-group">
-          <label for="phoneNumber">Phone Number:</label>
-          <input
-                  type="tel"
-                  id="phoneNumber"
-                  class="form-control"
-                  required
-          />
-        </div>
-        <div class="form-group">
-          <label for="customerAddress">Customer Address:</label>
-          <textarea
-                  id="customerAddress"
-                  class="form-control"
-                  rows="3"
-                  required
-          ></textarea>
-        </div>
-        <div class="form-group">
-          <label for="dealDate">Deal Date:</label>
-          <input type="date" id="dealDate" class="form-control" required />
-        </div>
-        <div class="form-group">
-          <label for="dealValue">Deal Value:</label>
-          <input
-                  type="number"
-                  id="dealValue"
-                  class="form-control"
-                  required
-          />
-        </div>
-        <div class="form-group">
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-      </form>
-    </div>
-    <div
-            class="tab-pane fade"
-            id="deal-tracker"
-            role="tabpanel"
-            aria-labelledby="deal-tracker-tab"
-    >
-      <form id="dealTrackerForm" class="mt-3">
-        <div class="form-group">
-          <label for="startDate">Start Date:</label>
-          <input
-                  type="date"
-                  id="startDate"
-                  class="form-control"
-                  required
-          />
-        </div>
-        <div class="form-group">
-          <label for="endDate">End Date:</label>
-          <input type="date" id="endDate" class="form-control" required />
-        </div>
-        <div class="form-group">
-          <button type="submit" class="btn btn-primary">
-            Track Deals
+      .form-group {
+        margin-bottom: 15px;
+        position: relative;
+      }
+      .form-group label {
+        font-weight: bold;
+        display: block;
+        transition: color 0.3s, transform 0.3s;
+      }
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        transition: all 0.3s;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      .form-group input:focus,
+      .form-group select:focus,
+      .form-group textarea:focus {
+        border-color: #4caf50;
+        box-shadow: 0 0 15px rgba(76, 175, 80, 0.5);
+        transform: scale(1.02);
+      }
+      .form-group input:focus + label,
+      .form-group select:focus + label,
+      .form-group textarea:focus + label {
+        color: #4caf50;
+        transform: translateY(-20px);
+      }
+      .form-group button {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s, transform 0.3s;
+        display: block;
+        width: 100%;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      .form-group button:hover {
+        background-color: #45a049;
+        transform: scale(1.05);
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+      }
+    </style>
+  </head>
+  <body>
+    <header></header>
+    <section class="container deals mt-5">
+      <h2>Customer Information and Deal Tracker</h2>
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link active"
+            id="customer-info-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#customer-info"
+            type="button"
+            role="tab"
+            aria-controls="customer-info"
+            aria-selected="true"
+          >
+            Customer Info
           </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="deal-tracker-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#deal-tracker"
+            type="button"
+            role="tab"
+            aria-controls="deal-tracker"
+            aria-selected="false"
+          >
+            Deal Tracker
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="all-customers-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#all-customers"
+            type="button"
+            role="tab"
+            aria-controls="all-customers"
+            aria-selected="false"
+          >
+            All Customers
+          </button>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div
+          class="tab-pane fade show active"
+          id="customer-info"
+          role="tabpanel"
+          aria-labelledby="customer-info-tab"
+        >
+          <form id="customerInfoForm" class="mt-3">
+            <div class="form-group">
+              <label for="customerName">Customer Name:</label>
+              <input
+                type="text"
+                id="customerName"
+                class="form-control"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="customerEmail">Customer Email:</label>
+              <input
+                type="email"
+                id="customerEmail"
+                class="form-control"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="phoneNumber">Phone Number:</label>
+              <input
+                type="tel"
+                id="phoneNumber"
+                class="form-control"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="customerAddress">Customer Address:</label>
+              <textarea
+                id="customerAddress"
+                class="form-control"
+                rows="3"
+                required
+              ></textarea>
+            </div>
+            <div class="form-group">
+              <label for="dealDate">Deal Date:</label>
+              <input type="date" id="dealDate" class="form-control" required />
+            </div>
+            <div class="form-group">
+              <label for="dealValue">Deal Value:</label>
+              <input
+                type="number"
+                id="dealValue"
+                class="form-control"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </form>
         </div>
-      </form>
-      <div id="dealSummary" style="display: none" class="mt-3">
-        <h3>Deal Summary</h3>
-        <p>Total Deals: <span id="totalDeals"></span></p>
-        <p>Total Deal Value: $<span id="totalValue"></span></p>
+        <div
+          class="tab-pane fade"
+          id="deal-tracker"
+          role="tabpanel"
+          aria-labelledby="deal-tracker-tab"
+        >
+          <form id="dealTrackerForm" class="mt-3">
+            <div class="form-group">
+              <label for="startDate">Start Date:</label>
+              <input type="date" id="startDate" class="form-control" required />
+            </div>
+            <div class="form-group">
+              <label for="endDate">End Date:</label>
+              <input type="date" id="endDate" class="form-control" required />
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary">Track Deals</button>
+            </div>
+          </form>
+          <div id="dealSummary" style="display: none" class="mt-3">
+            <h3>Deal Summary</h3>
+            <p>Total Deals: <span id="totalDeals"></span></p>
+            <p>Total Deal Value: $<span id="totalValue"></span></p>
+          </div>
+        </div>
+        <div
+          class="tab-pane fade"
+          id="all-customers"
+          role="tabpanel"
+          aria-labelledby="all-customers-tab"
+        >
+          <div class="table-responsive mt-3">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Address</th>
+                  <th>Deal Date</th>
+                  <th>Deal Value</th>
+                </tr>
+              </thead>
+              <tbody id="customerTableBody">
+                <!-- Customer data will be inserted here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
-    </div>
-    <div
-            class="tab-pane fade"
-            id="all-customers"
-            role="tabpanel"
-            aria-labelledby="all-customers-tab"
-    >
-      <div class="table-responsive mt-3">
-        <table class="table table-striped">
-          <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Address</th>
-            <th>Deal Date</th>
-            <th>Deal Value</th>
-          </tr>
-          </thead>
-          <tbody id="customerTableBody">
-          <!-- Customer data will be inserted here -->
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</section>
-<div id="footer-container"></div>
-<script>
-  fetch("Footer.html")
-          .then((response) => response.text())
-          .then((html) => {
-            document.getElementById("footer-container").innerHTML = html;
+    </section>
+    <div id="footer-container"></div>
+    <script>
+      fetch("Footer.html")
+        .then((response) => response.text())
+        .then((html) => {
+          document.getElementById("footer-container").innerHTML = html;
+        })
+        .catch((error) => console.error("Error fetching footer:", error));
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const dealTrackerForm = document.getElementById("dealTrackerForm");
+        const dealSummary = document.getElementById("dealSummary");
+        const totalDealsElement = document.getElementById("totalDeals");
+        const totalValueElement = document.getElementById("totalValue");
+
+        dealTrackerForm.addEventListener("submit", (event) => {
+          event.preventDefault();
+          const startDate = document.getElementById("startDate").value;
+          const endDate = document.getElementById("endDate").value;
+
+          fetchWithAuth(`/deal-tracker?start=${startDate}&end=${endDate}`)
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+              }
+              return response.json();
+            })
+            .then((data) => {
+              totalDealsElement.textContent = data.totalDeals;
+              totalValueElement.textContent = data.totalValue.toFixed(2);
+              dealSummary.style.display = "block";
+            })
+            .catch((error) => {
+              console.error("Error fetching deal summary:", error);
+              alert("Failed to fetch deal summary. Please try again.");
+            });
+        });
+
+        const customerInfoForm = document.getElementById("customerInfoForm");
+        customerInfoForm.addEventListener("submit", (event) => {
+          event.preventDefault();
+          const customerName = document.getElementById("customerName").value;
+          const customerEmail = document.getElementById("customerEmail").value;
+          const phoneNumber = document.getElementById("phoneNumber").value;
+          const customerAddress =
+            document.getElementById("customerAddress").value;
+          const dealDate = document.getElementById("dealDate").value;
+          const dealValue = parseFloat(
+            document.getElementById("dealValue").value
+          );
+
+          const customerInfo = {
+            customerName,
+            customerEmail,
+            phoneNumber,
+            customerAddress,
+            dealDate,
+            dealValue,
+          };
+
+          fetchWithAuth("/customer-info", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(customerInfo),
           })
-          .catch((error) => console.error("Error fetching footer:", error));
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+              }
+              return response.json();
+            })
+            .then((data) => {
+              alert("Customer information submitted successfully!");
+              customerInfoForm.reset();
+            })
+            .catch((error) => {
+              console.error("Error submitting customer information:", error);
+              alert("Failed to submit customer information. Please try again.");
+            });
+        });
 
-  document.addEventListener("DOMContentLoaded", () => {
-    const dealTrackerForm = document.getElementById("dealTrackerForm");
-    const dealSummary = document.getElementById("dealSummary");
-    const totalDealsElement = document.getElementById("totalDeals");
-    const totalValueElement = document.getElementById("totalValue");
+        const allCustomersTab = document.getElementById("all-customers-tab");
 
-    dealTrackerForm.addEventListener("submit", (event) => {
-      event.preventDefault();
-      const startDate = document.getElementById("startDate").value;
-      const endDate = document.getElementById("endDate").value;
+        allCustomersTab.addEventListener("click", () => {
+          fetchWithAuth("/customer-info/list")
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+              }
+              return response.json();
+            })
+            .then((data) => {
+              const customerTableBody =
+                document.getElementById("customerTableBody");
+              customerTableBody.innerHTML = ""; // Clear any existing content
 
-      fetchWithAuth(`/deal-tracker?start=${startDate}&end=${endDate}`)
-              .then((response) => {
-                if (!response.ok) {
-                  throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
-              })
-              .then((data) => {
-                totalDealsElement.textContent = data.totalDeals;
-                totalValueElement.textContent = data.totalValue.toFixed(2);
-                dealSummary.style.display = "block";
-              })
-              .catch((error) => {
-                console.error("Error fetching deal summary:", error);
-                alert("Failed to fetch deal summary. Please try again.");
+              data.forEach((customer) => {
+                const row = document.createElement("tr");
+
+                const nameCell = document.createElement("td");
+                nameCell.textContent = customer.customerName;
+                row.appendChild(nameCell);
+
+                const emailCell = document.createElement("td");
+                emailCell.textContent = customer.customerEmail;
+                row.appendChild(emailCell);
+
+                const phoneCell = document.createElement("td");
+                phoneCell.textContent = customer.phoneNumber;
+                row.appendChild(phoneCell);
+
+                const addressCell = document.createElement("td");
+                addressCell.textContent = customer.customerAddress;
+                row.appendChild(addressCell);
+
+                const dealDateCell = document.createElement("td");
+                dealDateCell.textContent = new Date(
+                  customer.dealDate
+                ).toLocaleDateString();
+                row.appendChild(dealDateCell);
+
+                const dealValueCell = document.createElement("td");
+                dealValueCell.textContent = customer.dealValue.toFixed(2);
+                row.appendChild(dealValueCell);
+
+                customerTableBody.appendChild(row);
               });
-    });
-
-    const customerInfoForm = document.getElementById("customerInfoForm");
-    customerInfoForm.addEventListener("submit", (event) => {
-      event.preventDefault();
-      const customerName = document.getElementById("customerName").value;
-      const customerEmail = document.getElementById("customerEmail").value;
-      const phoneNumber = document.getElementById("phoneNumber").value;
-      const customerAddress =
-              document.getElementById("customerAddress").value;
-      const dealDate = document.getElementById("dealDate").value;
-      const dealValue = parseFloat(
-              document.getElementById("dealValue").value
-      );
-
-      const customerInfo = {
-        customerName,
-        customerEmail,
-        phoneNumber,
-        customerAddress,
-        dealDate,
-        dealValue,
-      };
-
-      fetchWithAuth("/customer-info", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(customerInfo),
-      })
-              .then((response) => {
-                if (!response.ok) {
-                  throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
-              })
-              .then((data) => {
-                alert("Customer information submitted successfully!");
-                customerInfoForm.reset();
-              })
-              .catch((error) => {
-                console.error("Error submitting customer information:", error);
-                alert("Failed to submit customer information. Please try again.");
-              });
-    });
-
-    const allCustomersTab = document.getElementById("all-customers-tab");
-
-    allCustomersTab.addEventListener("click", () => {
-      fetchWithAuth("/customer-info/list")
-              .then((response) => {
-                if (!response.ok) {
-                  throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
-              })
-              .then((data) => {
-                const customerTableBody =
-                        document.getElementById("customerTableBody");
-                customerTableBody.innerHTML = ""; // Clear any existing content
-
-                data.forEach((customer) => {
-                  const row = document.createElement("tr");
-
-                  const nameCell = document.createElement("td");
-                  nameCell.textContent = customer.customerName;
-                  row.appendChild(nameCell);
-
-                  const emailCell = document.createElement("td");
-                  emailCell.textContent = customer.customerEmail;
-                  row.appendChild(emailCell);
-
-                  const phoneCell = document.createElement("td");
-                  phoneCell.textContent = customer.phoneNumber;
-                  row.appendChild(phoneCell);
-
-                  const addressCell = document.createElement("td");
-                  addressCell.textContent = customer.customerAddress;
-                  row.appendChild(addressCell);
-
-                  const dealDateCell = document.createElement("td");
-                  dealDateCell.textContent = new Date(
-                          customer.dealDate
-                  ).toLocaleDateString();
-                  row.appendChild(dealDateCell);
-
-                  const dealValueCell = document.createElement("td");
-                  dealValueCell.textContent = customer.dealValue.toFixed(2);
-                  row.appendChild(dealValueCell);
-
-                  customerTableBody.appendChild(row);
-                });
-              })
-              .catch((error) => {
-                console.error("Error fetching customer data:", error);
-                alert("Failed to fetch customer data. Please try again.");
-              });
-    });
-  });
-</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+            })
+            .catch((error) => {
+              console.error("Error fetching customer data:", error);
+              alert("Failed to fetch customer data. Please try again.");
+            });
+        });
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
 </html>
