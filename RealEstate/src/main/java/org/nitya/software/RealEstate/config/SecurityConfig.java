@@ -43,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/authenticate").permitAll()
                 .antMatchers( "/register").permitAll()
-                .antMatchers( "/employee/contacts").hasAnyRole("ADMIN", "USER")
+                .antMatchers( "/employee/contacts").permitAll()
                 .antMatchers("/api/forgot-password").permitAll()
                 .antMatchers("/api/reset-password/**").permitAll()
                 .antMatchers("/", "/static/**", "/images/**", "/css/**", "/js/**", "/uploads/**", "/includes/**").permitAll()
@@ -56,7 +56,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     response.sendError(HttpStatus.FORBIDDEN.value(), "Access Denied");
                 })
                 .authenticationEntryPoint((request, response, authException) -> {
-                    System.out.println("Authentication Denied: " + authException.getMessage());
                     response.sendError(HttpStatus.UNAUTHORIZED.value(), "Unauthorized");
 
                 })
