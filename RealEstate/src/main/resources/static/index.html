@@ -20,6 +20,7 @@
     <script src="js/login-logout.js"></script>
 
     <style>
+      /* General Styles */
       body {
         font-family: "Montserrat", sans-serif;
         background-color: #e9ecef;
@@ -27,6 +28,8 @@
         line-height: 1.6;
         margin: 0;
       }
+
+      /* Hero Section */
       .hero {
         background: url("images/img2.jpg") no-repeat center center/cover;
         color: white;
@@ -39,22 +42,27 @@
         border-bottom: 10px solid #2c3e50;
         padding: 20px;
       }
+
       .hero .hero-content {
         background-color: rgba(44, 62, 80, 0.8);
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
       }
+
       .hero h1 {
         font-size: 3.5em;
         margin-bottom: 15px;
         text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
       }
+
       .hero p {
         font-size: 1.3em;
         margin-bottom: 15px;
         text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
       }
+
+      /* Jumbotron Section */
       .jumbotron {
         background-color: #4b647c;
         color: white;
@@ -65,169 +73,26 @@
         margin-left: 20px;
         margin-right: 20px;
       }
+
+      /* Section Styles */
       .section {
         padding: 40px 0;
         text-align: center;
       }
+
       .section h2 {
         font-size: 2.2em;
         margin-bottom: 20px;
       }
+
       .section p {
         font-size: 1.1em;
         color: #555;
         max-width: 800px;
         margin: 0 auto;
       }
-      .service-card {
-        margin: 20px;
-        padding: 20px;
-        background: #fff;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s;
-        cursor: pointer;
-      }
-      .service-card:hover {
-        transform: scale(1.05);
-      }
-      .gallery img {
-        width: 100%;
-        height: 500px;
-        object-fit: cover;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        margin-bottom: 20px;
-        transition: transform 0.3s;
-      }
-      .gallery img:hover {
-        transform: scale(1.05);
-      }
-      .nav-pills .nav-link.active,
-      .nav-pills .show > .nav-link {
-        color: #fff;
-        background-color: #4b647c;
-      }
-      .nav-link {
-        display: block;
-        padding: 0.5rem 1rem;
-        color: #1a1a1a;
-        text-decoration: none;
-        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
-          border-color 0.15s ease-in-out;
-      }
-      .testimonials .testimonial {
-        margin: 20px;
-        padding: 20px;
-        background: #fff;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s;
-      }
-      .testimonials .testimonial:hover {
-        transform: scale(1.05);
-      }
-      .contact form {
-        max-width: 600px;
-        margin: 0 auto;
-      }
-      .feature {
-        background-color: #e9ecef;
-        padding: 40px 0;
-        text-align: center;
-      }
-      .feature .feature-content {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 20px;
-        background-color: #fff;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      }
-      .feature .feature-content h3 {
-        font-size: 2em;
-        margin-bottom: 15px;
-      }
-      .feature .feature-content p {
-        font-size: 1.2em;
-        margin-bottom: 15px;
-      }
-      .footer {
-        background-color: #2c3e50;
-        color: white;
-        text-align: start;
-        padding: 15px 0;
-        margin-top: 50px;
-        border-top: 10px solid #34495e;
-      }
-      .footer h5 {
-        font-size: 1.2em;
-      }
-      .footer ul {
-        list-style: none;
-        padding: 0;
-      }
-      .footer ul li {
-        margin-bottom: 10px;
-      }
-      .footer ul li a {
-        color: white;
-        text-decoration: none;
-        transition: color 0.3s;
-      }
-      .footer ul li a:hover {
-        color: #f39c12;
-      }
-      .footer .social-icons {
-        display: flex;
-        gap: 10px;
-      }
-      .footer .social-icons a {
-        color: #fff;
-        font-size: 1.4rem;
-        transition: color 0.3s;
-      }
-      .footer .social-icons a:hover {
-        color: #f39c12;
-      }
-      @media (max-width: 768px) {
-        .hero {
-          height: 300px;
-        }
-        .hero h1 {
-          font-size: 2.5em;
-        }
-        .hero p {
-          font-size: 1em;
-        }
-        .service-card {
-          margin: 10px;
-          padding: 15px;
-        }
-        .footer .container {
-          flex-direction: column;
-          align-items: center;
-        }
-        .footer .social-icons {
-          margin-top: 10px;
-        }
-      }
-      .message {
-        padding: 10px;
-        margin: 10px 0;
-        display: none;
-      }
-      .success {
-        color: green;
-      }
-      .error {
-        color: red;
-      }
-      .ad img {
-        width: 100%;
-        height: auto;
-        object-fit: cover;
-      }
+
+      /* Service Card Styles */
       .service-card {
         margin: 20px;
         padding: 20px;
@@ -238,19 +103,23 @@
         cursor: pointer;
         text-align: left;
       }
+
       .service-card:hover {
         transform: scale(1.05);
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
       }
+
       .service-card h3 {
         font-size: 1.5em;
         margin-bottom: 15px;
         color: #2c3e50;
       }
+
       .service-card ul {
         padding-left: 20px;
         list-style: none;
       }
+
       .service-card ul li {
         position: relative;
         padding-left: 25px;
@@ -258,6 +127,7 @@
         color: #555;
         font-size: 1em;
       }
+
       .service-card ul li:before {
         content: "•";
         position: absolute;
@@ -266,11 +136,122 @@
         font-size: 1.5em;
         line-height: 1em;
       }
+
+      /* Navigation Styles */
+      .nav-pills .nav-link.active,
+      .nav-pills .show > .nav-link {
+        color: #fff;
+        background-color: #4b647c;
+      }
+
+      .nav-link {
+        display: block;
+        padding: 0.5rem 1rem;
+        color: #1a1a1a;
+        text-decoration: none;
+        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+          border-color 0.15s ease-in-out;
+      }
+
+      /* Gallery Styles */
+      .gallery img {
+        width: 100%;
+        height: 500px;
+        object-fit: cover;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        transition: transform 0.3s;
+      }
+
+      .gallery img:hover {
+        transform: scale(1.05);
+      }
+
+      /* Footer Styles */
+      .footer {
+        background-color: #2c3e50;
+        color: white;
+        text-align: start;
+        padding: 15px 0;
+        margin-top: 50px;
+        border-top: 10px solid #34495e;
+      }
+
+      .footer h5 {
+        font-size: 1.2em;
+      }
+
+      .footer ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .footer ul li {
+        margin-bottom: 10px;
+      }
+
+      .footer ul li a {
+        color: white;
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      .footer ul li a:hover {
+        color: #f39c12;
+      }
+
+      .footer .social-icons {
+        display: flex;
+        gap: 10px;
+      }
+
+      .footer .social-icons a {
+        color: #fff;
+        font-size: 1.4rem;
+        transition: color 0.3s;
+      }
+
+      .footer .social-icons a:hover {
+        color: #f39c12;
+      }
+
+      /* Responsive Styles */
+      @media (max-width: 768px) {
+        .hero {
+          height: 300px;
+        }
+
+        .hero h1 {
+          font-size: 2.5em;
+        }
+
+        .hero p {
+          font-size: 1em;
+        }
+
+        .service-card {
+          margin: 10px;
+          padding: 15px;
+        }
+
+        .footer .container {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .footer .social-icons {
+          margin-top: 10px;
+        }
+      }
+
+      /* Additional Styles */
       .btn-primary {
         color: #fff;
         background-color: #4b647c;
         border-color: #4b647c;
       }
+
       a {
         color: #294c80;
         text-decoration: auto;
@@ -287,8 +268,9 @@
               alt="Logo"
               height="30"
               class="d-inline-block align-top"
+              m-2
             />
-            Iron Pillar Engineering and Construction
+            IPEC
           </a>
           <button
             class="navbar-toggler"
@@ -306,6 +288,9 @@
             id="navbarNav"
           >
             <ul class="navbar-nav" id="navbar">
+              <li class="nav-item">
+                <a class="nav-link" href="/gallery.html"> Gallery</a>
+              </li>
               <li class="nav-item">
                 <a
                   class="nav-link"
@@ -352,11 +337,11 @@
     <section class="jumbotron text-center">
       <div class="container">
         <h2>About Iron Pillar Engineering and Construction</h2>
-      </br>
+        <br />
         <p>
           At Iron Pillar Engineering and Construction, we are dedicated to
           delivering top-notch construction solutions tailored to meet the
-          unique needs of our clients.  Our team of experts is committed to
+          unique needs of our clients. Our team of experts is committed to
           ensuring the highest standards of quality and excellence in every
           project we undertake.
         </p>
@@ -714,6 +699,49 @@
                 </div>
               </div>
             </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="service-card">
+                  <h3>Materials Available for Decks</h3>
+                  <ul>
+                    <li>
+                      <strong>Wood</strong>
+                      <ul>
+                        <li>Pressure-Treated Lumber</li>
+                        <li>Cedar</li>
+                        <li>Redwood</li>
+                      </ul>
+                    </li>
+                    <li>
+                      <strong>Composite</strong>
+                      <ul>
+                        <li>Polymer Decking</li>
+                        <li>Wood-Plastic Composites</li>
+                      </ul>
+                    </li>
+                    <li>PVC (Polyvinyl Chloride)</li>
+                    <li>Aluminum</li>
+                    <li>Concrete</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="service-card">
+                  <h3>Deck Designs</h3>
+                  <ul>
+                    <li>Platform Decks</li>
+                    <li>Raised Decks</li>
+                    <li>Two-Story Decks</li>
+                    <li>Wraparound Decks</li>
+                    <li>Multifunctional Decks</li>
+                    <li>Rooftop Decks</li>
+                    <li>Pool Decks</li>
+                    <li>Gazebo or Pergola Decks</li>
+                    <li>Wheelchair Accessible Decks</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
           <!-- Framing Services -->
           <div
@@ -809,19 +837,6 @@
       </div>
     </section>
 
-    <script>
-      document.querySelectorAll("a.nav-link").forEach((anchor) => {
-        anchor.addEventListener("click", function (e) {
-          e.preventDefault();
-
-          const sectionId = this.getAttribute("href").substring(1);
-          document.getElementById(sectionId).scrollIntoView({
-            behavior: "smooth",
-          });
-        });
-      });
-    </script>
-
     <section class="section gallery">
       <div class="container">
         <h2>Gallery</h2>
@@ -874,93 +889,6 @@
         </div>
       </div>
     </section>
-
-    <!-- <section class="section testimonials">
-      <div class="container">
-        <h2>Testimonials</h2>
-        <div class="row">
-          <div class="col-md-4">
-            <div class="testimonial">
-              <p>
-                <i class="fas fa-quote-left"></i> Iron Pillar Engineering and
-                Construction transformed our home!
-                <i class="fas fa-quote-right"></i>
-                - John D.
-              </p>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="testimonial">
-              <p>
-                <i class="fas fa-quote-left"></i> Excellent service and
-                attention to detail. Highly recommended!
-                <i class="fas fa-quote-right"></i>
-                - Sarah P.
-              </p>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="testimonial">
-              <p>
-                <i class="fas fa-quote-left"></i> Professional and reliable.
-                They exceeded our expectations!
-                <i class="fas fa-quote-right"></i> - Mike T.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section> -->
-
-    <!-- <section class="section videos">
-      <div class="container">
-        <h2>Construction Videos</h2>
-        <div class="row">
-          <div class="col-md-4">
-            <div class="video-div">
-              <iframe
-                width="100%"
-                height="200"
-                src="https://www.youtube.com/embed/Z0GFRcFm-aY"
-                title="YouTube video player"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen
-              ></iframe>
-              <p>Innovative Construction Techniques</p>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="video-div">
-              <iframe
-                width="100%"
-                height="200"
-                src="https://www.youtube.com/embed/Z0GFRcFm-aY"
-                title="YouTube video player"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen
-              ></iframe>
-              <p>Building with Modern Technology</p>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="video-div">
-              <iframe
-                width="100%"
-                height="200"
-                src="https://www.youtube.com/embed/Z0GFRcFm-aY"
-                title="YouTube video player"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen
-              ></iframe>
-              <p>Project Management in Construction</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section> -->
 
     <section class="section feature">
       <div class="container">
